@@ -1,21 +1,27 @@
 from __future__ import print_function
-from Parser import parse
+
+from quest_core import parse
+from quest_core import Requirement
+from quest_core import Task
+
+from settings import Devices
+from settings import Global
+
+from game_state import GameState
 from deviceMaster.devicemaster import DeviceMaster
-from GameState import GameState
-from Requirement import Requirement
-from Task import Task
-from Action import Action
+
 import time
 import threading
+import tornado
+import subprocess
+import pygame
 import platform
 if platform.system() == 'Windows':
     from KeyboardListener import KeyboardListener
-from hallway_function import *
-import tornado
-from full_quest import *
-import subprocess
 
-import pygame
+from full_quest import *
+
+
 
 clients = None
 master = None
@@ -25,64 +31,45 @@ class QuestRoom(threading.Thread):
         global clients
         clients = cli
         self.game_state = None
-        sound_manager = None
-        captainsBridge_2 = None
-        pygame.mixer.init()
-        self.ambient_music = pygame.mixer.Sound("game_ambient.wav")
-        self.final_game_music = pygame.mixer.Sound("final_game.wav")
-        self.win_music = pygame.mixer.Sound("you_win.wav")
-        self.current_music = self.ambient_music
+
+        # sound_manager = None
+        # pygame.mixer.init()
+        # self.ambient_music = pygame.mixer.Sound("game_ambient.wav")
+        # self.final_game_music = pygame.mixer.Sound("final_game.wav")
+        # self.win_music = pygame.mixer.Sound("you_win.wav")
+        # self.current_music = self.ambient_music
 
         self.last_sended_messages = {}
 
-        hallwayPuzzles = None
         super(QuestRoom, self).__init__()
-
-    def progress_bar_zero(self, monitorId):
-        self.game_state.updateMonitorsListWithProgressBarZero(monitorId)
 
     def run(self):
         print("quest room thread start")
         global master
         master = DeviceMaster()
-        #hallwayPort = "/dev/tty.usbserial-A4033KK5"
+
         if platform.system() == 'Windows':
-            hallway_comport = "COM3"
-            captain_bridge_1_comport = "COM5"
-            captain_bridge_2_comport = "COM4"
+            lovecraft_comport = Devices.LOVECRAFT_DEVICE_COM_PORT_WIN
         else:
-            get_tty_script="./get_ttyUSB.sh "
-            bashCommand = get_tty_script + "A4033KK5"
+            bashCommand = Global.GET_TTY_USB_SCRIPT + Devices.LOVECRAFT_USB_SERIAL_NUMBER
             process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 
-            hallway_comport = process.communicate()[0]
-            print("Hallway: {}".format(hallway_comport))
+            lovecraft_comport = process.communicate()[0]
+            print("Use COM-port: {}".format(lovecraft_comport))
 
-            bashCommand = get_tty_script + "AL0079ZK"
-            process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-            captain_bridge_1_comport = process.communicate()[0]
-            print("CB_1: {}".format(captain_bridge_1_comport))
-
-            bashCommand = get_tty_script + "AL0079CW"
-            process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-            captain_bridge_2_comport = process.communicate()[0]
-            print("CB_2: {}".format(captain_bridge_2_comport))
-
-        self.hallwayPuzzles = master.addSlave("hallwayPuzzles", hallway_comport, 1, boudrate=5)
-        self.captainsBridge_1 = master.addSlave("CB_SLAVE_1", captain_bridge_1_comport, 2, boudrate=5)
-        self.captainsBridge_2 = master.addSlave("CB_SLAVE_2", captain_bridge_2_comport, 3, boudrate=5)
+        self.lovecraft_device = master.addSlave(Devices.LOVECRAFT_DEVICE_NAME, lovecraft_comport, 1, boudrate=5)
 
         master.start()
 
-        self.game_state = parse("full_quest.yml")
+        self.game_state = parse(Global.SCENARY_FILE)
 
-        if platform.system() == 'Windows':
-            keyboardListener = KeyboardListener(master, self.game_state)
-            keyboardListener.daemon = True
-            keyboardListener.start()
+        # if platform.system() == 'Windows':
+        #     keyboardListener = KeyboardListener(master, self.game_state)
+        #     keyboardListener.daemon = True
+        #     keyboardListener.start()
 
         self.game_state.device_master = master
-        self.game_state.slave = hallwayPuzzles
+        self.game_state.slave = self.lovecraft_device
         self.game_state.quest_room = self
         self.game_state.start_game_loop(self.send_state)
 
@@ -113,7 +100,6 @@ class QuestRoom(threading.Thread):
 
         # save last sended message
         self.last_sended_messages[str_id] = message
-
 
     def send_state(self, message):
         if self.game_state is None:
