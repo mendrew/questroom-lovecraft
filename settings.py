@@ -11,7 +11,16 @@ class Buttons:
 class DEVICES_TABLE:
     #ADC
     ADC_LORDS_TABLE_STATUE = 0
+    LORDS_TABLE_STATUE_RANGE = (20, 60)
+
+    COIN_1 = 1
+    COIN_2 = 2
+    COIN_3 = 3
+    COIN_4 = 4
+    COIN_INSERTED_RANGE = (20, 60)
+
     RELAY_GODS_TABLE_MOTOR = 2
+    RELAY_PUSH = 4
 
 class TASKS_IDS:
     PUT_STATUE_ON_LORDS_TABLE = 1

@@ -29,7 +29,9 @@
       success_requirements:
         [REQ_PUT_FIRST_COIN]
       success_actions:
-        []
+        # печь разгорится
+        [AC_BAKE_FLARE_UP, AC_PERFORMANCE_DOLL_GIFT, AC_POLTERGEISTS,
+        AC_FALLING_BOOKS]
       failure_requirements:
         []
       failure_actions:
