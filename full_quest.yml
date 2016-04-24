@@ -13,6 +13,18 @@
       title: 'Инициализация'
 
     -
+      id: 4
+      success_requirements:
+        [REQ_BACKGROUND_TABLE_CLOCK]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Настольные часы'
+
+    -
       id: 1
       success_requirements:
         [REQ_PUT_STATUE_ON_LORDS_TABLE]
@@ -31,10 +43,24 @@
       success_actions:
         # печь разгорится
         [AC_BAKE_FLARE_UP, AC_PERFORMANCE_DOLL_GIFT, AC_POLTERGEISTS,
-        AC_FALLING_BOOKS]
+        AC_FALLING_BOOKS, AC_ADD_COLLECT_DAD_FISHING]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Вставить первую монету'
+
+    -
+      id: 3
+      success_requirements:
+        [REQ_COLLECT_DAD_FISHING]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Собрать Папу на рыбалку'
+
+
 

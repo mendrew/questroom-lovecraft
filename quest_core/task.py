@@ -7,6 +7,7 @@ class Task:
         self.failure_actions = []
         self.state = 0
         self.type = None
+        self.stack = []
 
     def add_success_requirement(self, requirement):
         self.success_requirements.append(requirement)

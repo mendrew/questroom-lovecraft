@@ -14,7 +14,61 @@ def REQ_QUEST_INIT(master, task, game_state):
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, [0,0,0,0])
 
     # AC_ENABLE_INIT_LIGHTS(master, task, game_state)
+    # Add Table clock job
+    game_state.add_active_task_with_id(TASKS_IDS.BACKGROUND_TABLE_CLOCK)
+
     return True
+
+def REQ_BACKGROUND_TABLE_CLOCK(master, task, game_state):
+    INITIALIZATION_SET_TIME = 30
+    INITIALIZATION_UNSET_TIME = 20 + INITIALIZATION_SET_TIME
+    MINIMUM_CLOCK_CYCLE_MOVE_TIME = 12
+    CLOCK_CHANGE_PERIOD = 5 * 60
+    clock_ctrl = master.getSimpleLeds(DEVICES_TABLE.LOVECRAFT_DEVICE_NAME).get()
+
+
+    stack = task.stack
+    if stack == []:
+        start_time = time.time()
+        clock_last_change_time = start_time + INITIALIZATION_UNSET_TIME + 1
+    else:
+        start_time = stack.pop()
+        clock_last_change_time = stack.pop()
+
+
+    time_passed = time.time() - start_time
+    if time_passed < INITIALIZATION_SET_TIME:
+        # Signals ZERO and NEXT CMD to SET
+        clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_ZERO_CMD] = 1
+        clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 1
+        master.setSimpleLeds(DEVICES_TABLE.LOVECRAFT_DEVICE_NAME, clock_ctrl)
+
+        stack.append(clock_last_change_time)
+        stack.append(start_time)
+        return
+    elif time_passed < INITIALIZATION_UNSET_TIME:
+        # Clear ZERO CMD around 20 sec
+        clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_ZERO_CMD] = 0
+        clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 1
+        master.setSimpleLeds(DEVICES_TABLE.LOVECRAFT_DEVICE_NAME, clock_ctrl)
+
+        stack.append(clock_last_change_time)
+        stack.append(start_time)
+        return
+    else:
+        clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 0
+        master.setSimpleLeds(DEVICES_TABLE.LOVECRAFT_DEVICE_NAME, clock_ctrl)
+
+    change_clock_time_passed = time.time() - clock_last_change_time
+
+    if change_clock_time_passed > CLOCK_CHANGE_PERIOD:
+        clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 1
+        master.setSimpleLeds(DEVICES_TABLE.LOVECRAFT_DEVICE_NAME, clock_ctrl)
+
+        clock_last_change_time = time.time()
+
+    stack.append(clock_last_change_time)
+    stack.append(start_time)
 
 def AC_ADD_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PUT_STATUE_ON_LORDS_TABLE)
@@ -69,11 +123,14 @@ def AC_FALLING_BOOKS(master, task, game_state):
     relays[DEVICES_TABLE.RELAY_PUSH] = 1
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
+def AC_ADD_COLLECT_DAD_FISHING(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.COLLECT_DAD_FISHING)
+
+def REQ_COLLECT_DAD_FISHING(master, task, game_state):
+    buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
+    dad_collected = buttons[DEVICES_TABLE.BTN_COLLECT_DAD_FISHING]
+
+    return dad_collected
 
 
-# =====================================================
-# =====================================================
-# =====================================================
-# =====================================================
-# =====================================================
-# =====================================================
+

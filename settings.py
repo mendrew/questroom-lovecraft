@@ -1,3 +1,8 @@
+class Global:
+    SCENARY_FILE = "full_quest.yml"
+    GET_TTY_USB_SCRIPT = "./get_ttyUSB.sh"
+    INIT_TASK_ID = 0
+
 class Devices:
     DEVICE = "DEVICE"
     LOVECRAFT_DEVICE_NAME = "LOVECRAFT_DEVICE_NAME"
@@ -19,17 +24,23 @@ class DEVICES_TABLE:
     COIN_4 = 4
     COIN_INSERTED_RANGE = (20, 60)
 
+    #RELAY
     RELAY_GODS_TABLE_MOTOR = 2
     RELAY_PUSH = 4
+
+    #Btn
+    BTN_COLLECT_DAD_FISHING = 1;
+
+    # SimpleLeds
+    SL_TABLE_CLOCK_ZERO_CMD = 0
+    SL_TABLE_CLOCK_NEXT_TIME_CMD = 1
 
 class TASKS_IDS:
     PUT_STATUE_ON_LORDS_TABLE = 1
     PUT_FIRST_COIN = 2
+    COLLECT_DAD_FISHING = 3
+    BACKGROUND_TABLE_CLOCK = 4
 
 
-class Global:
-    SCENARY_FILE = "full_quest.yml"
-    GET_TTY_USB_SCRIPT = "./get_ttyUSB.sh"
-    INIT_TASK_ID = 0
 
 
