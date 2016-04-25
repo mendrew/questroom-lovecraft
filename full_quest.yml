@@ -55,12 +55,46 @@
       success_requirements:
         [REQ_COLLECT_DAD_FISHING]
       success_actions:
-        []
+        [AC_RING_OUT_THE_CLOCK, AC_TABLE_CLOCK_CHANGE_TIME,
+        AC_ADD_CLOCK_SYNCHRONIZATION]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Собрать Папу на рыбалку'
 
+    -
+      id: 5
+      success_requirements:
+        [REQ_CLOCK_SYNCHRONIZATION]
+      success_actions:
+        [AC_BOX_UNDER_CLOCK_FACE_OPEN, ADD_FAMILY_PICTURE_BARLEY_BREAK]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Синхронихировать часы'
 
+    -
+      id: 6
+      success_requirements:
+        [REQ_FAMILY_PICTURE_BARLEY_BREAK]
+      success_actions:
+        [AC_SECOND_COIN_FALL, ADD_PUT_SECOND_COIN]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Собрать пазл (семья)'
 
+    -
+      id: 7
+      success_requirements:
+        [REQ_PUT_SECOND_COIN]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Вставить вторую монетку'

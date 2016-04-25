@@ -91,7 +91,7 @@ def AC_TURN_LORDS_TABLE(master, task, game_state):
 def AC_ADD_PUT_FIRST_COIN(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PUT_FIRST_COIN)
 
-def REQ_PUT_FIRST_COIN(master, task, game_state):
+def check_coins_inserted(master, task, game_state, nubmer_of_coins):
     adc_list = master.getAdc(Devices.LOVECRAFT_DEVICE_NAME).get()
 
     adc_coins_values = (adc_list[DEVICES_TABLE.COIN_1],
@@ -104,9 +104,13 @@ def REQ_PUT_FIRST_COIN(master, task, game_state):
         if DEVICES_TABLE.COIN_INSERTED_RANGE(0) <= coin_value <= DEVICES_TABLE.COIN_INSERTED_RANGE(1):
             inserted_coins_number = inserted_coins_number + 1
 
-    if inserted_coins_number >= 1:
+    if inserted_coins_number >= nubmer_of_coins:
         return True
-    return True
+    return False
+
+
+def REQ_PUT_FIRST_COIN(master, task, game_state):
+    return check_coins_inserted(master, task, game_state, 1)
 
 #!!!
 def AC_BAKE_FLARE_UP(master, task, game_state):
@@ -132,5 +136,43 @@ def REQ_COLLECT_DAD_FISHING(master, task, game_state):
 
     return dad_collected
 
+def AC_RING_OUT_THE_CLOCK(master, task, game_state):
+    pass
 
+def AC_TABLE_CLOCK_CHANGE_TIME(master, task, game_state):
+    # Time must set to random value
+    clock_ctrl = master.getSimpleLeds(DEVICES_TABLE.LOVECRAFT_DEVICE_NAME).get()
 
+    clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 1
+    master.setSimpleLeds(DEVICES_TABLE.LOVECRAFT_DEVICE_NAME, clock_ctrl)
+    time.sleep(0.5)
+
+    clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 0
+    master.setSimpleLeds(DEVICES_TABLE.LOVECRAFT_DEVICE_NAME, clock_ctrl)
+    pass
+
+def AC_ADD_CLOCK_SYNCHRONIZATION(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.CLOCK_SYNCHRONIZATION)
+
+def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
+    pass
+    return True
+
+def AC_BOX_UNDER_CLOCK_FACE_OPEN(master, task, game_state):
+    # What box is opened ?
+    pass
+
+def ADD_FAMILY_PICTURE_BARLEY_BREAK(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.FAMILY_PICTURE_BARLEY_BREAK)
+
+def REQ_FAMILY_PICTURE_BARLEY_BREAK(master, task, game_state):
+    pass
+
+def AC_SECOND_COIN_FALL(master, task, game_state):
+    pass
+
+def ADD_PUT_SECOND_COIN(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PUT_SECOND_COIN)
+
+def REQ_PUT_SECOND_COIN(master, task, game_state):
+    return check_coins_inserted(master, task, game_state, 2)
