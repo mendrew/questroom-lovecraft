@@ -144,7 +144,7 @@ def check_coins_inserted(master, task, game_state, nubmer_of_coins):
             pass
         else:
             if not master.debugMode():
-                print("ERROR: check_coins_inserted coin_id {} value: {}".format(index, coin_value)) 
+                print("ERROR: check_coins_inserted coin_id {} value: {}".format(index, coin_value))
     if inserted_coins_number >= nubmer_of_coins:
         return True
     return False
@@ -253,3 +253,25 @@ def ADD_PUT_SECOND_COIN(master, task, game_state):
 
 def REQ_PUT_SECOND_COIN(master, task, game_state):
     return check_coins_inserted(master, task, game_state, 2)
+
+def AC_PERFORMANCE_YOU_NOT_MY_FATHER(master, task, game_state):
+    pass
+
+def AC_STRENGTHENING_OF_PRESENCE(master, task, game_state):
+    # LEDS and what else
+    pass
+
+def AC_ADD_CODE_LOCK(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.CODE_LOCK)
+
+def AC_SPIDERS_RUNNING(master, task, game_state):
+    pass
+
+def REQ_CODE_LOCK(master, task, game_state):
+    buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
+
+    code_buttons = buttons[DEVICES_TABLE.BTN_CODE_LOCKS_CODE_BUTTONS]
+    else_buttons = buttons[DEVICES_TABLE.BTN_CODE_LOCKS_ELSE_BUTTONS]
+
+    return code_buttons and not else_buttons
+

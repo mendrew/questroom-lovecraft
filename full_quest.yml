@@ -94,7 +94,28 @@
       success_requirements:
         [REQ_PUT_SECOND_COIN]
       success_actions:
+        [AC_BAKE_FLARE_UP,
+         AC_PERFORMANCE_YOU_NOT_MY_FATHER,
+         AC_STRENGTHENING_OF_PRESENCE,
+         AC_SPIDERS_RUNNING,
+         AC_ADD_CODE_LOCK
+         ]
+      failure_requirements:
         []
+      failure_actions:
+        []
+      title: 'Вставить вторую монетку'
+
+    -
+      id: 8
+      success_requirements:
+        [REQ_CODE_LOCK]
+      success_actions:
+        [AC_BAKE_FLARE_UP,
+         AC_PERFORMANCE_YOU_NOT_MY_FATHER,
+         AC_STRENGTHENING_OF_PRESENCE,
+         AC_ADD_CODE_LOCK
+         ]
       failure_requirements:
         []
       failure_actions:
