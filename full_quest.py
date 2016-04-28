@@ -168,6 +168,12 @@ def AC_FALLING_BOOKS(master, task, game_state):
     relays[DEVICES_TABLE.RELAY_PUSH] = 1
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
+def AC_FALLING_FISHING_RODS(master, task, game_state):
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_FISHING_RODS_HOLDERS] = 1
+
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
 def AC_ADD_COLLECT_DAD_FISHING(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.COLLECT_DAD_FISHING)
 
