@@ -3,11 +3,11 @@ from __future__ import print_function
 from quest_core import parse
 from quest_core import Requirement
 from quest_core import Task
+from quest_core import GameState
 
 from settings import Devices
 from settings import Global
 
-from game_state import GameState
 from deviceMaster.devicemaster import DeviceMaster
 
 import time
@@ -51,10 +51,13 @@ class QuestRoom(threading.Thread):
         if platform.system() == 'Windows':
             lovecraft_comport = Devices.LOVECRAFT_DEVICE_COM_PORT_WIN
         else:
-            bashCommand = Global.GET_TTY_USB_SCRIPT + Devices.LOVECRAFT_USB_SERIAL_NUMBER
-            process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+            if master.debugMode():
+                lovecraft_comport = Devices.LOVECRAFT_DEVICE_COM_PORT_WIN
+            else:
+                bashCommand = Global.GET_TTY_USB_SCRIPT + Devices.LOVECRAFT_USB_SERIAL_NUMBER
+                process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 
-            lovecraft_comport = process.communicate()[0]
+                lovecraft_comport = process.communicate()[0]
             print("Use COM-port: {}".format(lovecraft_comport))
 
         self.lovecraft_device = master.addSlave(Devices.LOVECRAFT_DEVICE_NAME, lovecraft_comport, 1, boudrate=5)
@@ -62,11 +65,6 @@ class QuestRoom(threading.Thread):
         master.start()
 
         self.game_state = parse(Global.SCENARY_FILE)
-
-        # if platform.system() == 'Windows':
-        #     keyboardListener = KeyboardListener(master, self.game_state)
-        #     keyboardListener.daemon = True
-        #     keyboardListener.start()
 
         self.game_state.device_master = master
         self.game_state.slave = self.lovecraft_device

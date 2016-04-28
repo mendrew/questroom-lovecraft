@@ -4,7 +4,8 @@ import os
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
-from GameState import GameState
+# from GameState import GameState
+from quest_core import GameState
 from time import sleep
 # from SoundManager import SoundManager
 from quest_room import QuestRoom

@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
 class Global:
     SCENARY_FILE = "full_quest.yml"
     GET_TTY_USB_SCRIPT = "./get_ttyUSB.sh"
