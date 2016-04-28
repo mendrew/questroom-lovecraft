@@ -5,7 +5,9 @@
       success_requirements:
         [REQ_QUEST_INIT]
       success_actions:
-        [AC_ADD_PUT_STATUE_ON_LORDS_TABLE]
+        [AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
+          AC_REMEMBER_WALL_CLOCK_INIT_VALUE,
+          AC_ADD_PUT_STATUE_ON_LORDS_TABLE]
       failure_requirements:
         []
       failure_actions:

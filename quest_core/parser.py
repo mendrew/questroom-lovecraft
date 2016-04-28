@@ -5,6 +5,11 @@ from requirement import Requirement
 from task import Task
 from action import Action
 
+import os, sys
+parentPath = os.path.abspath("..")
+if parentPath not in sys.path:
+    sys.path.insert(0, parentPath)
+from full_quest import *
 
 def parse(file_name):
     game_state = GameState()

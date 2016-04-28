@@ -1,4 +1,13 @@
 # -*- coding: utf-8 -*-
+import os, sys
+parentPath = os.path.abspath("..")
+if parentPath not in sys.path:
+    sys.path.insert(0, parentPath)
+from full_quest import *
+from settings import Global
+
+import copy
+import time
 
 class GameState:
     def __init__(self):
@@ -24,7 +33,8 @@ class GameState:
             self.game_loop(callback)
 
     def game_loop(self, callback):
-        if not self.state: return
+        # if not self.state: return
+        time.sleep(0.1)
 
         for task in self.active_tasks:
             self.perform_task_if_satisfies(task)
