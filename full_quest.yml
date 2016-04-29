@@ -9,8 +9,7 @@
           AC_REMEMBER_WALL_CLOCK_INIT_VALUE,
           AC_ADD_PUT_STATUE_ON_LORDS_TABLE]
       failure_requirements:
-        []
-      failure_actions:
+        [] failure_actions:
         []
       title: 'Инициализация'
 
@@ -102,22 +101,54 @@
          ]
       failure_requirements:
         []
-      failure_actions:
-        []
-      title: 'Вставить вторую монетку'
+      failure_actions: [] title: 'Вставить вторую монетку'
 
     -
       id: 8
       success_requirements:
         [REQ_CODE_LOCK]
       success_actions:
-        [AC_BAKE_FLARE_UP,
-         AC_PERFORMANCE_YOU_NOT_MY_FATHER,
-         AC_STRENGTHENING_OF_PRESENCE,
-         AC_ADD_CODE_LOCK
-         ]
+        [AC_ADD_KUNSTKAMERA]
       failure_requirements:
         []
       failure_actions:
         []
-      title: 'Вставить вторую монетку'
+      title: 'Открыть кодовый замок шкафа'
+
+    -
+      id: 9
+      success_requirements:
+        [REQ_ONCOMING_TO_KUNSTKAMERA]
+      success_actions:
+        [AC_OCTOPUS_SPIT_LIQUID,
+         AC_PLAY_OCTOPUS_SPRUT]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Кунсткамера: приблизится, брызнуть из глаз'
+
+    -
+      id: 10
+      success_requirements:
+        [REQ_PLACE_THE_BOTTLES]
+      success_actions:
+        [AC_PUMPS_WATER,
+         AC_ADD_OPEN_BOX_IN_THE_PANTRY]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Расставить склянки'
+
+    -
+      id: 11
+      success_requirements:
+        [REQ_OPEN_BOX_IN_THE_PANTRY]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Открыть ящик в кладовой'

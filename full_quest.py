@@ -14,11 +14,29 @@ class GLOBAL_VARIABLES:
     TABLE_CLOCK_VALUE = 0
     WALL_CLOCK_INIT_VALUE = 0
 
+def puzzle_status(puzzle_name, status):
+    PUZZLE_OK_MSG = "\tPUZZLE OK"
+    PUZZLE_ERROR_MSG = "\tPUZZLE ERROR"
+
+    if status:
+        print("{puzzle_name}: {msg}".format(puzzle_name, PUZZLE_OK_MSG))
+    else:
+        print("{puzzle_name}: {msg}".format(puzzle_name, PUZZLE_ERROR_MSG))
+
+
+def check_puzzles(master):
+    buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
+
+    # check bottles
+    puzzle_status("BOTTLES", buttons[DEVICES_TABLE.BTN_BOTTLES])
+
 def REQ_QUEST_INIT(master, task, game_state):
+
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, [0,0,0,0])
 
+    # check_puzzles
     # AC_ENABLE_INIT_LIGHTS(master, task, game_state)
-
+    dad_collected = buttons[DEVICES_TABLE.BTN_COLLECT_DAD_FISHING]
 
     return True
 
@@ -275,3 +293,71 @@ def REQ_CODE_LOCK(master, task, game_state):
 
     return code_buttons and not else_buttons
 
+def AC_LOCKER_OPEN(master, task, game_state):
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_CODE_LOCKS_LOCKER_LOCK] = 1
+
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+def AC_ADD_KUNSTKAMERA(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.ONCOMING_TO_KUNSTKAMERA)
+
+
+def REQ_ONCOMING_TO_KUNSTKAMERA(master, task, game_state):
+    buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
+
+    head_sensor = buttons[DEVICES_TABLE.BTN_HEAD_SENSOR]
+    return head_sensor
+
+def AC_OCTOPUS_SPIT_LIQUID(master, task, game_state):
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_1] = 1
+    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_2] = 1
+
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    # maybe here play sound or in external action
+
+def AC_PLAY_OCTOPUS_SPRUT(master, task, game_state):
+    pass
+
+
+def REQ_PLACE_THE_BOTTLES(master, task, game_state):
+    buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
+
+    bottles_placed = buttons[DEVICES_TABLE.BTN_BOTTLES]
+
+    return bottles_placed
+
+def AC_PUMPS_WATER(master, task, game_state):
+    # maybe pump used one of eyes leds
+    # sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    # sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_2] = 1
+    #
+    # master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    pass
+
+def AC_ADD_OPEN_BOX_IN_THE_PANTRY(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.OPEN_BOX_IN_THE_PANTRY)
+
+def REQ_OPEN_BOX_IN_THE_PANTRY(master, task, game_state):
+    adcs = master.getAdc(Devices.LOVECRAFT_DEVICE_NAME).get()
+    symbol_1 = adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_1]
+    symbol_2 = adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_2]
+    symbol_3 = adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_3]
+
+    if not master.debugMode():
+        print("OPEN_BOX_IN_THE_PANTRY:\n sym1: {}\tsym2: {}\tsym3: {}".format(
+            symbol_1, symbol_2, symbol_3))
+
+    symbol_ok_1 = True if symbol_1 == DEVICES_TABLE.SYMBOL_1_VALUE else False
+    symbol_ok_2 = True if symbol_2 == DEVICES_TABLE.SYMBOL_2_VALUE else False
+    symbol_ok_3 = True if symbol_3 == DEVICES_TABLE.SYMBOL_3_VALUE else False
+
+    return symbol_ok_1 and symbol_ok_2 and symbol_ok_3
+
+def AC_OPEN_BOX_IN_THE_PANTRY(master, task, game_state):
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_BOX_IN_THE_PANTRY] = 1
+
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
