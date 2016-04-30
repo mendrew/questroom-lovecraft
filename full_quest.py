@@ -15,20 +15,21 @@ class GLOBAL_VARIABLES:
     WALL_CLOCK_INIT_VALUE = 0
 
 def puzzle_status(puzzle_name, status):
-    PUZZLE_OK_MSG = "\tPUZZLE OK"
-    PUZZLE_ERROR_MSG = "\tPUZZLE ERROR"
+    PUZZLE_OK_MSG = "\tOK"
+    PUZZLE_ERROR_MSG = "\tERROR"
 
     if status:
-        print("{puzzle_name}: {msg}".format(puzzle_name, PUZZLE_OK_MSG))
+        print("{pname}: {msg}".format(pname=puzzle_name, msg=PUZZLE_OK_MSG))
     else:
-        print("{puzzle_name}: {msg}".format(puzzle_name, PUZZLE_ERROR_MSG))
+        print("{pname}: {msg}".format(pname=puzzle_name, msg=PUZZLE_ERROR_MSG))
 
 
 def check_puzzles(master):
     buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
 
     # check bottles
-    puzzle_status("BOTTLES", buttons[DEVICES_TABLE.BTN_BOTTLES])
+    print("Puzzle status:")
+    puzzle_status("BOTTLES", buttons[DEVICES_TABLE.BTN_BOTTLES] == 0)
 
 def REQ_QUEST_INIT(master, task, game_state):
 
@@ -36,7 +37,7 @@ def REQ_QUEST_INIT(master, task, game_state):
 
     # check_puzzles
     # AC_ENABLE_INIT_LIGHTS(master, task, game_state)
-    dad_collected = buttons[DEVICES_TABLE.BTN_COLLECT_DAD_FISHING]
+    check_puzzles(master)
 
     return True
 
@@ -138,6 +139,7 @@ def REQ_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
     return False
 
 def AC_TURN_LORDS_TABLE(master, task, game_state):
+    print("(ACTION:{task_id})We turn lords table".format(task_id=task.id))
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
     relays[DEVICES_TABLE.RELAY_GODS_TABLE_MOTOR] = 1
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
@@ -173,20 +175,25 @@ def REQ_PUT_FIRST_COIN(master, task, game_state):
 
 #!!!
 def AC_BAKE_FLARE_UP(master, task, game_state):
+    print("(ACTION:{task_id}) Bake flare up".format(task_id=task.id))
     pass
 
 def AC_PERFORMANCE_DOLL_GIFT(master, task, game_state):
+    print("(ACTION:{task_id}) Performance - doll gift".format(task_id=task.id))
     pass
 
 def AC_POLTERGEISTS(master, task, game_state):
+    print("(ACTION:{task_id}) Poltergeists".format(task_id=task.id))
     pass
 
 def AC_FALLING_BOOKS(master, task, game_state):
+    print("(ACTION:{task_id}) Falling books".format(task_id=task.id))
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
     relays[DEVICES_TABLE.RELAY_PUSH] = 1
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
 def AC_FALLING_FISHING_RODS(master, task, game_state):
+    print("(ACTION:{task_id}) Falling fishing rods".format(task_id=task.id))
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_FISHING_RODS_HOLDERS] = 1
 
@@ -202,9 +209,11 @@ def REQ_COLLECT_DAD_FISHING(master, task, game_state):
     return dad_collected
 
 def AC_RING_OUT_THE_CLOCK(master, task, game_state):
+    print("(ACTION:{task_id}) Ring out the clock".format(task_id=task.id))
     pass
 
 def AC_TABLE_CLOCK_CHANGE_TIME(master, task, game_state):
+    print("(ACTION:{task_id}) Table clock change time".format(task_id=task.id))
     # Time must set to random value
     TABLE_CLOCK_UP(master)
 
@@ -245,6 +254,7 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
     return False
 
 def AC_BOX_UNDER_CLOCK_FACE_OPEN(master, task, game_state):
+    print("(ACTION:{task_id}) Lock under clock face opened".format(task_id=task.id))
     # What box is opened ? On Device table looks like it not my job
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_PICTURE] = 1
@@ -261,6 +271,7 @@ def REQ_FAMILY_PICTURE_BARLEY_BREAK(master, task, game_state):
     return puzzle_collected
 
 def AC_SECOND_COIN_FALL(master, task, game_state):
+    print("(ACTION:{task_id}) Second coin fall from clock".format(task_id=task.id))
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_COIN] = 1
 
@@ -273,9 +284,12 @@ def REQ_PUT_SECOND_COIN(master, task, game_state):
     return check_coins_inserted(master, task, game_state, 2)
 
 def AC_PERFORMANCE_YOU_NOT_MY_FATHER(master, task, game_state):
+    print("(ACTION:{task_id}) Performance - you not my father".format(task_id=task.id))
     pass
 
 def AC_STRENGTHENING_OF_PRESENCE(master, task, game_state):
+    # усиление присутствия
+    print("(ACTION:{task_id}) Feel of strengthening presence".format(task_id=task.id))
     # LEDS and what else
     pass
 
@@ -283,6 +297,7 @@ def AC_ADD_CODE_LOCK(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.CODE_LOCK)
 
 def AC_SPIDERS_RUNNING(master, task, game_state):
+    print("(ACTION:{task_id}) Spiders running".format(task_id=task.id))
     pass
 
 def REQ_CODE_LOCK(master, task, game_state):
@@ -294,6 +309,7 @@ def REQ_CODE_LOCK(master, task, game_state):
     return code_buttons and not else_buttons
 
 def AC_LOCKER_OPEN(master, task, game_state):
+    print("(ACTION:{task_id}) Code lock opened".format(task_id=task.id))
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_CODE_LOCKS_LOCKER_LOCK] = 1
 
@@ -301,6 +317,7 @@ def AC_LOCKER_OPEN(master, task, game_state):
 
 def AC_ADD_KUNSTKAMERA(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.ONCOMING_TO_KUNSTKAMERA)
+    game_state.add_active_task_with_id(TASKS_IDS.PLACE_THE_BOTTLES)
 
 
 def REQ_ONCOMING_TO_KUNSTKAMERA(master, task, game_state):
@@ -310,6 +327,7 @@ def REQ_ONCOMING_TO_KUNSTKAMERA(master, task, game_state):
     return head_sensor
 
 def AC_OCTOPUS_SPIT_LIQUID(master, task, game_state):
+    print("(ACTION:{task_id}) Octopus spit liquid".format(task_id=task.id))
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_1] = 1
     sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_2] = 1
@@ -319,6 +337,7 @@ def AC_OCTOPUS_SPIT_LIQUID(master, task, game_state):
     # maybe here play sound or in external action
 
 def AC_PLAY_OCTOPUS_SPRUT(master, task, game_state):
+    print("(ACTION:{task_id}) Octopus sprut sound".format(task_id=task.id))
     pass
 
 
@@ -330,6 +349,7 @@ def REQ_PLACE_THE_BOTTLES(master, task, game_state):
     return bottles_placed
 
 def AC_PUMPS_WATER(master, task, game_state):
+    print("(ACTION:{task_id}) Pumps water | where pump?".format(task_id=task.id))
     # maybe pump used one of eyes leds
     # sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     # sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_2] = 1
@@ -357,7 +377,138 @@ def REQ_OPEN_BOX_IN_THE_PANTRY(master, task, game_state):
     return symbol_ok_1 and symbol_ok_2 and symbol_ok_3
 
 def AC_OPEN_BOX_IN_THE_PANTRY(master, task, game_state):
+    print("(ACTION:{task_id}) Box opend in the pantry | closet".format(task_id=task.id))
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_BOX_IN_THE_PANTRY] = 1
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+def AC_ADD_CLOSE_THE_DOOR(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.CLOSE_THE_DOOR)
+
+def REQ_CLOSE_THE_DOOR(master, task, game_state):
+    TIME_TO_CLOSE_THE_DOOR = 15
+    # initialization
+    if task.stack == []:
+        # set motor to start close the door
+        print("(REQ:{task_id}) Try to close door in closet | wait {time} sec.".format(task_id=task.id, time=TIME_TO_CLOSE_THE_DOOR))
+        relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+        relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = 1
+        master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
+
+
+        close_start_time = time.time()
+        task.stack.append(close_start_time)
+
+    close_start_time = task.stack.pop()
+    passed_time = time.time() - close_start_time
+
+    if passed_time >= TIME_TO_CLOSE_THE_DOOR:
+        # check door lock
+        # if players start play
+        if False:
+            return True
+        else:
+            # try to close again
+            # we can't close door again just try to send 1
+            # because if door opened without us control, when we will still thinking
+            # that door is closed already.
+            # To rewrite our data without spend time
+            # to send signal for open, sleep and send signal for close
+            # we just save() new value (0) in data and now we will think, what door is open
+            print("(REQ:{task_id}) Try to close door in closet again".format(task_id=task.id))
+            relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME)
+            relays_value = relays.get()
+            relays_value[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = 0
+            relays.set(relays_value)
+            # save value 0 in device to send 1 again
+            relays.save()
+            # set door to close again
+            relays_value[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = 1
+            relays.set(relays_value)
+
+            close_start_time = time.time()
+
+    task.stack.append(close_start_time)
+    return False
+
+
+def AC_OPEN_BOX_WITH_THIRD_COIN(master, task, game_state):
+    print("(ACTION:{task_id}) Open box with third coin".format(task_id=task.id))
+    pass
+
+def AC_ADD_PUT_THIRD_COIN(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PUT_THIRD_COIN)
+
+def REQ_PUT_THIRD_COIN(master, task, game_state):
+    return check_coins_inserted(master, task, game_state, 3)
+
+def AC_PARANORMAL_ACTIVITY(master, task, game_state):
+    print("(ACTION:{task_id}) Paranormal activity".format(task_id=task.id))
+    pass
+
+def AC_PERFORMANCE_GIRL_GONE(master, task, game_state):
+    print("(ACTION:{task_id}) Performance - girl gone".format(task_id=task.id))
+    pass
+
+def AC_ADD_ANOMALOUS_PHENOMENA(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.ANOMALOUS_PHENOMENA_LEDS)
+    game_state.add_active_task_with_id(TASKS_IDS.ANOMALOUS_PHENOMENA_ENTER_NUMBERS)
+
+def REQ_ANOMALOUS_PHENOMENA_LEDS(master, task, game_state):
+    return True
+
+def REQ_ANOMALOUS_PHENOMENA_ENTER_NUMBERS(master, task, game_state):
+    adcs = master.getAdc(Devices.LOVECRAFT_DEVICE_NAME).get()
+    number_1 = adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_1]
+    number_2 = adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_2]
+    number_3 = adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_3]
+
+    if not master.debugMode():
+        print("ANOMALOUS_PHENOMENA_ENTER_NUMBERS:\n number1: {}\tnumber2: {}\tnumber3: {}".format(
+            number_1, number_2, number_3))
+
+    number_ok_1 = True if number_1 == DEVICES_TABLE.SYMBOL_1_VALUE else False
+    number_ok_2 = True if number_2 == DEVICES_TABLE.SYMBOL_2_VALUE else False
+    number_ok_3 = True if number_3 == DEVICES_TABLE.SYMBOL_3_VALUE else False
+
+    return number_ok_1 and number_ok_2 and number_ok_3
+
+
+def AC_OPEN_CLOSET_BOX_WITH_KNIFE(master, task, game_state):
+    print("(ACTION:{task_id}) Closet box with knife opened".format(task_id=task.id))
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_BOX_IN_CLOSET_WITH_KNIFE] = 1
+
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+def AC_ADD_MARINE_TROPHIES(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.MARINE_TROPHIES)
+
+def REQ_MARINE_TROPHIES(master, task, game_state):
+    pass
+
+def AC_OPEN_DOOR_WITH_SKELET(master, task, game_state):
+    print("(ACTION:{task_id}) Open door with skelet".format(task_id=task.id))
+    relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = 1
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
+
+
+def AC_ADD_PUT_FOURTH_COIN(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PUT_FOURTH_COIN)
+
+def REQ_PUT_FOURTH_COIN(master, task, game_state):
+    return check_coins_inserted(master, task, game_state, 4)
+
+def AC_PERFORMANCE_CULMINATION(master, task, game_state):
+    print("(ACTION:{task_id}) Performance culmination".format(task_id=task.id))
+
+def AC_ADD_THE_FINAL(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.THE_FINAL)
+
+def REQ_THE_FINAL(master, task, game_state):
+    pass
+
+def AC_THE_FINAL(master, task, game_state):
+    print("(ACTION:{task_id}) The final".format(task_id=task.id))
