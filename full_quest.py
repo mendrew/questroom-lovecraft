@@ -31,6 +31,12 @@ def check_puzzles(master):
     print("Puzzle status:")
     puzzle_status("BOTTLES", buttons[DEVICES_TABLE.BTN_BOTTLES] == 0)
 
+    knife_slots = []
+    for slot_index in range(len(DEVICES_TABLE.BTN_KNIFE_SLOTS)):
+        knife_slots.append(
+                buttons[ DEVICES_TABLE.BTN_KNIFE_SLOTS[slot_index] ])
+    puzzle_status("KNIFE_SLOTS: {}".format(knife_slots), knife_slots == [0]*5)
+
 def REQ_QUEST_INIT(master, task, game_state):
 
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, [0,0,0,0])
@@ -486,7 +492,23 @@ def AC_ADD_MARINE_TROPHIES(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.MARINE_TROPHIES)
 
 def REQ_MARINE_TROPHIES(master, task, game_state):
-    pass
+    if task.stack == []:
+        # init eyes
+        old_knife_slots = [1] * len(DEVICES_TABLE.BTN_KNIFE_SLOTS)
+        task.stack.append(old_knife_slots)
+    old_knife_slots = task.stack.pop()
+    # get knife slots status
+    buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
+    knife_slots = []
+    for slot_index in range(len(DEVICES_TABLE.BTN_KNIFE_SLOTS)):
+        knife_slots.append(
+                buttons[ DEVICES_TABLE.BTN_KNIFE_SLOTS[slot_index] ])
+
+    if knife_slots != old_knife_slots:
+        print("(REQ:{task_id}) Knife slots changed: {slots}".format(task_id=task.id, slots=knife_slots))
+        old_knife_slots = knife_slots
+
+    task.stack.append(old_knife_slots)
 
 def AC_OPEN_DOOR_WITH_SKELET(master, task, game_state):
     print("(ACTION:{task_id}) Open door with skelet".format(task_id=task.id))
@@ -512,3 +534,11 @@ def REQ_THE_FINAL(master, task, game_state):
 
 def AC_THE_FINAL(master, task, game_state):
     print("(ACTION:{task_id}) The final".format(task_id=task.id))
+
+def AC_OPEN_PICTURE_BOX(master, task, game_state):
+    print("(ACTION:{task_id}) Open picture box".format(task_id=task.id))
+
+    sl_control = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_control[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
+

@@ -52,6 +52,8 @@ class DEVICES_TABLE:
 
     BTN_BOTTLES = 0
 
+    BTN_KNIFE_SLOTS = [11, 10, 12, 13, 14]
+
 
     # SimpleLeds
     SL_TABLE_CLOCK_ZERO_CMD = 0
@@ -75,6 +77,8 @@ class DEVICES_TABLE:
     # What motor for?
     # SL_CLOSET_BOX_LOCK = 14
     SL_BOX_IN_CLOSET_WITH_KNIFE = 14
+
+    SL_BOX_UNDER_PICTURE = 5
 
     # Encoders
     WALL_CLOCK = 2
