@@ -46,7 +46,9 @@
       success_actions:
         # печь разгорится
         [AC_BAKE_FLARE_UP, AC_PERFORMANCE_DOLL_GIFT, AC_POLTERGEISTS,
-        AC_FALLING_BOOKS, AC_ADD_COLLECT_DAD_FISHING]
+        AC_FALLING_BOOKS,
+        AC_ADD_COLLECT_DAD_FISHING,
+        AC_FALLING_FISHING_RODS]
       failure_requirements:
         []
       failure_actions:
@@ -99,7 +101,8 @@
          AC_PERFORMANCE_YOU_NOT_MY_FATHER,
          AC_STRENGTHENING_OF_PRESENCE,
          AC_SPIDERS_RUNNING,
-         AC_ADD_CODE_LOCK
+         AC_ADD_CODE_LOCK,
+         AC_SCARE_IN_LOCKER
          ]
       failure_requirements:
         []
@@ -112,7 +115,7 @@
       success_requirements:
         [REQ_CODE_LOCK]
       success_actions:
-        [AC_ADD_KUNSTKAMERA]
+        [AC_LOCKER_OPEN, AC_ADD_KUNSTKAMERA]
       failure_requirements:
         []
       failure_actions:

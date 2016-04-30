@@ -54,13 +54,14 @@ class QuestRoom(threading.Thread):
             if master.debugMode():
                 lovecraft_comport = Devices.LOVECRAFT_DEVICE_COM_PORT_WIN
             else:
+                lovecraft_comport = "/dev/ttyUSB2"
                 bashCommand = Global.GET_TTY_USB_SCRIPT + Devices.LOVECRAFT_USB_SERIAL_NUMBER
                 process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 
                 lovecraft_comport = process.communicate()[0]
             print("Use COM-port: {}".format(lovecraft_comport))
 
-        self.lovecraft_device = master.addSlave(Devices.LOVECRAFT_DEVICE_NAME, lovecraft_comport, 1, boudrate=5)
+        self.lovecraft_device = master.addSlave(Devices.LOVECRAFT_DEVICE_NAME, lovecraft_comport, 1, boudrate=0)
 
         master.start()
 

@@ -38,8 +38,29 @@ def check_puzzles(master):
     puzzle_status("KNIFE_SLOTS: {}".format(knife_slots), knife_slots == [0]*5)
 
 def REQ_QUEST_INIT(master, task, game_state):
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_COIN] = 1
+    sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_PICTURE] = 1
+    sl_controlls[DEVICES_TABLE.SL_CODE_LOCKS_LOCKER_LOCK] = 1
+    sl_controlls[DEVICES_TABLE.SL_BOX_IN_CLOSET_WITH_KNIFE] = 1
+    sl_controlls[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = 1
+    for scare_index in DEVICES_TABLE.SL_SCARE_IN_LOCKER:
+        sl_controlls[scare_index] = 0
 
-    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, [0,0,0,0])
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    for smart_index in range(0,20):
+        smart_leds.setOneLed(smart_index, [0xfff, 0x0, 0x0])
+
+    relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+    relays[DEVICES_TABLE.RELAY_GODS_TABLE_MOTOR] = 0
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = 0
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = 1
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
+    time.sleep(10)
+    relays[DEVICES_TABLE.RELAY_GODS_TABLE_MOTOR] = 1
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
     # check_puzzles
     # AC_ENABLE_INIT_LIGHTS(master, task, game_state)
@@ -115,13 +136,72 @@ def REQ_BACKGROUND_TABLE_CLOCK(master, task, game_state):
     stack.append(clock_last_change_time)
     stack.append(start_time)
 
+def REQ_BACKGROUND_PICTURE_MOVES(master, task, game_state):
+    # INITIALIZATION_SET_TIME = 30
+    # INITIALIZATION_UNSET_TIME = 20 + INITIALIZATION_SET_TIME
+    # PICTURE_CHANGE_PERIOD = 15 * 60
+    #
+    # debug values
+    INITIALIZATION_SET_TIME = 0
+    INITIALIZATION_UNSET_TIME = 2 + INITIALIZATION_SET_TIME
+    CLOCK_CHANGE_PERIOD = 1 * 2
+    #
+    # clock_ctrl = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    #
+    stack = task.stack
+    if stack == []:
+        start_time = time.time()
+        clock_last_change_time = start_time + INITIALIZATION_UNSET_TIME + 1
+    else:
+        start_time = stack.pop()
+        clock_last_change_time = stack.pop()
+
+
+    time_passed = time.time() - start_time
+    if time_passed < INITIALIZATION_SET_TIME:
+        pass
+    #     # Signals ZERO and NEXT CMD to SET
+    #     clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_ZERO_CMD] = 1
+    #     clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 1
+    #     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, clock_ctrl)
+    #
+    #     stack.append(clock_last_change_time)
+    #     stack.append(start_time)
+    #     return
+    elif time_passed < INITIALIZATION_UNSET_TIME:
+        pass
+    #     # Clear ZERO CMD around 20 sec
+    #     clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_ZERO_CMD] = 0
+    #     clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 1
+    #     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, clock_ctrl)
+    #
+    #     stack.append(clock_last_change_time)
+    #     stack.append(start_time)
+    #     return
+    #
+    # change_clock_time_passed = time.time() - clock_last_change_time
+    #
+    if change_clock_time_passed > PICTURE_CHANGE_PERIOD:
+        pass
+    #     TABLE_CLOCK_UP(master)
+    #
+        clock_last_change_time = time.time()
+        print("(REQ:{task_id}) Change picture".format(task_id=task.id))
+    #
+    stack.append(clock_last_change_time)
+    stack.append(start_time)
+
+
 def AC_REMEMBER_WALL_CLOCK_INIT_VALUE(master, task, game_state):
     encoders = master.getEncoders(Devices.LOVECRAFT_DEVICE_NAME).get()
 
     wall_clock_init_value = encoders[DEVICES_TABLE.WALL_CLOCK]
-    GLOBAL_VARIABLES.WALL_CLOCK_INIT_VALUE = wall_clock_init_value
 
     print("Wall Clock Init value: {}".format(wall_clock_init_value))
+    wall_clock_init_value = wall_clock_init_value + 15
+    print("Wall Clock Init value + 15: {}".format(wall_clock_init_value))
+
+    GLOBAL_VARIABLES.WALL_CLOCK_INIT_VALUE = wall_clock_init_value
 
 def AC_ADD_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PUT_STATUE_ON_LORDS_TABLE)
@@ -133,8 +213,10 @@ def REQ_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
     lords_table_value = master.getAdc(
             Devices.LOVECRAFT_DEVICE_NAME).get()[DEVICES_TABLE.ADC_LORDS_TABLE_STATUE]
     if PUT_RANGE[0] <= lords_table_value <= PUT_RANGE[1]:
+        print("YES: REQ_PUT_STATUE_ON_LORDS_TABLE value: {}".format(lords_table_value))
         return True
     elif NONE_RANGE[0] <= lords_table_value <= NONE_RANGE[1]:
+        print("NONE: REQ_PUT_STATUE_ON_LORDS_TABLE value: {}".format(lords_table_value))
         # it's ok. statue just absent
         pass
     else:
@@ -147,7 +229,7 @@ def REQ_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
 def AC_TURN_LORDS_TABLE(master, task, game_state):
     print("(ACTION:{task_id})We turn lords table".format(task_id=task.id))
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
-    relays[DEVICES_TABLE.RELAY_GODS_TABLE_MOTOR] = 1
+    relays[DEVICES_TABLE.RELAY_GODS_TABLE_MOTOR] = 0
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
 def AC_ADD_PUT_FIRST_COIN(master, task, game_state):
@@ -163,6 +245,7 @@ def check_coins_inserted(master, task, game_state, nubmer_of_coins):
 
     inserted_coins_number = 0
     for index, coin_value in enumerate(adc_coins_values):
+        print("REQ: check_coins_inserted coin_id {} value: {}".format(index, coin_value))
         if DEVICES_TABLE.COIN_INSERTED_RANGE[0] <= coin_value <= DEVICES_TABLE.COIN_INSERTED_RANGE[1]:
             inserted_coins_number = inserted_coins_number + 1
         elif DEVICES_TABLE.COIN_NONE_RANGE[0] <= coin_value <= DEVICES_TABLE.COIN_NONE_RANGE[1]:
@@ -177,6 +260,7 @@ def check_coins_inserted(master, task, game_state, nubmer_of_coins):
 
 
 def REQ_PUT_FIRST_COIN(master, task, game_state):
+    time.sleep(5)
     return check_coins_inserted(master, task, game_state, 1)
 
 #!!!
@@ -196,6 +280,9 @@ def AC_FALLING_BOOKS(master, task, game_state):
     print("(ACTION:{task_id}) Falling books".format(task_id=task.id))
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
     relays[DEVICES_TABLE.RELAY_PUSH] = 1
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
+    time.sleep(1.5)
+    relays[DEVICES_TABLE.RELAY_PUSH] = 0
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
 def AC_FALLING_FISHING_RODS(master, task, game_state):
@@ -248,9 +335,13 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
         print("REQ_CLOCK_SYNCHRONIZATION: late value: {}, new_value: {}".format(last_value, wall_clock_value))
         print("REQ_CLOCK_SYNCHRONIZATION: list {}".format(wall_clock_values_list))
+        print("REQ_CLOCK_SYNCHRONIZATION: table value: {}, new_value: {}".format(GLOBAL_VARIABLES.TABLE_CLOCK_VALUE, wall_clock_value))
 
         # !!!
         # convert value to time and compare with table clock
+
+    if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE ==  wall_clock_value:
+        return True
 
     task.stack.append(wall_clock_values_list)
     # save time
@@ -263,7 +354,7 @@ def AC_BOX_UNDER_CLOCK_FACE_OPEN(master, task, game_state):
     print("(ACTION:{task_id}) Lock under clock face opened".format(task_id=task.id))
     # What box is opened ? On Device table looks like it not my job
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_PICTURE] = 1
+    sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_PICTURE] = 0
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
@@ -279,7 +370,7 @@ def REQ_FAMILY_PICTURE_BARLEY_BREAK(master, task, game_state):
 def AC_SECOND_COIN_FALL(master, task, game_state):
     print("(ACTION:{task_id}) Second coin fall from clock".format(task_id=task.id))
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_COIN] = 1
+    sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_COIN] = 0
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
@@ -306,6 +397,22 @@ def AC_SPIDERS_RUNNING(master, task, game_state):
     print("(ACTION:{task_id}) Spiders running".format(task_id=task.id))
     pass
 
+def AC_SCARE_IN_LOCKER(master, task, game_state):
+    print("(ACTION:{task_id}) Scare in LOCKER".format(task_id=task.id))
+
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    for scare_index in DEVICES_TABLE.SL_SCARE_IN_LOCKER:
+        sl_controlls[scare_index] = 1
+
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    time.sleep(2)
+
+    for scare_index in DEVICES_TABLE.SL_SCARE_IN_LOCKER:
+        sl_controlls[scare_index] = 0
+
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
 def REQ_CODE_LOCK(master, task, game_state):
     buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
 
@@ -317,7 +424,7 @@ def REQ_CODE_LOCK(master, task, game_state):
 def AC_LOCKER_OPEN(master, task, game_state):
     print("(ACTION:{task_id}) Code lock opened".format(task_id=task.id))
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_CODE_LOCKS_LOCKER_LOCK] = 1
+    sl_controlls[DEVICES_TABLE.SL_CODE_LOCKS_LOCKER_LOCK] = 0
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
@@ -339,7 +446,11 @@ def AC_OCTOPUS_SPIT_LIQUID(master, task, game_state):
     sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_2] = 1
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    time.sleep(5)
+    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_1] = 0
+    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_2] = 0
 
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
     # maybe here play sound or in external action
 
 def AC_PLAY_OCTOPUS_SPRUT(master, task, game_state):
@@ -412,7 +523,8 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
     if passed_time >= TIME_TO_CLOSE_THE_DOOR:
         # check door lock
         # if players start play
-        if False:
+        buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
+        if not buttons[DEVICES_TABLE.BTN_DOOR_OPEN]:
             return True
         else:
             # try to close again
@@ -426,6 +538,10 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
             relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME)
             relays_value = relays.get()
             relays_value[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = 0
+            master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays_value)
+            time.sleep(20)
+            relays_value[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = 1
+            master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays_value)
             relays.set(relays_value)
             # save value 0 in device to send 1 again
             relays.save()
@@ -484,7 +600,7 @@ def REQ_ANOMALOUS_PHENOMENA_ENTER_NUMBERS(master, task, game_state):
 def AC_OPEN_CLOSET_BOX_WITH_KNIFE(master, task, game_state):
     print("(ACTION:{task_id}) Closet box with knife opened".format(task_id=task.id))
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_BOX_IN_CLOSET_WITH_KNIFE] = 1
+    sl_controlls[DEVICES_TABLE.SL_BOX_IN_CLOSET_WITH_KNIFE] = 0
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
@@ -539,6 +655,6 @@ def AC_OPEN_PICTURE_BOX(master, task, game_state):
     print("(ACTION:{task_id}) Open picture box".format(task_id=task.id))
 
     sl_control = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_control[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = 1
+    sl_control[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
 

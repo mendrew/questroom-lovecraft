@@ -3,24 +3,21 @@
 
 class Global:
     SCENARY_FILE = "./full_quest.yml"
-    GET_TTY_USB_SCRIPT = "./get_ttyUSB.sh"
+    GET_TTY_USB_SCRIPT = "./get_ttyUSB.sh "
     INIT_TASK_ID = 0
 
 class Devices:
     DEVICE = "DEVICE"
     LOVECRAFT_DEVICE_NAME = "LOVECRAFT_DEVICE_NAME"
-    LOVECRAFT_USB_SERIAL_NUMBER = "A4033KK5"
+    LOVECRAFT_USB_SERIAL_NUMBER = "AL0079C6"
     LOVECRAFT_DEVICE_COM_PORT_WIN = "COM3"
 
-class Buttons:
-    # CASKET_BOX =  # "Ящик под картиной?"
-    pass
-
 class DEVICES_TABLE:
+
     #ADC
     ADC_LORDS_TABLE_STATUE = 0
-    LORDS_TABLE_STATUE_RANGE = (115, 90)
-    LORDS_TABLE_STATUE_NONE_RANGE = (116, 150)
+    LORDS_TABLE_STATUE_RANGE = (90, 109)
+    LORDS_TABLE_STATUE_NONE_RANGE = (110, 150)
 
     BOX_LOCK_SYMBOL_1 = 6
     BOX_LOCK_SYMBOL_2 = 5
@@ -33,8 +30,8 @@ class DEVICES_TABLE:
     COIN_2 = 2
     COIN_3 = 3
     COIN_4 = 4
-    COIN_INSERTED_RANGE = (33, 35)
-    COIN_NONE_RANGE = (36, 100)
+    COIN_INSERTED_RANGE = (30, 36)
+    COIN_NONE_RANGE = (37, 130)
 
     #RELAY
     RELAY_CLOSET_DOOR_1 = 0
@@ -54,19 +51,23 @@ class DEVICES_TABLE:
 
     BTN_KNIFE_SLOTS = [11, 10, 12, 13, 14]
 
+    BTN_DOOR_OPEN = 15
+
 
     # SimpleLeds
     SL_TABLE_CLOCK_ZERO_CMD = 0
     SL_TABLE_CLOCK_NEXT_TIME_CMD = 1
 
-    SL_FISHING_RODS_HOLDERS = 13
+    SL_FISHING_RODS_HOLDERS = 14 # change from 13
 
     SL_WALL_CLOCK_LOCK_WITH_PICTURE = 11 # LOCK - 1
     SL_WALL_CLOCK_LOCK_WITH_COIN = 10 # LOCK - 2
 
+    SL_SCARE_IN_LOCKER = [15, 16, 17]
+
     SL_CODE_LOCKS_LOCKER_LOCK = 9
 
-    SL_DOLL_EYES_PUMP_1 = 3
+    SL_DOLL_EYES_PUMP_1 = 5
     # may be it aquarium pump
     SL_DOLL_EYES_PUMP_2 = 4
 
@@ -76,12 +77,29 @@ class DEVICES_TABLE:
     # SL_CLOSET_DOOR_LOCK = 14
     # What motor for?
     # SL_CLOSET_BOX_LOCK = 14
-    SL_BOX_IN_CLOSET_WITH_KNIFE = 14
+    SL_BOX_IN_CLOSET_WITH_KNIFE = 13 # change from 14
 
-    SL_BOX_UNDER_PICTURE = 5
+    SL_BOX_UNDER_PICTURE = 3
+
+    # FISH EYES
+    
+
 
     # Encoders
     WALL_CLOCK = 2
+
+    # Smart LEDs
+    SML_FISHING_ROD = 6
+    SML_STOREROOM = 7
+    SML_STOREROOM_SECRET = 5
+    SLM_DOLL = 4
+    # ???
+    SLM_MATRIX_SOB = 0
+    SLM_HALL_1_2_3_4 = 8
+    SLM_HALL_5_6_7_8 = 9
+    SLM_WINDOWS = 16
+    SLM_WINDOWS_DOUBLE_HREN = 17
+
 
 class TASKS_IDS:
     PUT_STATUE_ON_LORDS_TABLE = 1
