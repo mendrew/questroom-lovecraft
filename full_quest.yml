@@ -15,6 +15,32 @@
         []
       title: 'Инициализация'
 
+    # -
+    #   id: 101
+    #   success_requirements:
+    #     [REQ_INIT_GODS_TABLE]
+    #   success_actions:
+    #     []
+    #   failure_requirements:
+    #     []
+    #   failure_actions:
+    #     []
+    #   title: 'Инициализация алтаря'
+    #
+    # -
+    #   id: 100
+    #   success_requirements:
+    #     [REQ_START_QUEST]
+    #   success_actions:
+    #     [AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
+    #       AC_REMEMBER_WALL_CLOCK_INIT_VALUE,
+    #       AC_ADD_PUT_STATUE_ON_LORDS_TABLE]
+    #   failure_requirements:
+    #     []
+    #   failure_actions:
+    #     []
+    #   title: 'Старт загадок'
+
     -
       id: 4
       success_requirements:
