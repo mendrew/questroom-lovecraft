@@ -63,9 +63,9 @@ def REQ_QUEST_INIT(master, task, game_state):
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_COIN] = DEVICES_TABLE.CLOSE
     sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_PICTURE] = DEVICES_TABLE.CLOSE
-    sl_controlls[DEVICES_TABLE.SL_CODE_LOCKS_LOCKER_LOCK] = DEVICES_TABLE.CLOSE
-    sl_controlls[DEVICES_TABLE.SL_BOX_IN_CLOSET_WITH_KNIFE] = DEVICES_TABLE.CLOSE
-    sl_controlls[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = DEVICES_TABLE.CLOSE
+    # sl_controlls[DEVICES_TABLE.SL_CODE_LOCKS_LOCKER_LOCK] = DEVICES_TABLE.CLOSE
+    # sl_controlls[DEVICES_TABLE.SL_BOX_IN_CLOSET_WITH_KNIFE] = DEVICES_TABLE.CLOSE
+    # sl_controlls[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = DEVICES_TABLE.CLOSE
     for scare_index in DEVICES_TABLE.SL_SCARE_IN_LOCKER:
         sl_controlls[scare_index] = 0
 
@@ -74,13 +74,15 @@ def REQ_QUEST_INIT(master, task, game_state):
     # init colors
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     for smart_index in range(0,20):
-        smart_leds.setOneLed(smart_index, [0xfff, 0x0, 0x0])
+        smart_leds.setOneLed(smart_index, [0x0, 0x0, 0x0])
+    # smart_leds.setOneLed(17, [0x000, 0x0, 0x0])
+    # smart_leds.setOneLed(18, [0x000, 0x0, 0x0])
 
     # init doors
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
-    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.OPEN
-    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = DEVICES_TABLE.CLOSE
-    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
+    # relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.OPEN
+    # relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = DEVICES_TABLE.CLOSE
+    # master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
     # init GODS table
     relays[DEVICES_TABLE.RELAY_GODS_TABLE_MOTOR] = DEVICES_TABLE.OPEN
@@ -164,7 +166,7 @@ def AC_ADD_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
 
 def REQ_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
     # time to set 12 o'clock
-    INITIALIZATION_SET_12_TIME = 60
+    INITIALIZATION_SET_12_TIME = 20
 
     stack = task.stack
     if stack == []:
@@ -357,7 +359,7 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
     last_time = task.stack.pop()
     time_passed = time.time() - last_time
-    if time_passed < 1:
+    if time_passed < 0.1:
         task.stack.append(last_time)
         return
 
@@ -376,18 +378,20 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
     # choose clock direction
     delta_time = GLOBAL_VARIABLES.WALL_CLOCK_REAL_12 - wall_clock_value
     if wall_clock_last_value > 1000 and wall_clock_value < 100:
-        clockwise_direction = True
-    elif wall_clock_last_value < 100 and wall_clock_value > 1000:
         clockwise_direction = False
-    elif delta_time < 0:
+    elif wall_clock_last_value < 100 and wall_clock_value > 1000:
+        clockwise_direction = True
+    elif wall_clock_value > wall_clock_last_value:
         clockwise_direction = True
     else:
         clockwise_direction = False
 
+    delta_time = abs(delta_time)
+
     if clockwise_direction:
         wall_clock_time = 0 + delta_time/2 - int((delta_time/2)/12) * 12
     else:
-        wall_clock_time = 12 - delta_time/2 - int((delta_time/2)/12) * 12
+        wall_clock_time = 12 - (delta_time/2 - int((delta_time/2)/12) * 12 )
 
     if wall_clock_time == 12:
         wall_clock_time = 0
@@ -396,13 +400,13 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
     wall_clock_values_list.append(wall_clock_value)
 
-    print("REQ_CLOCK_SYNCHRONIZATION: wall late value: {}, new_value: {}".format(wall_clock_last_value, wall_clock_value))
+    print("REQ_CLOCK_SYNCHRONIZATION: wall late value: {}, new_value: {}  init_real {}".format(wall_clock_last_value, wall_clock_value, GLOBAL_VARIABLES.WALL_CLOCK_REAL_12))
     print("REQ_CLOCK_SYNCHRONIZATION: wall list {}".format(wall_clock_values_list))
-    print("REQ_CLOCK_SYNCHRONIZATION: table value: {}, wall value: {}".format(GLOBAL_VARIABLES.TABLE_CLOCK_VALUE, wall_clock_time))
+    print("REQ_CLOCK_SYNCHRONIZATION: table time: {}, wall time: {}".format(GLOBAL_VARIABLES.TABLE_CLOCK_VALUE, wall_clock_time))
 
-    if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE ==  wall_clock_time:
-        print("(REQ:{task_id}) Clocks sync!".format(task_id=task.id))
-        return True
+    # if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE ==  wall_clock_time:
+    #     print("(REQ:{task_id}) Clocks sync!".format(task_id=task.id))
+    #     return True
 
     task.stack.append(wall_clock_values_list)
     # save time
@@ -628,12 +632,50 @@ def AC_OPEN_CLOSET_BOX_WITH_KNIFE(master, task, game_state):
 def AC_ADD_MARINE_TROPHIES(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.MARINE_TROPHIES)
 
+class Colors:
+    WHITE = [0xff, 0xff, 0xff]
+    RED = [0xff, 0, 0]
+    LIGHT_RED = [0xff, 33, 33]
+    GREEN = [0, 0xff, 0]
+    LIGHT_GREEN = [33, 0xff, 33]
+    BLUE = [0, 0, 0xff]
+    NONE = [0, 0, 0]
+
+class pColors:
+    RED = Colors.RED
+    GREEN = Colors.GREEN
+    BLUE = Colors.BLUE
+
+def toggleEyeColor(color):
+    if pColors.GREEN == color:
+        color = pColors.BLUE
+    elif pColors.BLUE == color:
+        color = pColors.RED
+    else:
+        color = pColors.GREEN
+    return color
+
+# initialization value
 def REQ_MARINE_TROPHIES(master, task, game_state):
+    WINNER_EYES_CLOLORS = [pColors.BLUE] * 5
     if task.stack == []:
+
+        knife_slots = [1] * len(DEVICES_TABLE.BTN_KNIFE_SLOTS)
+
         # init eyes
-        old_knife_slots = [1] * len(DEVICES_TABLE.BTN_KNIFE_SLOTS)
-        task.stack.append(old_knife_slots)
+        fishes_eyes = [pColors.RED] * 5
+
+        smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+        for index in range(len(knife_slots)):
+            smart_leds.setOneLed(DEVICES_TABLE.SML_FISH_EYES[index], fishes_eyes[index])
+
+        task.stack.append(knife_slots)
+        task.stack.append(fishes_eyes)
+
+
+    fishes_eyes = task.stack.pop()
     old_knife_slots = task.stack.pop()
+
     # get knife slots status
     buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
     knife_slots = []
@@ -642,10 +684,33 @@ def REQ_MARINE_TROPHIES(master, task, game_state):
                 buttons[ DEVICES_TABLE.BTN_KNIFE_SLOTS[slot_index] ])
 
     if knife_slots != old_knife_slots:
+        for index in range(len(knife_slots)):
+            if (knife_slots[index] != old_knife_slots[index]) and (knife_slots[index] == 0):
+                fishes_eyes[index] = toggleEyeColor(fishes_eyes[index])
+                if index == 0:
+                    fishes_eyes[index + 1] = toggleEyeColor(fishes_eyes[index + 1])
+                elif index == len(fishes_eyes) - 1:
+                    fishes_eyes[index - 1] = toggleEyeColor(fishes_eyes[index - 1])
+                else:
+                    fishes_eyes[index - 1] = toggleEyeColor(fishes_eyes[index - 1])
+                    fishes_eyes[index + 1] = toggleEyeColor(fishes_eyes[index + 1])
+
+        smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+        for index in range(len(knife_slots)):
+            smart_leds.setOneLed(DEVICES_TABLE.SML_FISH_EYES[index], fishes_eyes[index])
+
+    if knife_slots != old_knife_slots:
         print("(REQ:{task_id}) Knife slots changed: {slots}".format(task_id=task.id, slots=knife_slots))
+        print("(REQ:{task_id}) Knife slots changed: colors {eyes}".format(task_id=task.id, eyes=fishes_eyes))
         old_knife_slots = knife_slots
 
+    if WINNER_EYES_CLOLORS == fishes_eyes:
+        print("(REQ:{task_id}) Fishes eyes done!!!!: {slots}".format(task_id=task.id, slots=knife_slots))
+        return True
+
+
     task.stack.append(old_knife_slots)
+    task.stack.append(fishes_eyes)
 
 def AC_OPEN_CLOSET_DOOR(master, task, game_state):
     print("(ACTION:{task_id}) Open closet".format(task_id=task.id))

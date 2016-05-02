@@ -67,6 +67,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         if "door" == message['message']:
             door_id = int(message['door_id'])
             door_state = message['state']
+            print("Set door state {}   {}".format(door_id, door_state))
             quest_room.set_door_state(door_id, door_state)
 
         if "box" == message['message']:
@@ -86,7 +87,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             room_led = message['room_led_id']
             rgb_color_str = message['color']
             rgb_color = [int(char_h + char_l, 16) for char_h, char_l in zip(rgb_color_str[0::2], rgb_color_str[1::2])]
-            # print("We receive set_room_light with room_led_id: {} and color {} = {}".format(room_led, rgb_color_str, rgb_color))
+            print("We receive set_room_light with room_led_id: {} and color {} = {}".format(room_led, rgb_color_str, rgb_color))
 
             quest_room.set_room_light(room_led, rgb_color)
 

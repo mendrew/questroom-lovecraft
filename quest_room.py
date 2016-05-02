@@ -7,6 +7,8 @@ from quest_core import GameState
 
 from settings import Devices
 from settings import Global
+from settings import DEVICES_TABLE
+
 
 from deviceMaster.devicemaster import DeviceMaster
 
@@ -74,9 +76,10 @@ class QuestRoom(threading.Thread):
 
 
     def set_door_state(self, door_id, door_state):
-        relays = master.getRelays(self.captainsBridge_2).get()
+        relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+        print("Set door state in set_door_state in quest_room {}   {}".format(door_id, door_state))
         relays[door_id] = door_state
-        master.setRelays(self.captainsBridge_2, relays)
+        master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
     def set_box_state(self, box_id, box_state):
         smartLeds = master.getSmartLeds(self.hallwayPuzzles)
@@ -142,25 +145,25 @@ class QuestRoom(threading.Thread):
     def set_room_light(self, room_led_id, in_color):
         # convert color range from 255 to 4096
         color = [value * 16 for value in in_color]
+        rooms_colors = [ color[2], color[1], color[0] ]
         # print("Color {} in new range {}".format(in_color, color))
+        smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
 
-        if room_led_id == "entrance_top":
-            setRoomLight(master, ROOM_LEDS.ENTRANCE_TOP, color)
+        if room_led_id == "storeroom":
+            smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, rooms_colors)
 
-        elif room_led_id == "entrance_bottom":
-            setRoomLight(master, ROOM_LEDS.ENTRANCE_BOTTOM, color)
+        elif room_led_id == "secret_storeroom":
+            smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, rooms_colors)
 
-        elif room_led_id == "main_room_top":
-            setRoomLight(master, ROOM_LEDS.MAIN_ROOM_TOP, color)
+        elif room_led_id == "hall_begin":
+            smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, rooms_colors)
 
-        elif room_led_id == "main_room_bottom":
-            setRoomLight(master, ROOM_LEDS.MAIN_ROOM_BOTTOM, color)
+        elif room_led_id == "hall_end":
+            smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, rooms_colors)
 
-        elif room_led_id == "engine_room":
-            setRoomLight(master, ROOM_LEDS.ENGINE_ROOM, color)
-
-        elif room_led_id == "captains_bridge":
-            setRoomLight(master, ROOM_LEDS.CAPTAINTS_BRIDGE, color)
+        elif room_led_id == "fishes":
+            for index in DEVICES_TABLE.SML_FISH_EYES:
+                smart_leds.setOneLed(index, color)
 
         else:
             print("Error in set_room_light in quest_room: unknown room led {}".format(room_led_id))

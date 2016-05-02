@@ -83,8 +83,8 @@ class DEVICES_TABLE:
 
     SL_BOX_UNDER_PICTURE = 3
 
-    # FISH EYES
-    
+
+
 
 
     # Encoders
@@ -93,15 +93,17 @@ class DEVICES_TABLE:
     # Smart LEDs
     SML_FISHING_ROD = 6
     SML_STOREROOM = 7
-    SML_STOREROOM_SECRET = 5
-    SLM_DOLL = 4
+    SML_STOREROOM_SECRET = 6
+    SML_DOLL = 4
     # lightning
-    SLM_MATRIX_SOB = 0
-    SLM_HALL_1_2_3_4 = 8
-    SLM_HALL_5_6_7_8 = 9
-    SLM_WINDOWS = 16
-    SLM_WINDOWS_DOUBLE_HREN = 17
+    SML_MATRIX_SOB = 0
+    SML_HALL_END = 8
+    SML_HALL_BEGIN = 9
+    SML_WINDOWS = 16
+    SML_WINDOWS_DOUBLE_HREN = 17
 
+    # FISH EYES
+    SML_FISH_EYES = [28, 27, 26, 25, 24]
 
 class TASKS_IDS:
     INITIALIZATION = 0
