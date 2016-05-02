@@ -12,7 +12,9 @@ from settings import Devices, DEVICES_TABLE, TASKS_IDS
 
 class GLOBAL_VARIABLES:
     TABLE_CLOCK_VALUE = 0
-    WALL_CLOCK_INIT_VALUE = 0
+    TABLE_CLOCK_LAST_CHANGE_TIME = time.time()
+
+    WALL_CLOCK_REAL_12 = 0
 
 def puzzle_status(puzzle_name, status):
     PUZZLE_OK_MSG = "\tOK"
@@ -93,9 +95,6 @@ def REQ_QUEST_INIT(master, task, game_state):
     return True
 
 def TABLE_CLOCK_UP(master):
-    if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE == 12:
-        GLOBAL_VARIABLES.TABLE_CLOCK_VALUE = 0
-    GLOBAL_VARIABLES.TABLE_CLOCK_VALUE = GLOBAL_VARIABLES.TABLE_CLOCK_VALUE + 2
 
     clock_ctrl = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     next_time_cmd = clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD]
@@ -103,7 +102,14 @@ def TABLE_CLOCK_UP(master):
     clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = next_time_cmd
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, clock_ctrl)
-    print("Value of table clock is: {}".format(GLOBAL_VARIABLES.TABLE_CLOCK_VALUE))
+
+    GLOBAL_VARIABLES.TABLE_CLOCK_VALUE = GLOBAL_VARIABLES.TABLE_CLOCK_VALUE + 2
+    GLOBAL_VARIABLES.TABLE_CLOCK_LAST_CHANGE_TIME = time.time()
+
+    if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE == 12:
+        GLOBAL_VARIABLES.TABLE_CLOCK_VALUE = 0
+
+    print("TABLE CLOCK VALUE: {}".format(GLOBAL_VARIABLES.TABLE_CLOCK_VALUE))
 
 def AC_ADD_BACKGROUND_TABLE_CLOCK_JOB(master, tas, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.BACKGROUND_TABLE_CLOCK)
@@ -124,11 +130,9 @@ def REQ_BACKGROUND_TABLE_CLOCK(master, task, game_state):
     stack = task.stack
     if stack == []:
         start_time = time.time()
-        clock_last_change_time = start_time + INITIALIZATION_UNSET_TIME + 1
+        GLOBAL_VARIABLES.TABLE_CLOCK_LAST_CHANGE_TIME = start_time + INITIALIZATION_UNSET_TIME + 1
     else:
         start_time = stack.pop()
-        clock_last_change_time = stack.pop()
-
 
     time_passed = time.time() - start_time
     if time_passed < INITIALIZATION_SET_TIME:
@@ -137,7 +141,6 @@ def REQ_BACKGROUND_TABLE_CLOCK(master, task, game_state):
         clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 1
         master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, clock_ctrl)
 
-        stack.append(clock_last_change_time)
         stack.append(start_time)
         return
     elif time_passed < INITIALIZATION_UNSET_TIME:
@@ -146,19 +149,41 @@ def REQ_BACKGROUND_TABLE_CLOCK(master, task, game_state):
         clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 1
         master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, clock_ctrl)
 
-        stack.append(clock_last_change_time)
         stack.append(start_time)
         return
 
-    change_clock_time_passed = time.time() - clock_last_change_time
+    change_clock_time_passed = time.time() - GLOBAL_VARIABLES.TABLE_CLOCK_LAST_CHANGE_TIME
 
     if change_clock_time_passed > CLOCK_CHANGE_PERIOD:
         TABLE_CLOCK_UP(master)
 
-        clock_last_change_time = time.time()
-
-    stack.append(clock_last_change_time)
     stack.append(start_time)
+
+def AC_ADD_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.BACKGROUND_WALL_CLOCK_INIT)
+
+def REQ_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
+    # time to set 12 o'clock
+    INITIALIZATION_SET_12_TIME = 60
+
+    stack = task.stack
+    if stack == []:
+        start_time = time.time()
+    else:
+        start_time = stack.pop()
+
+    time_passed = time.time() - start_time
+    if time_passed < INITIALIZATION_SET_12_TIME:
+        # just wait till time pass
+        stack.append(start_time)
+        return
+
+    encoders = master.getEncoders(Devices.LOVECRAFT_DEVICE_NAME).get()
+    GLOBAL_VARIABLES.WALL_CLOCK_REAL_12 = encoders[DEVICES_TABLE.WALL_CLOCK]
+    print("WALL_CLOCK_INIT_12_VALUE: {}".format(GLOBAL_VARIABLES.WALL_CLOCK_REAL_12))
+
+    return True
+
 
 def REQ_BACKGROUND_PICTURE_MOVES(master, task, game_state):
     # INITIALIZATION_SET_TIME = 30
@@ -214,18 +239,6 @@ def REQ_BACKGROUND_PICTURE_MOVES(master, task, game_state):
     #
     stack.append(clock_last_change_time)
     stack.append(start_time)
-
-
-def AC_REMEMBER_WALL_CLOCK_INIT_VALUE(master, task, game_state):
-    encoders = master.getEncoders(Devices.LOVECRAFT_DEVICE_NAME).get()
-
-    wall_clock_init_value = encoders[DEVICES_TABLE.WALL_CLOCK]
-
-    print("Wall Clock Init value: {}".format(wall_clock_init_value))
-    wall_clock_init_value = wall_clock_init_value + 15
-    print("Wall Clock Init value + 15: {}".format(wall_clock_init_value))
-
-    GLOBAL_VARIABLES.WALL_CLOCK_INIT_VALUE = wall_clock_init_value
 
 def AC_ADD_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PUT_STATUE_ON_LORDS_TABLE)
@@ -339,7 +352,7 @@ def AC_ADD_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
 def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
     if task.stack == []:
-        task.stack.append([GLOBAL_VARIABLES.WALL_CLOCK_INIT_VALUE])
+        task.stack.append([GLOBAL_VARIABLES.WALL_CLOCK_REAL_12])
         task.stack.append(time.time())
 
     last_time = task.stack.pop()
@@ -349,22 +362,46 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
         return
 
     wall_clock_values_list = task.stack.pop()
-    last_value = wall_clock_values_list[-1]
+    wall_clock_last_value = wall_clock_values_list[-1]
 
     encoders = master.getEncoders(Devices.LOVECRAFT_DEVICE_NAME).get()
     wall_clock_value = encoders[DEVICES_TABLE.WALL_CLOCK]
 
-    if last_value != wall_clock_value:
-        wall_clock_values_list.append(wall_clock_value)
 
-        print("REQ_CLOCK_SYNCHRONIZATION: late value: {}, new_value: {}".format(last_value, wall_clock_value))
-        print("REQ_CLOCK_SYNCHRONIZATION: list {}".format(wall_clock_values_list))
-        print("REQ_CLOCK_SYNCHRONIZATION: table value: {}, new_value: {}".format(GLOBAL_VARIABLES.TABLE_CLOCK_VALUE, wall_clock_value))
+    if wall_clock_last_value == wall_clock_value:
+        task.stack.append(wall_clock_values_list)
+        task.stack.append(time.time())
+        return
 
-        # !!!
-        # convert value to time and compare with table clock
+    # choose clock direction
+    delta_time = GLOBAL_VARIABLES.WALL_CLOCK_REAL_12 - wall_clock_value
+    if wall_clock_last_value > 1000 and wall_clock_value < 100:
+        clockwise_direction = True
+    elif wall_clock_last_value < 100 and wall_clock_value > 1000:
+        clockwise_direction = False
+    elif delta_time < 0:
+        clockwise_direction = True
+    else:
+        clockwise_direction = False
 
-    if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE ==  wall_clock_value:
+    if clockwise_direction:
+        wall_clock_time = 0 + delta_time/2 - int((delta_time/2)/12) * 12
+    else:
+        wall_clock_time = 12 - delta_time/2 - int((delta_time/2)/12) * 12
+
+    if wall_clock_time == 12:
+        wall_clock_time = 0
+
+    print("Wall clock TIME: {}".format(wall_clock_time))
+
+    wall_clock_values_list.append(wall_clock_value)
+
+    print("REQ_CLOCK_SYNCHRONIZATION: wall late value: {}, new_value: {}".format(wall_clock_last_value, wall_clock_value))
+    print("REQ_CLOCK_SYNCHRONIZATION: wall list {}".format(wall_clock_values_list))
+    print("REQ_CLOCK_SYNCHRONIZATION: table value: {}, wall value: {}".format(GLOBAL_VARIABLES.TABLE_CLOCK_VALUE, wall_clock_time))
+
+    if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE ==  wall_clock_time:
+        print("(REQ:{task_id}) Clocks sync!".format(task_id=task.id))
         return True
 
     task.stack.append(wall_clock_values_list)
@@ -490,7 +527,7 @@ def REQ_PLACE_THE_BOTTLES(master, task, game_state):
     return bottles_placed
 
 def AC_PUMPS_WATER(master, task, game_state):
-    print("(ACTION:{task_id}) Pumps water | where pump?".format(task_id=task.id))
+    print("(ACTION:{task_id}) Pumps water | where pump? Ask Alexey".format(task_id=task.id))
     # maybe pump used one of eyes leds
     # sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     # sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_2] = 1
@@ -498,37 +535,19 @@ def AC_PUMPS_WATER(master, task, game_state):
     # master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
     pass
 
-def AC_ADD_OPEN_BOX_IN_THE_PANTRY(master, task, game_state):
-    game_state.add_active_task_with_id(TASKS_IDS.OPEN_BOX_IN_THE_PANTRY)
+def AC_ADD_PUT_THIRD_COIN(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PUT_THIRD_COIN)
 
-def REQ_OPEN_BOX_IN_THE_PANTRY(master, task, game_state):
-    adcs = master.getAdc(Devices.LOVECRAFT_DEVICE_NAME).get()
-    symbol_1 = adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_1]
-    symbol_2 = adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_2]
-    symbol_3 = adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_3]
-
-    if not master.debugMode():
-        print("OPEN_BOX_IN_THE_PANTRY:\n sym1: {}\tsym2: {}\tsym3: {}".format(
-            symbol_1, symbol_2, symbol_3))
-
-    symbol_ok_1 = True if symbol_1 == DEVICES_TABLE.SYMBOL_1_VALUE else False
-    symbol_ok_2 = True if symbol_2 == DEVICES_TABLE.SYMBOL_2_VALUE else False
-    symbol_ok_3 = True if symbol_3 == DEVICES_TABLE.SYMBOL_3_VALUE else False
-
-    return symbol_ok_1 and symbol_ok_2 and symbol_ok_3
-
-def AC_OPEN_BOX_IN_THE_PANTRY(master, task, game_state):
-    print("(ACTION:{task_id}) Box opend in the pantry | closet".format(task_id=task.id))
-    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_BOX_IN_THE_PANTRY] = DEVICES_TABLE.CLOSE
-
-    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+def REQ_PUT_THIRD_COIN(master, task, game_state):
+    return check_coins_inserted(master, task, game_state, 3)
 
 def AC_ADD_CLOSE_THE_DOOR(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.CLOSE_THE_DOOR)
 
 def REQ_CLOSE_THE_DOOR(master, task, game_state):
     TIME_TO_CLOSE_THE_DOOR = 15
+    TIME_TO_OPEN_THE_DOOR = 90
+    TIME_WAIT_TO_OPEN = 10
     # initialization
     if task.stack == []:
         # set motor to start close the door
@@ -540,7 +559,10 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
 
         close_start_time = time.time()
         task.stack.append(close_start_time)
+        wait_till_action = False
+        task.stack.append(wait_till_action)
 
+    wait_till_action = task.stack.pop()
     close_start_time = task.stack.pop()
     passed_time = time.time() - close_start_time
 
@@ -548,46 +570,21 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
         # check door lock
         # if players start play
         buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
+        # if door closed
         if not buttons[DEVICES_TABLE.BTN_DOOR_OPEN]:
+
             return True
         else:
-            # try to close again
-            # we can't close door again just try to send 1
-            # because if door opened without us control, when we will still thinking
-            # that door is closed already.
-            # To rewrite our data without spend time
-            # to send signal for open, sleep and send signal for close
-            # we just save() new value (0) in data and now we will think, what door is open
-            print("(REQ:{task_id}) Try to close door in closet again".format(task_id=task.id))
-            relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME)
-            relays_value = relays.get()
+            # door not closed - open
             relays_value[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.OPEN
-            master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays_value)
-            time.sleep(20)
-            relays_value[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.CLOSE
-            master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays_value)
-            relays.set(relays_value)
-            # save value 0 in device to send 1 again
-            relays.save()
-            # set door to close again
-            relays_value[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.CLOSE
             relays.set(relays_value)
 
             close_start_time = time.time()
 
     task.stack.append(close_start_time)
+    task.stack.append(wait_till_action)
     return False
 
-
-def AC_OPEN_BOX_WITH_THIRD_COIN(master, task, game_state):
-    print("(ACTION:{task_id}) Open box with third coin".format(task_id=task.id))
-    pass
-
-def AC_ADD_PUT_THIRD_COIN(master, task, game_state):
-    game_state.add_active_task_with_id(TASKS_IDS.PUT_THIRD_COIN)
-
-def REQ_PUT_THIRD_COIN(master, task, game_state):
-    return check_coins_inserted(master, task, game_state, 3)
 
 def AC_PARANORMAL_ACTIVITY(master, task, game_state):
     print("(ACTION:{task_id}) Paranormal activity".format(task_id=task.id))
@@ -649,6 +646,13 @@ def REQ_MARINE_TROPHIES(master, task, game_state):
         old_knife_slots = knife_slots
 
     task.stack.append(old_knife_slots)
+
+def AC_OPEN_CLOSET_DOOR(master, task, game_state):
+    print("(ACTION:{task_id}) Open closet".format(task_id=task.id))
+    relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.CLOSE
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
+
 
 def AC_OPEN_DOOR_WITH_SKELET(master, task, game_state):
     print("(ACTION:{task_id}) Open door with skelet".format(task_id=task.id))

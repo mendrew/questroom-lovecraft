@@ -7,7 +7,7 @@
       success_actions:
         # [AC_ADD_ANOMALOUS_PHENOMENA]
         [AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
-          AC_REMEMBER_WALL_CLOCK_INIT_VALUE,
+          AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
           AC_ADD_PUT_STATUE_ON_LORDS_TABLE]
       failure_requirements:
         []
@@ -40,6 +40,18 @@
     #   failure_actions:
     #     []
     #   title: 'Старт загадок'
+
+    -
+      id: 110
+      success_requirements:
+        [REQ_BACKGROUND_WALL_CLOCK_INIT]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Инициализация настенных часов'
 
     -
       id: 4
@@ -167,7 +179,7 @@
         [REQ_PLACE_THE_BOTTLES]
       success_actions:
         [AC_PUMPS_WATER,
-         AC_ADD_OPEN_BOX_IN_THE_PANTRY]
+         AC_ADD_PUT_THIRD_COIN]
       failure_requirements:
         []
       failure_actions:
@@ -175,46 +187,30 @@
       title: 'Расставить склянки'
 
     -
-      id: 11
+      id: 16
       success_requirements:
-        [REQ_OPEN_BOX_IN_THE_PANTRY]
+        [REQ_PUT_THIRD_COIN]
       success_actions:
-        [AC_ADD_CLOSE_THE_DOOR]
+        [AC_ADD_CLOSE_THE_DOOR,
+         AC_ADD_ANOMALOUS_PHENOMENA
+        ]
       failure_requirements:
         []
       failure_actions:
         []
-      title: 'Открыть ящик в кладовой(символами)'
+      title: 'Вставить третью монету'
 
     -
       id: 13
       success_requirements:
         [REQ_CLOSE_THE_DOOR]
       success_actions:
-        [AC_OPEN_BOX_WITH_THIRD_COIN,
-         AC_ADD_PUT_THIRD_COIN]
+        []
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Закрывание двери в кладовку'
-
-
-    -
-      id: 16
-      success_requirements:
-        [REQ_PUT_THIRD_COIN]
-      success_actions:
-        [AC_BAKE_FLARE_UP,
-         AC_PERFORMANCE_GIRL_GONE,
-         AC_PARANORMAL_ACTIVITY,
-         AC_ADD_ANOMALOUS_PHENOMENA
-         ]
-      failure_requirements:
-        []
-      failure_actions:
-        []
-      title: 'Вставить третью монету'
 
     -
       id: 17
@@ -247,12 +243,13 @@
         [REQ_MARINE_TROPHIES]
       success_actions:
         [AC_OPEN_DOOR_WITH_SKELET,
-         AC_ADD_PUT_FOURTH_COIN]
+         AC_ADD_PUT_FOURTH_COIN,
+         AC_OPEN_CLOSET_DOOR]
       failure_requirements:
         []
       failure_actions:
         []
-      title: 'Выставить цвет глаз у морских трофеев'
+      title: 'Выставить ножом цвет глаз у морских трофеев'
 
     -
       id: 20
