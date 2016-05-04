@@ -38,6 +38,9 @@ class DEVICES_TABLE:
     RELAY_CLOSET_DOOR_WITH_SKELET= 1
     RELAY_GODS_TABLE_MOTOR = 2
     RELAY_PUSH = 3
+    # relay actions
+    RELAY_CLOSE = 1
+    RELAY_OPEN = 0
 
     #Btn
     BTN_COLLECT_DAD_FISHING = 1;
@@ -69,9 +72,9 @@ class DEVICES_TABLE:
 
     SL_CODE_LOCKS_LOCKER_LOCK = 9
 
-    SL_DOLL_EYES_PUMP_1 = 5
+    SL_DOLL_EYES_PUMP = 5 # 2B
     # may be it aquarium pump
-    SL_DOLL_EYES_PUMP_2 = 4
+    SL_AQUARIUM_PUMP = 4
 
     # SL_BOX_IN_THE_PANTRY = 14
 

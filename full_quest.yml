@@ -7,10 +7,11 @@
       success_actions:
         # [AC_ADD_ANOMALOUS_PHENOMENA]
         [AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
-          AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
+          # AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
           # AC_ADD_PUT_STATUE_ON_LORDS_TABLE,
-          AC_ADD_CLOCK_SYNCHRONIZATION,
+          # AC_ADD_CLOCK_SYNCHRONIZATION,
           # AC_ADD_MARINE_TROPHIES
+          AC_ADD_CLOSE_THE_DOOR
           ]
       failure_requirements:
         []
@@ -195,7 +196,6 @@
         [REQ_PUT_THIRD_COIN]
       success_actions:
         [AC_ADD_CLOSE_THE_DOOR,
-         AC_ADD_ANOMALOUS_PHENOMENA
         ]
       failure_requirements:
         []
@@ -208,7 +208,10 @@
       success_requirements:
         [REQ_CLOSE_THE_DOOR]
       success_actions:
-        []
+        [
+         AC_OPEN_MIRROR,
+         AC_ADD_ANOMALOUS_PHENOMENA
+        ]
       failure_requirements:
         []
       failure_actions:

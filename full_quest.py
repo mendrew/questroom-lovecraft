@@ -63,9 +63,9 @@ def REQ_QUEST_INIT(master, task, game_state):
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_COIN] = DEVICES_TABLE.CLOSE
     sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_PICTURE] = DEVICES_TABLE.CLOSE
-    # sl_controlls[DEVICES_TABLE.SL_CODE_LOCKS_LOCKER_LOCK] = DEVICES_TABLE.CLOSE
-    # sl_controlls[DEVICES_TABLE.SL_BOX_IN_CLOSET_WITH_KNIFE] = DEVICES_TABLE.CLOSE
-    # sl_controlls[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = DEVICES_TABLE.CLOSE
+    sl_controlls[DEVICES_TABLE.SL_CODE_LOCKS_LOCKER_LOCK] = DEVICES_TABLE.CLOSE
+    sl_controlls[DEVICES_TABLE.SL_BOX_IN_CLOSET_WITH_KNIFE] = DEVICES_TABLE.CLOSE
+    sl_controlls[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = DEVICES_TABLE.CLOSE
     for scare_index in DEVICES_TABLE.SL_SCARE_IN_LOCKER:
         sl_controlls[scare_index] = 0
 
@@ -188,9 +188,9 @@ def REQ_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
 
 
 def REQ_BACKGROUND_PICTURE_MOVES(master, task, game_state):
-    # INITIALIZATION_SET_TIME = 30
-    # INITIALIZATION_UNSET_TIME = 20 + INITIALIZATION_SET_TIME
-    # PICTURE_CHANGE_PERIOD = 15 * 60
+    INITIALIZATION_SET_TIME = 30
+    INITIALIZATION_UNSET_TIME = 20 + INITIALIZATION_SET_TIME
+    PICTURE_CHANGE_PERIOD = 15 * 60
     #
     # debug values
     INITIALIZATION_SET_TIME = 0
@@ -377,17 +377,19 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
     # choose clock direction
     delta_time = GLOBAL_VARIABLES.WALL_CLOCK_REAL_12 - wall_clock_value
-    if wall_clock_last_value > 1000 and wall_clock_value < 100:
-        clockwise_direction = False
-    elif wall_clock_last_value < 100 and wall_clock_value > 1000:
-        clockwise_direction = True
-    elif wall_clock_value > wall_clock_last_value:
-        clockwise_direction = True
-    else:
-        clockwise_direction = False
+    # if wall_clock_last_value > 1000 and wall_clock_value < 100:
+    #     clockwise_direction = False
+    # elif wall_clock_last_value < 100 and wall_clock_value > 1000:
+    #     clockwise_direction = True
+    # elif wall_clock_value > wall_clock_last_value:
+    #     clockwise_direction = True
+    # else:
+    #     clockwise_direction = False
 
-    delta_time = abs(delta_time)
-
+    if wall_clock_value >= GLOBAL_VARIABLES.WALL_CLOCK_REAL_12:
+        clockwise_direction = False
+    if wall_clock_value < GLOBAL_VARIABLES.WALL_CLOCK_REAL_12:
+        clockwise_direction = True
     if clockwise_direction:
         wall_clock_time = 0 + delta_time/2 - int((delta_time/2)/12) * 12
     else:
@@ -507,13 +509,11 @@ def REQ_ONCOMING_TO_KUNSTKAMERA(master, task, game_state):
 def AC_OCTOPUS_SPIT_LIQUID(master, task, game_state):
     print("(ACTION:{task_id}) Octopus spit liquid".format(task_id=task.id))
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_1] = 1
-    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_2] = 1
+    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP] = 1
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
     time.sleep(5)
-    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_1] = 0
-    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_2] = 0
+    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP] = 0
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
     # maybe here play sound or in external action
@@ -532,12 +532,9 @@ def REQ_PLACE_THE_BOTTLES(master, task, game_state):
 
 def AC_PUMPS_WATER(master, task, game_state):
     print("(ACTION:{task_id}) Pumps water | where pump? Ask Alexey".format(task_id=task.id))
-    # maybe pump used one of eyes leds
-    # sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    # sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP_2] = 1
-    #
-    # master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-    pass
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_AQUARIUM_PUMP] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 def AC_ADD_PUT_THIRD_COIN(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PUT_THIRD_COIN)
@@ -549,47 +546,118 @@ def AC_ADD_CLOSE_THE_DOOR(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.CLOSE_THE_DOOR)
 
 def REQ_CLOSE_THE_DOOR(master, task, game_state):
-    TIME_TO_CLOSE_THE_DOOR = 15
-    TIME_TO_OPEN_THE_DOOR = 90
-    TIME_WAIT_TO_OPEN = 10
-    # initialization
+    TIME_TO_CLOSE = 15
+    TIME_TO_OPEN = 15
+    TIME_TO_WAIT_PLAYERS_ACTIONS = 90
+    TIME_BEFORE_CLOSE_AGAIN = 30
+
+    class Stages:
+        CLOSE = 1
+        OPEN = 2
+        WAIT_PLAYERS_ACTIONS = 3
+        WAIT_TILL_CLOSE = 4
+        WAIT_TILL_OPEN = 5
+        WAIT_TO_CLOSE_AGAIN = 6
+
     if task.stack == []:
-        # set motor to start close the door
-        print("(REQ:{task_id}) Try to close door in closet | wait {time} sec.".format(task_id=task.id, time=TIME_TO_CLOSE_THE_DOOR))
+        stage = Stages.CLOSE
+        start_time = time.time()
+        task.stack.append(stage)
+        task.stack.append(start_time)
+
+    start_time = task.stack.pop()
+    stage = task.stack.pop()
+
+    passed_time = time.time() - start_time
+
+    if Stages.CLOSE == stage:
+        print("(REQ:{task_id}) CLOSE_THE_DOOR!".format(task_id=task.id))
+
+        # set signal to device for close door
         relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
-        relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.CLOSE
+        relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.RELAY_CLOSE
         master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
+        start_time = time.time()
+        # change state to wait till close
+        stage = Stages.WAIT_TILL_CLOSE
+        pass
+    elif Stages.WAIT_TILL_CLOSE == stage:
+        if passed_time > TIME_TO_CLOSE:
+           # check is door really close, or something happend
+          buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
+          if buttons[DEVICES_TABLE.BTN_DOOR_OPEN]:
+              print("(REQ:{task_id}) DOOR STILL OPEN. SOMETHING HAPPEND, need to open it!".format(task_id=task.id))
+              # door still open we must open doorPLAYERS NOT ACTIVE
+              start_time = time.time()
+              stage = Stages.OPEN
+          else:
+              print("(REQ:{task_id}) DOOR_CLOSED AND WE MUST WAIT PLAYERS ACTIONS!".format(task_id=task.id))
+              # door closed and we must wait to players actions
+              start_time = time.time()
+              # get symbols state for detect players activity in future
+              adcs = master.getAdc(Devices.LOVECRAFT_DEVICE_NAME).get()
+              symbols_list = []
+              symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_1])
+              symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_2])
+              symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_3])
+              task.stack.append(symbols_list)
 
-        close_start_time = time.time()
-        task.stack.append(close_start_time)
-        wait_till_action = False
-        task.stack.append(wait_till_action)
+              stage = Stages.WAIT_PLAYERS_ACTIONS
 
-    wait_till_action = task.stack.pop()
-    close_start_time = task.stack.pop()
-    passed_time = time.time() - close_start_time
+    elif Stages.OPEN == stage:
+        print("(REQ:{task_id}) OPEN_THE_DOOR!".format(task_id=task.id))
+        start_time = time.time()
 
-    if passed_time >= TIME_TO_CLOSE_THE_DOOR:
-        # check door lock
-        # if players start play
-        buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
-        # if door closed
-        if not buttons[DEVICES_TABLE.BTN_DOOR_OPEN]:
+        relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+        relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.RELAY_OPEN
+        master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
-            return True
+        stage = Stages.WAIT_TILL_OPEN
+
+    elif Stages.WAIT_TILL_OPEN == stage:
+        if passed_time > TIME_TO_OPEN:
+            print("(REQ:{task_id}) DOOR OPENED, WAIT_TO_CLOSE IT AGAIN!".format(task_id=task.id))
+            # door may be opened
+            # we must start wait till close again
+            start_time = time.time()
+            stage = Stages.WAIT_TO_CLOSE_AGAIN
+
+    elif Stages.WAIT_PLAYERS_ACTIONS == stage:
+        old_symbols_list = task.stack.pop()
+        if passed_time > TIME_TO_WAIT_PLAYERS_ACTIONS:
+            print("(REQ:{task_id}) PLAYERS NOT ACTIVE!".format(task_id=task.id))
+            # all we can is open the door again
+            start_time = time.time()
+            stage = Stages.OPEN
         else:
-            # door not closed - open
-            relays_value[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.OPEN
-            relays.set(relays_value)
+            # check players activity
+            adcs = master.getAdc(Devices.LOVECRAFT_DEVICE_NAME).get()
+            symbols_list = []
+            symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_1])
+            symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_2])
+            symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_3])
+            if int(passed_time % 10) == 0:
+                print("(REQ:{task_id}) SYMBOLS_LIST: {symlist}".format(task_id=task.id, symlist=symbols_list))
 
-            close_start_time = time.time()
 
-    task.stack.append(close_start_time)
-    task.stack.append(wait_till_action)
-    return False
+            if old_symbols_list != symbols_list:
+                print("Players start to play and door is closed - return TRUE")
+                return True
 
+            task.stack.append(old_symbols_list)
 
+    elif Stages.WAIT_TO_CLOSE_AGAIN == stage:
+        if passed_time > TIME_BEFORE_CLOSE_AGAIN:
+            start_time = time.time()
+            stage = Stages.CLOSE
+
+    task.stack.append(stage)
+    task.stack.append(start_time)
+
+def AC_OPEN_MIRROR(master, task, game_state):
+    sl_control = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get() 
+    sl_control[DEVICES_TABLE.
 def AC_PARANORMAL_ACTIVITY(master, task, game_state):
     print("(ACTION:{task_id}) Paranormal activity".format(task_id=task.id))
     pass
