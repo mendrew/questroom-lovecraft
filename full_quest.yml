@@ -11,13 +11,28 @@
           # AC_ADD_PUT_STATUE_ON_LORDS_TABLE,
           # AC_ADD_CLOCK_SYNCHRONIZATION,
           # AC_ADD_MARINE_TROPHIES
-          AC_ADD_CLOSE_THE_DOOR
+          AC_ADD_CLOSE_THE_DOOR,
+          AC_ADD_WAIT_START_QUEST
           ]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Инициализация'
+
+    -
+      id: 1000
+      success_requirements:
+        [REQ_START_QUEST]
+      success_actions:
+        [AC_SOUND_BACKGROUND_STAGE_1,
+         # AC_SOUND_RADIO_RESCUE,
+         AC_LIGHTNING]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Начать квест(старт звуков)'
 
     # -
     #   id: 101

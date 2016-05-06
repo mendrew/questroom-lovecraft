@@ -99,11 +99,13 @@ class DEVICES_TABLE:
     SML_STOREROOM_SECRET = 6
     SML_DOLL = 4
     # lightning
+    SML_LIGHTNING = [16, 17]
     SML_MATRIX_SOB = 0
     SML_HALL_END = 8
     SML_HALL_BEGIN = 9
     SML_WINDOWS = 16
     SML_WINDOWS_DOUBLE_HREN = 17
+
 
     # FISH EYES
     SML_FISH_EYES = [28, 27, 26, 25, 24]
@@ -112,7 +114,7 @@ class TASKS_IDS:
     INITIALIZATION = 0
     INITIALIZATION_GODS_TABLE = 101
 
-    START_QUEST = 100
+    START_QUEST = 1000
     BACKGROUND_WALL_CLOCK_INIT = 110
 
 
@@ -130,7 +132,6 @@ class TASKS_IDS:
 
     CLOSE_THE_DOOR = 13
 
-
     PUT_THIRD_COIN = 16
     # PUT_FOURTH_COIN = 16
 
@@ -142,3 +143,11 @@ class TASKS_IDS:
     PUT_FOURTH_COIN = 20
 
     THE_FINAL = 21
+
+class SOUNDS_NAMES:
+    SOUNDS_DIR = "./sound/"
+    STAGE_1 = SOUNDS_DIR + "stage_one_whisper.ogg"
+    STAGE_2 = SOUNDS_DIR + "stage_two_call.ogg"
+    RESCURE_1 = SOUNDS_DIR + "lifesaver_1_1.ogg"
+    LIGHTNING = SOUNDS_DIR + "lightning_thunder.ogg"
+

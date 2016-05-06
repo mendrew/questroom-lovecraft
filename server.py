@@ -9,12 +9,14 @@ from quest_core import GameState
 from time import sleep
 # from SoundManager import SoundManager
 from quest_room import QuestRoom
+from sound_manager import play_sound
 
 import platform
 if platform.system() == 'Windows':
     from KeyboardListener import KeyboardListener
 from tornado.options import define, options, parse_command_line
 import json
+from full_quest import SOUNDS
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -60,9 +62,9 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         print(message)
         print(message['message'])
 
-        # if "play_sound" == message['message']:
-        #     sound_id = message['sound']
-        #     sound_manager.play_sound(sound_id)
+        if "play_sound" == message['message']:
+            sound_id = message['sound']
+            play_sound(sound_id)
 
         if "door" == message['message']:
             door_id = int(message['door_id'])

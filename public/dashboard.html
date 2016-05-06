@@ -82,7 +82,7 @@
        <hr/>
 
 			 <form onsubmit='toggle_skip_task(event)'>
-         <input type="text" id="skip_task_input" placeholder="Номер задачи: ####" pattern="[0-9]{,4}" title="Номер задачи - только цифры">
+         <input type="text" id="skip_task_input" placeholder="Номер задачи: ####" title="Номер задачи - только цифры">
          <input type="submit" id="skip_task_button" value="Пропустить задачу"></td>
        </form>
 
@@ -162,6 +162,7 @@
        <table>
          <tr><th>Звуковые эффекты</th></tr>
          <tr><td><button data-sound='coin.wav' onClick='playSound(event)'>Coin</button></td></tr>
+         <tr><td><button data-sound='1_girl_help.ogg' onClick='playSound(event)'>1_Помоги</button></td></tr>
        </table>
     </body>
 </html>

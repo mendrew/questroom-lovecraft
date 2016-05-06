@@ -6,9 +6,10 @@ import random
 from collections import Counter
 from copy import copy
 from threading import Timer
-# import pygame
+import pygame
 
 from settings import Devices, DEVICES_TABLE, TASKS_IDS
+from settings import SOUNDS_NAMES
 
 class GLOBAL_VARIABLES:
     TABLE_CLOCK_VALUE = 0
@@ -58,7 +59,18 @@ def check_puzzles(master):
     #         pass
     #
 
+pygame.mixer.pre_init(44100)
+pygame.init()
+pygame.mixer.init()
+
+class SOUNDS:
+    stage_1 = pygame.mixer.Sound(SOUNDS_NAMES.STAGE_1)
+    # stage_2 = pygame.mixer.Sound(SOUNDS_NAMES.STAGE_2)
+    rescure_begin = pygame.mixer.Sound(SOUNDS_NAMES.RESCURE_1)
+    lightning = pygame.mixer.Sound(SOUNDS_NAMES.LIGHTNING)
+
 def REQ_QUEST_INIT(master, task, game_state):
+    return True
     # close all boxes
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_COIN] = DEVICES_TABLE.CLOSE
@@ -241,6 +253,46 @@ def REQ_BACKGROUND_PICTURE_MOVES(master, task, game_state):
     #
     stack.append(clock_last_change_time)
     stack.append(start_time)
+
+def AC_ADD_WAIT_START_QUEST(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.START_QUEST)
+
+def REQ_START_QUEST(master, task, game_state):
+    pass
+    return True
+
+def AC_SOUND_RADIO_RESCUE(master, task, game_state):
+    SOUNDS.rescure_begin.play()
+    time.sleep(SOUNDS.rescure_begin.get_length() + 1)
+
+def AC_SOUND_BACKGROUND_STAGE_1(master, task, game_state):
+    SOUNDS.stage_1.play()
+    pass
+
+def AC_LIGHTNING(master, task, game_state):
+    SOUNDS.lightning.play()
+    sml_control = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    last_lightning_value = []
+    for light_index in DEVICES_TABLE.SML_LIGHTNING:
+        last_lightning_value.append(sml_control.getRgbLed(light_index))
+
+    for light_index in DEVICES_TABLE.SML_LIGHTNING:
+        sml_control.setOneLed(light_index, [0, 0, 0])
+
+    time.sleep(0.4)
+
+    for light_index in DEVICES_TABLE.SML_LIGHTNING:
+        sml_control.setOneLed(light_index, [0xfff, 0xfff, 0xfff])
+
+    print("Lightning!")
+
+
+    for index_number, light_index in enumerate(DEVICES_TABLE.SML_LIGHTNING):
+        print("last_lightning_value: {}".format(last_lightning_value))
+        sml_control.setOneLed(light_index, last_lightning_value[index_number])
+
+    time.sleep(1)
+    print("Lightning off!")
 
 def AC_ADD_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PUT_STATUE_ON_LORDS_TABLE)
@@ -656,8 +708,9 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
     task.stack.append(start_time)
 
 def AC_OPEN_MIRROR(master, task, game_state):
-    sl_control = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get() 
-    sl_control[DEVICES_TABLE.
+    sl_control = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    # sl_control[DEVICES_TABLE.
+
 def AC_PARANORMAL_ACTIVITY(master, task, game_state):
     print("(ACTION:{task_id}) Paranormal activity".format(task_id=task.id))
     pass
