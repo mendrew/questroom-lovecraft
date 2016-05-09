@@ -1,0 +1,42 @@
+ALSA lib confmisc.c:1286:(snd_func_refer) Unable to find definition 'cards.ICH4.pcm.rear.0:CARD=0'
+ALSA lib conf.c:4248:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:4727:(snd_config_expand) Evaluate error: No such file or directory
+ALSA lib pcm.c:2239:(snd_pcm_open_noupdate) Unknown PCM rear
+ALSA lib pcm.c:2239:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.center_lfe
+ALSA lib pcm.c:2239:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.side
+ALSA lib pcm.c:2239:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.surround71
+ALSA lib pcm.c:2239:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.hdmi
+ALSA lib pcm.c:2239:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.hdmi
+ALSA lib pcm.c:2239:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.modem
+ALSA lib pcm.c:2239:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.modem
+ALSA lib pcm.c:2239:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.phoneline
+ALSA lib pcm.c:2239:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.phoneline
+bt_audio_service_open: connect() failed: Connection refused (111)
+bt_audio_service_open: connect() failed: Connection refused (111)
+bt_audio_service_open: connect() failed: Connection refused (111)
+bt_audio_service_open: connect() failed: Connection refused (111)
+Cannot connect to server socket err = No such file or directory
+Cannot connect to server request channel
+jack server is not running or cannot be started
+ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred
+ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred
+ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred
+ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred
+ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred
+ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred
+ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred
+ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred
+ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred
+Traceback (most recent call last):
+  File "play.py", line 10, in <module>
+    sound.play()
+  File "/home/mendrew/quests/lovecraft/questroom-lovecraft/sound/SoundCallbackFiles.py", line 81, in play
+    time.sleep(1)
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/home/mendrew/quests/lovecraft/questroom-lovecraft/sound/SoundCallbackFiles.py", line 47, in callback
+    nframes = sound_file.read(self.playing_files_buffers_for_read)
+  File "/usr/local/lib/python2.7/dist-packages/wavefile/wavefile.py", line 302, in read
+    if data.dtype==np.float64 :
+AttributeError: 'NoneType' object has no attribute 'float64'
+Exception AttributeError in <function _remove at 0xb73f0d14> ignored
