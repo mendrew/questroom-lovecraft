@@ -7,6 +7,14 @@ import threading
 
 from wavefile import WaveReader
 
+"""
+    SOUNDS BUGS
+    If we have only one sound file in files - than we may be hear any second time 
+        some creak sound on the first channel
+    Looks like it's all because of my volume managment
+    now i deprecated volume
+"""
+
 def run_in_thread(fn):
     def run(*k, **kw):
         t = threading.Thread(target=fn, args=k, kwargs=kw)
@@ -25,12 +33,12 @@ class SoundFile:
         self.frame_size = frame_size
         self.samplerate = self.file_pointer.samplerate
 
-    def setVolume(self, volume=100):
+    def set_volume(self, volume=100):
         self.volume = volume / 100
 
     def read(self):
         self.nframes = self.file_pointer.read(self.data)
-        self.data = self.data * self.volume
+        # self.data = self.data * self.volume
         return self.data[:self.channels, :self.nframes]
 
 class SoundManager:
@@ -48,7 +56,7 @@ class SoundManager:
 
         self.playing_data_list = numpy.zeros((len(self.files), self.max_channels, self.CHUNK), numpy.float32, order='F')
 
-    def addSound(self, sound_name):
+    def add_sound(self, sound_name):
         new_sound_file = SoundFile(sound_name)
 
         for sound in self.files:
@@ -63,18 +71,18 @@ class SoundManager:
         return new_sound_file
 
 
-    def setVolume(self, sound, volume):
+    def set_volume(self, sound, volume):
         if sound not in self.files:
             return
-        sound.setVolume(volume)
+        sound.set_volume(volume)
 
     def play_sound(self, sound):
         if sound not in self.files:
-            self.addSound(sound)
+            self.add_sound(sound)
 
         self.playing_data_list = numpy.zeros((len(self.files), self.max_channels, self.CHUNK), numpy.float32, order='F')
 
-        sound.file_pointer.seek(0)
+        # sound.file_pointer.seek(0)
         self.playing_files.append(sound)
 
         if self.stream is None:

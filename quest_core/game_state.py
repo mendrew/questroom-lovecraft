@@ -12,6 +12,7 @@ import time
 class GameState:
     def __init__(self):
         self.device_master = None
+        self.sound_manager = None
         self.tasks = []
 
         self.active_tasks = []

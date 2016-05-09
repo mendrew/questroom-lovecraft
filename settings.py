@@ -62,27 +62,24 @@ class DEVICES_TABLE:
     OPEN = 0
     SL_TABLE_CLOCK_ZERO_CMD = 0
     SL_TABLE_CLOCK_NEXT_TIME_CMD = 1
+    SL_TABLE_CLOCK_RING_OUT = 20 # led7 B
 
     SL_FISHING_RODS_HOLDERS = 14 # change from 13
 
     SL_WALL_CLOCK_LOCK_WITH_PICTURE = 11 # LOCK - 1
     SL_WALL_CLOCK_LOCK_WITH_COIN = 10 # LOCK - 2
 
+    SL_SCARES_ALL = [15, 16, 17]
     SL_SCARE_IN_LOCKER = [15, 16, 17]
+
 
     SL_CODE_LOCKS_LOCKER_LOCK = 9
 
-    SL_DOLL_EYES_PUMP = 5 # 2B
-    # may be it aquarium pump
+    SL_DOLL_EYES_PUMP = 3 # 2B
     SL_AQUARIUM_PUMP = 4
 
-    # SL_BOX_IN_THE_PANTRY = 14
-
-    # SL_CLOSET_DOOR_MOTOR = 12
-    # SL_CLOSET_DOOR_LOCK = 14
-    # What motor for?
-    # SL_CLOSET_BOX_LOCK = 14
-    SL_BOX_IN_CLOSET_WITH_KNIFE = 13 # change from 14
+    SL_BOX_IN_CLOSET_WITH_KNIFE = 12
+    SL_MIRROR_IN_CLOSET = 13
 
     SL_BOX_UNDER_PICTURE = 3
 
@@ -98,6 +95,7 @@ class DEVICES_TABLE:
     SML_STOREROOM = 7
     SML_STOREROOM_SECRET = 6
     SML_DOLL = 4
+
     # lightning
     SML_LIGHTNING = [16, 17]
     SML_MATRIX_SOB = 0
@@ -105,6 +103,7 @@ class DEVICES_TABLE:
     SML_HALL_BEGIN = 9
     SML_WINDOWS = 16
     SML_WINDOWS_DOUBLE_HREN = 17
+
 
 
     # FISH EYES
@@ -117,6 +116,7 @@ class TASKS_IDS:
     START_QUEST = 1000
     BACKGROUND_WALL_CLOCK_INIT = 110
 
+    PLAY_SOUND_HELP = 201
 
     PUT_STATUE_ON_LORDS_TABLE = 1
     PUT_FIRST_COIN = 2
@@ -145,9 +145,28 @@ class TASKS_IDS:
     THE_FINAL = 21
 
 class SOUNDS_NAMES:
-    SOUNDS_DIR = "./sound/"
-    STAGE_1 = SOUNDS_DIR + "stage_one_whisper.ogg"
-    STAGE_2 = SOUNDS_DIR + "stage_two_call.ogg"
-    RESCURE_1 = SOUNDS_DIR + "lifesaver_1_1.ogg"
-    LIGHTNING = SOUNDS_DIR + "lightning_thunder.ogg"
+    SOUNDS_DIR = "./music/changed/"
+    STAGE_1 = SOUNDS_DIR + "stage_one_whisper.wav"
+    LIFESAVER_1 = SOUNDS_DIR + "lifesaver_2_2.wav"
+    GIRL_1_HELP = SOUNDS_DIR + "girl_1_help.wav"
+    GIRL_2_HEARD = SOUNDS_DIR + "girl_2_i_heard.wav"
+    GIRL_4_SHE_ALL_I_HAVE = SOUNDS_DIR + "girl_4_she_all_i_have.wav"
+    STAGE_2 = SOUNDS_DIR + "stage_two_call.wav"
+    STAGE_3 = SOUNDS_DIR + "stage_three_shout.wav"
+    STAGE_4 = SOUNDS_DIR + "stage_four_madness.wav"
+    LIGHTNING = SOUNDS_DIR + "lightning_thunder.wav"
 
+
+class SOUNDS:
+    stage_1 = None
+    lifesaver_begin = None
+    lightning = None
+    girl_help = None
+    girl_heard = None
+    girl_she_all_i_have = None
+
+    stage_2 = None
+    stage_3 = None
+    stage_4 = None
+    # stage_2 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_2)
+    # lightning = sound_manager.add_sound(SOUNDS_NAMES.LIGHTNING)

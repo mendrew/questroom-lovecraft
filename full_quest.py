@@ -6,13 +6,13 @@ import random
 from collections import Counter
 from copy import copy
 from threading import Timer
-import pygame
 
 from settings import Devices, DEVICES_TABLE, TASKS_IDS
 from settings import SOUNDS_NAMES
+from settings import SOUNDS
 
 class GLOBAL_VARIABLES:
-    TABLE_CLOCK_VALUE = 0
+    TABLE_CLOCK_VALUE = 1
     TABLE_CLOCK_LAST_CHANGE_TIME = time.time()
 
     WALL_CLOCK_REAL_12 = 0
@@ -59,17 +59,20 @@ def check_puzzles(master):
     #         pass
     #
 
-pygame.mixer.pre_init(44100)
-pygame.init()
-pygame.mixer.init()
+def init_sounds(game_state):
+    sound_manager = game_state.sound_manager
+    SOUNDS.stage_1 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_1)
+    SOUNDS.lifesaver_begin = sound_manager.add_sound(SOUNDS_NAMES.LIFESAVER_1)
+    SOUNDS.lightning = sound_manager.add_sound(SOUNDS_NAMES.LIGHTNING)
+    SOUNDS.girl_help = sound_manager.add_sound(SOUNDS_NAMES.GIRL_1_HELP)
+    SOUNDS.girl_heard = sound_manager.add_sound(SOUNDS_NAMES.GIRL_2_HEARD)
+    SOUNDS.girl_she_all_i_have = sound_manager.add_sound(SOUNDS_NAMES.GIRL_4_SHE_ALL_I_HAVE)
 
-class SOUNDS:
-    stage_1 = pygame.mixer.Sound(SOUNDS_NAMES.STAGE_1)
-    # stage_2 = pygame.mixer.Sound(SOUNDS_NAMES.STAGE_2)
-    rescure_begin = pygame.mixer.Sound(SOUNDS_NAMES.RESCURE_1)
-    lightning = pygame.mixer.Sound(SOUNDS_NAMES.LIGHTNING)
-
+    SOUNDS.stage_2 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_2)
+    SOUNDS.stage_3 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_3)
+    SOUNDS.stage_4 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_4)
 def REQ_QUEST_INIT(master, task, game_state):
+    init_sounds(game_state)
     return True
     # close all boxes
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
@@ -78,6 +81,8 @@ def REQ_QUEST_INIT(master, task, game_state):
     sl_controlls[DEVICES_TABLE.SL_CODE_LOCKS_LOCKER_LOCK] = DEVICES_TABLE.CLOSE
     sl_controlls[DEVICES_TABLE.SL_BOX_IN_CLOSET_WITH_KNIFE] = DEVICES_TABLE.CLOSE
     sl_controlls[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = DEVICES_TABLE.CLOSE
+    sl_controlls[DEVICES_TABLE.SL_MIRROR_IN_CLOSET] = 0
+
     for scare_index in DEVICES_TABLE.SL_SCARE_IN_LOCKER:
         sl_controlls[scare_index] = 0
 
@@ -120,10 +125,19 @@ def TABLE_CLOCK_UP(master):
     GLOBAL_VARIABLES.TABLE_CLOCK_VALUE = GLOBAL_VARIABLES.TABLE_CLOCK_VALUE + 2
     GLOBAL_VARIABLES.TABLE_CLOCK_LAST_CHANGE_TIME = time.time()
 
-    if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE == 12:
-        GLOBAL_VARIABLES.TABLE_CLOCK_VALUE = 0
+    if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE >= 12:
+        GLOBAL_VARIABLES.TABLE_CLOCK_VALUE = GLOBAL_VARIABLES.TABLE_CLOCK_VALUE - 12
 
     print("TABLE CLOCK VALUE: {}".format(GLOBAL_VARIABLES.TABLE_CLOCK_VALUE))
+
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 1
+
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    time.sleep(1)
+
+    sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 def AC_ADD_BACKGROUND_TABLE_CLOCK_JOB(master, tas, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.BACKGROUND_TABLE_CLOCK)
@@ -261,16 +275,16 @@ def REQ_START_QUEST(master, task, game_state):
     pass
     return True
 
-def AC_SOUND_RADIO_RESCUE(master, task, game_state):
-    SOUNDS.rescure_begin.play()
-    time.sleep(SOUNDS.rescure_begin.get_length() + 1)
-
 def AC_SOUND_BACKGROUND_STAGE_1(master, task, game_state):
-    SOUNDS.stage_1.play()
-    pass
+    game_state.sound_manager.play_sound(SOUNDS.stage_1)
+
+def AC_SOUND_RADIO_RESCUE(master, task, game_state):
+    game_state.sound_manager.play_sound(SOUNDS.lifesaver_begin)
+
 
 def AC_LIGHTNING(master, task, game_state):
-    SOUNDS.lightning.play()
+    game_state.sound_manager.play_sound(SOUNDS.lightning)
+    # SOUNDS.lightning.play()
     sml_control = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     last_lightning_value = []
     for light_index in DEVICES_TABLE.SML_LIGHTNING:
@@ -293,6 +307,25 @@ def AC_LIGHTNING(master, task, game_state):
 
     time.sleep(1)
     print("Lightning off!")
+
+
+def AC_ADD_PLAY_SOUND_HELP(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_HELP)
+
+def REQ_PLAY_SOUND_HELP(master, task, game_state):
+    TIME_TO_WAIT = 5 * 60
+    if task.stack == []:
+        task.stack.append(time.time())
+    start_time = task.stack.pop()
+
+    if time.time() - start_time > TIME_TO_WAIT:
+        return True
+
+    task.stack.append(start_time)
+
+
+def AC_PLAY_SOUND_HELP(master, task, game_state):
+    game_state.sound_manager.play_sound(SOUNDS.girl_help)
 
 def AC_ADD_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PUT_STATUE_ON_LORDS_TABLE)
@@ -364,7 +397,8 @@ def AC_PERFORMANCE_DOLL_GIFT(master, task, game_state):
     pass
 
 def AC_POLTERGEISTS(master, task, game_state):
-    print("(ACTION:{task_id}) Poltergeists".format(task_id=task.id))
+    print("(ACTION:{task_id}) Poltergeists, need to check scares in book closet".format(task_id=task.id))
+    AC_SCARE_IN_LOCKER(master, task, game_state)
     pass
 
 def AC_FALLING_BOOKS(master, task, game_state):
@@ -383,6 +417,9 @@ def AC_FALLING_FISHING_RODS(master, task, game_state):
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
+def AC_PLAY_SHE_ALL_I_HAVE(master, task, game_state):
+    game_state.sound_manager.play_sound(SOUNDS.girl_she_all_i_have)
+
 def AC_ADD_COLLECT_DAD_FISHING(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.COLLECT_DAD_FISHING)
 
@@ -391,10 +428,6 @@ def REQ_COLLECT_DAD_FISHING(master, task, game_state):
     dad_collected = buttons[DEVICES_TABLE.BTN_COLLECT_DAD_FISHING]
 
     return dad_collected
-
-def AC_RING_OUT_THE_CLOCK(master, task, game_state):
-    print("(ACTION:{task_id}) Ring out the clock".format(task_id=task.id))
-    pass
 
 def AC_TABLE_CLOCK_CHANGE_TIME(master, task, game_state):
     print("(ACTION:{task_id}) Table clock change time".format(task_id=task.id))
@@ -486,6 +519,9 @@ def REQ_FAMILY_PICTURE_BARLEY_BREAK(master, task, game_state):
 
     return puzzle_collected
 
+def AC_PLAY_SOUND_GIRL_HEARD(master, task, game_state):
+    game_state.sound_manager.play_sound(SOUNDS.girl_heard)
+
 def AC_SECOND_COIN_FALL(master, task, game_state):
     print("(ACTION:{task_id}) Second coin fall from clock".format(task_id=task.id))
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
@@ -531,6 +567,12 @@ def AC_SCARE_IN_LOCKER(master, task, game_state):
         sl_controlls[scare_index] = 0
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+
+def AC_SOUND_BACKGROUND_STAGE_2(master, task, game_state):
+    game_state.sound_manager.stop(SOUNDS.stage_1)
+    game_state.sound_manager.play_sound(SOUNDS.stage_2)
+
 
 def REQ_CODE_LOCK(master, task, game_state):
     buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
@@ -583,9 +625,13 @@ def REQ_PLACE_THE_BOTTLES(master, task, game_state):
     return bottles_placed
 
 def AC_PUMPS_WATER(master, task, game_state):
+    TIME_TO_WORK = 10 # find time experimental
     print("(ACTION:{task_id}) Pumps water | where pump? Ask Alexey".format(task_id=task.id))
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_AQUARIUM_PUMP] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    time.sleep(TIME_TO_WORK)
+    sl_controlls[DEVICES_TABLE.SL_AQUARIUM_PUMP] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 def AC_ADD_PUT_THIRD_COIN(master, task, game_state):
@@ -593,6 +639,10 @@ def AC_ADD_PUT_THIRD_COIN(master, task, game_state):
 
 def REQ_PUT_THIRD_COIN(master, task, game_state):
     return check_coins_inserted(master, task, game_state, 3)
+
+def AC_SOUND_BACKGROUND_STAGE_3(master, task, game_state):
+    game_state.sound_manager.stop(SOUNDS.stage_2)
+    game_state.sound_manager.play_sound(SOUNDS.stage_3)
 
 def AC_ADD_CLOSE_THE_DOOR(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.CLOSE_THE_DOOR)
@@ -709,7 +759,8 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
 
 def AC_OPEN_MIRROR(master, task, game_state):
     sl_control = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    # sl_control[DEVICES_TABLE.
+    sl_control[DEVICES_TABLE.SL_MIRROR_IN_CLOSET] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
 
 def AC_PARANORMAL_ACTIVITY(master, task, game_state):
     print("(ACTION:{task_id}) Paranormal activity".format(task_id=task.id))
@@ -852,6 +903,10 @@ def AC_ADD_PUT_FOURTH_COIN(master, task, game_state):
 
 def REQ_PUT_FOURTH_COIN(master, task, game_state):
     return check_coins_inserted(master, task, game_state, 4)
+
+def AC_SOUND_BACKGROUND_STAGE_4(master, task, game_state):
+    game_state.sound_manager.stop(SOUNDS.stage_3)
+    game_state.sound_manager.play_sound(SOUNDS.stage_4)
 
 def AC_PERFORMANCE_CULMINATION(master, task, game_state):
     print("(ACTION:{task_id}) Performance culmination".format(task_id=task.id))

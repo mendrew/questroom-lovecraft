@@ -6,12 +6,13 @@
         [REQ_QUEST_INIT]
       success_actions:
         # [AC_ADD_ANOMALOUS_PHENOMENA]
-        [AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
-          # AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
-          # AC_ADD_PUT_STATUE_ON_LORDS_TABLE,
+        [AC_SOUND_BACKGROUND_STAGE_1,
+          AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
+          AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
+          AC_ADD_PUT_STATUE_ON_LORDS_TABLE,
           # AC_ADD_CLOCK_SYNCHRONIZATION,
           # AC_ADD_MARINE_TROPHIES
-          AC_ADD_CLOSE_THE_DOOR,
+          # AC_ADD_CLOSE_THE_DOOR,
           AC_ADD_WAIT_START_QUEST
           ]
       failure_requirements:
@@ -25,14 +26,27 @@
       success_requirements:
         [REQ_START_QUEST]
       success_actions:
-        [AC_SOUND_BACKGROUND_STAGE_1,
-         # AC_SOUND_RADIO_RESCUE,
-         AC_LIGHTNING]
+        [
+         AC_SOUND_RADIO_RESCUE,
+         AC_LIGHTNING,
+         AC_ADD_PLAY_SOUND_HELP]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Начать квест(старт звуков)'
+
+    -
+      id: 201
+      success_requirements:
+        [REQ_PLAY_SOUND_HELP]
+      success_actions:
+        [AC_PLAY_SOUND_HELP]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизвести <<Помоги>>'
 
     # -
     #   id: 101
@@ -102,10 +116,14 @@
         [REQ_PUT_FIRST_COIN]
       success_actions:
         # печь разгорится
-        [AC_BAKE_FLARE_UP, AC_PERFORMANCE_DOLL_GIFT, AC_POLTERGEISTS,
+        [AC_PLAY_SHE_ALL_I_HAVE,
+        AC_BAKE_FLARE_UP,
+        AC_PERFORMANCE_DOLL_GIFT,
+        AC_POLTERGEISTS,
         AC_FALLING_BOOKS,
         AC_ADD_COLLECT_DAD_FISHING,
-        AC_FALLING_FISHING_RODS]
+        AC_FALLING_FISHING_RODS
+        ]
       failure_requirements:
         []
       failure_actions:
@@ -117,7 +135,7 @@
       success_requirements:
         [REQ_COLLECT_DAD_FISHING]
       success_actions:
-        [AC_RING_OUT_THE_CLOCK, AC_TABLE_CLOCK_CHANGE_TIME,
+        [AC_TABLE_CLOCK_CHANGE_TIME,
         AC_ADD_CLOCK_SYNCHRONIZATION]
       failure_requirements:
         []
@@ -142,7 +160,10 @@
       success_requirements:
         [REQ_FAMILY_PICTURE_BARLEY_BREAK]
       success_actions:
-        [AC_SECOND_COIN_FALL, ADD_PUT_SECOND_COIN]
+        [
+          AC_PLAY_SOUND_GIRL_HEARD,
+          AC_SECOND_COIN_FALL,
+          ADD_PUT_SECOND_COIN]
       failure_requirements:
         []
       failure_actions:
@@ -159,7 +180,8 @@
          AC_STRENGTHENING_OF_PRESENCE,
          AC_SPIDERS_RUNNING,
          AC_ADD_CODE_LOCK,
-         AC_SCARE_IN_LOCKER
+         AC_SCARE_IN_LOCKER,
+         AC_SOUND_BACKGROUND_STAGE_2
          ]
       failure_requirements:
         []
@@ -210,7 +232,8 @@
       success_requirements:
         [REQ_PUT_THIRD_COIN]
       success_actions:
-        [AC_ADD_CLOSE_THE_DOOR,
+        [AC_SOUND_BACKGROUND_STAGE_3,
+         AC_ADD_CLOSE_THE_DOOR,
         ]
       failure_requirements:
         []
@@ -277,8 +300,9 @@
       success_requirements:
         [REQ_PUT_FOURTH_COIN]
       success_actions:
-        [AC_PERFORMANCE_CULMINATION,
-         AC_ADD_THE_FINAL]
+        [ AC_SOUND_BACKGROUND_STAGE_4,
+          AC_PERFORMANCE_CULMINATION,
+          AC_ADD_THE_FINAL]
       failure_requirements:
         []
       failure_actions:

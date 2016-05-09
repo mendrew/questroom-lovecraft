@@ -4,6 +4,7 @@ from quest_core import parse
 from quest_core import Requirement
 from quest_core import Task
 from quest_core import GameState
+from quest_core import SoundManager
 
 from settings import Devices
 from settings import Global
@@ -16,10 +17,8 @@ import time
 import threading
 import tornado
 import subprocess
-import pygame
+# import pygame
 import platform
-if platform.system() == 'Windows':
-    from KeyboardListener import KeyboardListener
 
 from full_quest import *
 
@@ -33,13 +32,6 @@ class QuestRoom(threading.Thread):
         global clients
         clients = cli
         self.game_state = None
-
-        # sound_manager = None
-        # pygame.mixer.init()
-        # self.ambient_music = pygame.mixer.Sound("game_ambient.wav")
-        # self.final_game_music = pygame.mixer.Sound("final_game.wav")
-        # self.win_music = pygame.mixer.Sound("you_win.wav")
-        # self.current_music = self.ambient_music
 
         self.last_sended_messages = {}
 
@@ -72,6 +64,8 @@ class QuestRoom(threading.Thread):
         self.game_state.device_master = master
         self.game_state.slave = self.lovecraft_device
         self.game_state.quest_room = self
+        self.game_state.sound_manager = SoundManager()
+        # self.sound_manager.play()
         self.game_state.start_game_loop(self.send_state)
 
 
