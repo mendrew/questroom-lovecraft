@@ -54,17 +54,21 @@
               document.getElementById("skip_task_input").value = '';
             }
 
-            function turnLight(event) {
+            function turnOnLight(event) {
               light_id = event.currentTarget.dataset.light_id;
-              ws.send('{"message": "light", "light_id":"' + light_id + '"}');
+              ws.send('{"message": "light", "light_id":"' + light_id + '", "action": "1"}');
+            }
+
+            function turnOffLight(event) {
+              light_id = event.currentTarget.dataset.light_id;
+              ws.send('{"message": "light", "light_id":"' + light_id + '", "action": "0"}');
             }
 
             function setRoomLight(event) {
-              let room_led_id = event.currentTarget.dataset.room_led_id;
-              let color_value = document.getElementById(room_led_id).value;
+              var room_led_id = event.currentTarget.dataset.room_led_id;
+              var color_value = document.getElementById(room_led_id).value;
               console.log("Color_value for room " + room_led_id + ": " + color_value);
-              let message = '{"message": "set_room_light", "room_led_id":"' + room_led_id + '", "color":"' + color_value + '"}';
-              <!-- console.log("Send: " + message); -->
+              var  message = '{"message": "set_room_light", "room_led_id":"' + room_led_id + '", "color":"' + color_value + '"}';
               ws.send(message);
             }
 
@@ -101,13 +105,8 @@
        <table>
          <th>Управление освещением</th>
          <tr>
-           <td><button data-light_id="onAll" onClick='turnLight(event)'>Вкл. всё</button></td>
-           <td><button data-light_id="offAll" onClick='turnLight(event)'>Выкл. всё</button></td>
-         </tr>
-         <tr>
-           <td><button data-light_id="startOn" onClick='turnLight(event)'>Вкл. старт</button></td>
-           <td><button data-light_id="wireOn" onClick='turnLight(event)'>Вкл. провод</button></td>
-           <td><button data-light_id="fuseOn" onClick='turnLight(event)'>Вкл. предохранитель</button></td>
+           <td><button data-light_id="lenin" onClick='turnOnLight(event)'>Лампочки вкл</button></td>
+           <td><button data-light_id="lenin" onClick='turnOffLight(event)'>Лампочки выкл</button></td>
          </tr>
        </table>
 
@@ -138,26 +137,6 @@
        </table>
        <br/>
        <br/>
-
-       <table>
-         <th>Управление ящиками</th>
-         <tr>
-           <td><button data-box_id='0' onClick='openBox(event)'>Открыть первый ящик</button></td>
-           <td><button data-box_id='0' onClick='closeBox(event)'>Закрыть первый ящик</button></td>
-         </tr>
-         <tr>
-           <td><button data-box_id='1' onClick='openBox(event)'>Открыть второй ящик</button></td>
-           <td><button data-box_id='1' onClick='closeBox(event)'>Закрыть второй ящик</button></td>
-         </tr>
-         <tr>
-           <td><button data-box_id='2' onClick='openBox(event)'>Открыть третий ящик</button></td>
-           <td><button data-box_id='2' onClick='closeBox(event)'>Закрыть третий ящик</button></td>
-         </tr>
-         <tr>
-           <td><button data-box_id='3' onClick='openBox(event)'>Открыть четвертый ящик</button></td>
-           <td><button data-box_id='3' onClick='closeBox(event)'>Закрыть четвертый ящик</button></td>
-         </tr>
-       </table>
 
        <table>
          <tr><th>Звуковые эффекты</th></tr>

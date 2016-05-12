@@ -118,23 +118,14 @@ class QuestRoom(threading.Thread):
                 else:
                     self.game_state.skipped_tasks.append(task)
 
-    def turn_light(self, light_id):
+    def turn_light(self, light_id, action):
         global master
-        if light_id == "onAll":
-            # print("Command to light all")
-            AC_ENABLE_ALL_LIGHT(master, None, None)
-        elif light_id == "offAll":
-            # print("Command to light off")
-            AC_DISABLE_ALL_LIGHT(master, None, None)
-        elif light_id == "startOn":
-            # print("Command light to start ")
-            AC_ENABLE_INIT_LIGHTS(master, None, None)
-        elif light_id == "wireOn":
-            # print("Command light to wireConnected ")
-            AC_ENABLE_WIRE_ROOMS_LIGHT(master, None, None)
-        elif light_id == "fuseOn":
-            # print("Command light to fuse insert ")
-            AC_ENABLE_FUSE_ROOMS_LIGHT(master, None, None)
+        sm_leds = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+
+        if room_led_id == "lenin":
+            sm_leds[DEVICES_TABLE.SL_LENIN_LIGHT] = action
+
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, smart_leds)
 
     def set_room_light(self, room_led_id, in_color):
         # convert color range from 255 to 4096
@@ -158,7 +149,6 @@ class QuestRoom(threading.Thread):
         elif room_led_id == "fishes":
             for index in DEVICES_TABLE.SML_FISH_EYES:
                 smart_leds.setOneLed(index, color)
-
         else:
             print("Error in set_room_light in quest_room: unknown room led {}".format(room_led_id))
 

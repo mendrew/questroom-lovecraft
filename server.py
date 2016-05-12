@@ -83,7 +83,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
                 quest_room.toggle_skiped_task(task_id)
 
         if "light" == message['message']:
-            quest_room.turn_light(message['light_id'])
+            quest_room.turn_light(message['light_id'], message['action'])
 
         if "set_room_light" == message['message']:
             room_led = message['room_led_id']

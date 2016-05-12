@@ -273,7 +273,7 @@ def AC_ADD_WAIT_START_QUEST(master, task, game_state):
 
 def REQ_START_QUEST(master, task, game_state):
     pass
-    return True
+    # return True
 
 def AC_SOUND_BACKGROUND_STAGE_1(master, task, game_state):
     game_state.sound_manager.play_sound(SOUNDS.stage_1)

@@ -83,6 +83,8 @@ class DEVICES_TABLE:
 
     SL_BOX_UNDER_PICTURE = 3
 
+    SL_LENIN_LIGHT = 23
+
 
 
 
