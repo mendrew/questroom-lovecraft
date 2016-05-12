@@ -124,10 +124,13 @@ class QuestRoom(threading.Thread):
         global master
         sm_leds = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
 
-        if room_led_id == "lenin":
-            sm_leds[DEVICES_TABLE.SL_LENIN_LIGHT] = action
+        if light_id == "lenin":
+            sm_leds[DEVICES_TABLE.SL_LENIN_LIGHT] = int(action)
 
-        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, smart_leds)
+        if light_id == "lightning":
+            AC_LIGHTNING(master, None, self.game_state)
+
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sm_leds)
 
     def set_room_light(self, room_led_id, in_color):
         # convert color range from 255 to 4096
@@ -163,6 +166,7 @@ class QuestRoom(threading.Thread):
 
     def play_sound(self, sound_id):
         # stages
+        print("Sound_id in quest_room play_sound: {}".format(sound_id))
         if sound_id in SOUNDS_NAMES.STAGE_1:
             self.play_stage_sound(SOUNDS.stage_1)
 

@@ -5,11 +5,11 @@ import numpy
 from fractions import Fraction
 import threading
 
-from wavefile import WaveReader
+from wavefile import WaveReader, Seek
 
 """
     SOUNDS BUGS
-    If we have only one sound file in files - than we may be hear any second time 
+    If we have only one sound file in files - than we may be hear any second time
         some creak sound on the first channel
     Looks like it's all because of my volume managment
     now i deprecated volume
@@ -80,10 +80,12 @@ class SoundManager:
         if sound not in self.files:
             self.add_sound(sound)
 
+        sound.file_pointer.seek(Seek.SET)
+
         self.playing_data_list = numpy.zeros((len(self.files), self.max_channels, self.CHUNK), numpy.float32, order='F')
 
-        # sound.file_pointer.seek(0)
-        self.playing_files.append(sound)
+        if sound not in self.playing_files:
+            self.playing_files.append(sound)
 
         if self.stream is None:
             self.play()
@@ -99,8 +101,11 @@ class SoundManager:
             # self.stream.close()
             # self.stream = None
         # with self.lock:
+        sound.file_pointer.seek(Seek.SET)
+        print("playing_files before remove: {}".format(self.playing_files))
         print("Remove playing file")
         self.playing_files.remove(sound)
+        print("playing_files before remove: {}".format(self.playing_files))
 
 
     def callback(self, in_data, frame_count, time_info, status):

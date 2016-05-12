@@ -73,7 +73,7 @@ def init_sounds(game_state):
     SOUNDS.stage_4 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_4)
 def REQ_QUEST_INIT(master, task, game_state):
     init_sounds(game_state)
-    return True
+    # return True
     # close all boxes
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_COIN] = DEVICES_TABLE.CLOSE
@@ -83,17 +83,26 @@ def REQ_QUEST_INIT(master, task, game_state):
     sl_controlls[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = DEVICES_TABLE.CLOSE
     sl_controlls[DEVICES_TABLE.SL_MIRROR_IN_CLOSET] = 0
 
+
     for scare_index in DEVICES_TABLE.SL_SCARE_IN_LOCKER:
         sl_controlls[scare_index] = 0
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
     # init colors
+    # on lenin lamps
+    sl_controlls =  master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_LENIN_LIGHT] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    # init fish eyes
+    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    for eye_index in DEVICES_TABLE.SML_FISH_EYES:
+       smart_leds.setOneLed(eye_index, [1, 0, 0])
+
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     for smart_index in range(0,20):
         smart_leds.setOneLed(smart_index, [0x0, 0x0, 0x0])
-    # smart_leds.setOneLed(17, [0x000, 0x0, 0x0])
-    # smart_leds.setOneLed(18, [0x000, 0x0, 0x0])
 
     # init doors
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
@@ -299,6 +308,7 @@ def AC_LIGHTNING(master, task, game_state):
         sml_control.setOneLed(light_index, [0xfff, 0xfff, 0xfff])
 
     print("Lightning!")
+    time.sleep(0.4)
 
 
     for index_number, light_index in enumerate(DEVICES_TABLE.SML_LIGHTNING):
@@ -418,6 +428,7 @@ def AC_FALLING_FISHING_RODS(master, task, game_state):
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 def AC_PLAY_SHE_ALL_I_HAVE(master, task, game_state):
+    time.sleep(8)
     game_state.sound_manager.play_sound(SOUNDS.girl_she_all_i_have)
 
 def AC_ADD_COLLECT_DAD_FISHING(master, task, game_state):
@@ -760,6 +771,9 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
 def AC_OPEN_MIRROR(master, task, game_state):
     sl_control = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_control[DEVICES_TABLE.SL_MIRROR_IN_CLOSET] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
+    time.sleep(1)
+    sl_control[DEVICES_TABLE.SL_MIRROR_IN_CLOSET] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
 
 def AC_PARANORMAL_ACTIVITY(master, task, game_state):

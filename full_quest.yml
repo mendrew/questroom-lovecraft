@@ -13,7 +13,7 @@
           # AC_ADD_CLOCK_SYNCHRONIZATION,
           # AC_ADD_MARINE_TROPHIES
           # AC_ADD_CLOSE_THE_DOOR,
-          AC_ADD_WAIT_START_QUEST
+          AC_ADD_WAIT_START_QUEST,
           ]
       failure_requirements:
         []
@@ -116,14 +116,14 @@
         [REQ_PUT_FIRST_COIN]
       success_actions:
         # печь разгорится
-        [AC_PLAY_SHE_ALL_I_HAVE,
+        [
         AC_BAKE_FLARE_UP,
         AC_PERFORMANCE_DOLL_GIFT,
         AC_POLTERGEISTS,
         AC_FALLING_BOOKS,
         AC_ADD_COLLECT_DAD_FISHING,
-        AC_FALLING_FISHING_RODS
-        ]
+        AC_FALLING_FISHING_RODS,
+        AC_PLAY_SHE_ALL_I_HAVE]
       failure_requirements:
         []
       failure_actions:
