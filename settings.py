@@ -168,5 +168,6 @@ class SOUNDS:
     stage_2 = None
     stage_3 = None
     stage_4 = None
+    stages = [stage_1, stage_2, stage_3, stage_4]
     # stage_2 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_2)
     # lightning = sound_manager.add_sound(SOUNDS_NAMES.LIGHTNING)

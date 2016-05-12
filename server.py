@@ -62,9 +62,9 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         print(message)
         print(message['message'])
 
-        # if "play_sound" == message['message']:
-        #     sound_id = message['sound']
-        #     play_sound(sound_id)
+        if "play_sound" == message['message']:
+            sound_id = message['sound']
+            quest_room.play_sound(sound_id)
 
         if "door" == message['message']:
             door_id = int(message['door_id'])

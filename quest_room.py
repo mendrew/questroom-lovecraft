@@ -9,6 +9,8 @@ from quest_core import SoundManager
 from settings import Devices
 from settings import Global
 from settings import DEVICES_TABLE
+from settings import SOUNDS_NAMES
+from settings import SOUNDS
 
 
 from deviceMaster.devicemaster import DeviceMaster
@@ -169,4 +171,38 @@ class QuestRoom(threading.Thread):
     def play_robot(self, sound):
         self.sound_manager.play_sound(sound)
 
+    def play_sound(self, sound_id):
+        # stages
+        if sound_id in SOUNDS_NAMES.STAGE_1:
+            self.play_stage_sound(SOUNDS.stage_1)
+
+        elif sound_id in SOUNDS_NAMES.STAGE_2:
+            self.play_stage_sound(SOUNDS.stage_2)
+
+        elif sound_id in SOUNDS_NAMES.STAGE_3:
+            self.play_stage_sound(SOUNDS.stage_3)
+
+        elif sound_id in SOUNDS_NAMES.STAGE_4:
+            self.play_stage_sound(SOUNDS.stage_4)
+
+        elif sound_id in SOUNDS_NAMES.GIRL_1_HELP:
+            self.game_state.sound_manager.play_sound(SOUNDS.girl_help)
+
+        elif sound_id in SOUNDS_NAMES.GIRL_2_HEARD:
+            self.game_state.sound_manager.play_sound(SOUNDS.girl_heard)
+
+        elif sound_id in SOUNDS_NAMES.GIRL_4_SHE_ALL_I_HAVE:
+            self.game_state.sound_manager.play_sound(SOUNDS.girl_she_all_i_have)
+
+        elif sound_id in SOUNDS_NAMES.LIGHTNING:
+            self.game_state.sound_manager.play_sound(SOUNDS.lightning)
+
+        elif sound_id in SOUNDS_NAMES.LIFESAVER_1:
+            self.game_state.sound_manager.play_sound(SOUNDS.lifesaver_begin)
+
+
+    def play_stage_sound(self, stage_sound_file):
+        for stage_sound in SOUNDS.stages:
+            self.game_state.sound_manager.stop(stage_sound)
+        self.game_state.sound_manager.play_sound(stage_sound_file)
 
