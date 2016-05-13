@@ -10,6 +10,7 @@ from threading import Timer
 from settings import Devices, DEVICES_TABLE, TASKS_IDS
 from settings import SOUNDS_NAMES
 from settings import SOUNDS
+from settings import COLORS
 
 class GLOBAL_VARIABLES:
     TABLE_CLOCK_VALUE = 3
@@ -98,7 +99,7 @@ def REQ_QUEST_INIT(master, task, game_state):
     # init fish eyes
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     for eye_index in DEVICES_TABLE.SML_FISH_EYES:
-       smart_leds.setOneLed(eye_index, [1, 0, 0])
+       smart_leds.setOneLed(eye_index, COLORS.FISH_NORMAL)
 
     # smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     # for smart_index in range(0,20):
@@ -292,18 +293,45 @@ def AC_SOUND_RADIO_RESCUE(master, task, game_state):
 
 
 def AC_LIGHTNING(master, task, game_state):
+
+    print("SML_ALL_LIGHTS in AC_LIGHTNING {}".format(DEVICES_TABLE.SML_ALL_LIGHTS))
+
     game_state.sound_manager.play_sound(SOUNDS.lightning)
     # SOUNDS.lightning.play()
     sml_control = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     last_lightning_value = []
+
+    ## SAVE COLORS
+    # save all room colors
+    all_smart_lights = []
+    for light_index in DEVICES_TABLE.SML_ALL_LIGHTS:
+        all_smart_lights.append(sml_control.getRgbLed(light_index))
+        sml_control.setOneLed(light_index, COLORS.NONE)
+
+    # set FISH eyes colors
+    # for lig
+    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    for eye_index in DEVICES_TABLE.SML_FISH_EYES:
+       smart_leds.setOneLed(eye_index, COLORS.FISH_LIGHTNING)
+
+    # save lenin light color
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    lenin_ligth_value = sl_controlls[DEVICES_TABLE.SL_LENIN_LIGHT]
+    # lenin off
+    sl_controlls[DEVICES_TABLE.SL_LENIN_LIGHT] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    # save lightning colors
     for light_index in DEVICES_TABLE.SML_LIGHTNING:
         last_lightning_value.append(sml_control.getRgbLed(light_index))
 
+        # lightning off
     for light_index in DEVICES_TABLE.SML_LIGHTNING:
         sml_control.setOneLed(light_index, [0, 0, 0])
 
-    time.sleep(0.4)
+    time.sleep(1)
 
+    # lightning on
     for light_index in DEVICES_TABLE.SML_LIGHTNING:
         sml_control.setOneLed(light_index, [0xfff, 0xfff, 0xfff])
 
@@ -311,9 +339,24 @@ def AC_LIGHTNING(master, task, game_state):
     time.sleep(0.4)
 
 
+    # restore lightning colors
     for index_number, light_index in enumerate(DEVICES_TABLE.SML_LIGHTNING):
-        print("last_lightning_value: {}".format(last_lightning_value))
+        print("last_lightning_value: {}".format(last_lightning_value[index_number]))
         sml_control.setOneLed(light_index, last_lightning_value[index_number])
+
+    time.sleep(2)
+
+    ## RESTORE
+    # restore room lights
+    for index_number, light_index in enumerate(DEVICES_TABLE.SML_ALL_LIGHTS):
+        print("last_romm_light_value: {}".format(all_smart_lights[index_number]))
+        sml_control.setOneLed(light_index, all_smart_lights[index_number])
+
+    # restore lenin light value
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_LENIN_LIGHT] = lenin_ligth_value
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
 
     time.sleep(1)
     print("Lightning off!")
@@ -819,19 +862,11 @@ def AC_OPEN_CLOSET_BOX_WITH_KNIFE(master, task, game_state):
 def AC_ADD_MARINE_TROPHIES(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.MARINE_TROPHIES)
 
-class Colors:
-    WHITE = [0xff, 0xff, 0xff]
-    RED = [0xff, 0, 0]
-    LIGHT_RED = [0xff, 33, 33]
-    GREEN = [0, 0xff, 0]
-    LIGHT_GREEN = [33, 0xff, 33]
-    BLUE = [0, 0, 0xff]
-    NONE = [0, 0, 0]
 
 class pColors:
-    RED = Colors.RED
-    GREEN = Colors.GREEN
-    BLUE = Colors.BLUE
+    RED = COLORS.RED
+    GREEN = COLORS.GREEN
+    BLUE = COLORS.BLUE
 
 def toggleEyeColor(color):
     if pColors.GREEN == color:

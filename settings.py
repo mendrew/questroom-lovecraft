@@ -12,6 +12,18 @@ class Devices:
     LOVECRAFT_USB_SERIAL_NUMBER = "AL0079C6"
     LOVECRAFT_DEVICE_COM_PORT_WIN = "COM3"
 
+class COLORS:
+    FISH_NORMAL = [0x05, 0x02, 0x00]
+    FISH_LIGHTNING = [0x01, 0x00, 0x00]
+
+    WHITE = [0xff, 0xff, 0xff]
+    RED = [0xff, 0, 0]
+    LIGHT_RED = [0xff, 33, 33]
+    GREEN = [0, 0xff, 0]
+    LIGHT_GREEN = [33, 0xff, 33]
+    BLUE = [0, 0, 0xff]
+    NONE = [0, 0, 0]
+
 class DEVICES_TABLE:
 
     #ADC
@@ -107,10 +119,23 @@ class DEVICES_TABLE:
     SML_WINDOWS = 16
     SML_WINDOWS_DOUBLE_HREN = 17
 
-
-
     # FISH EYES
     SML_FISH_EYES = [28, 27, 26, 25, 24]
+
+    SML_ALL_LIGHTS = [
+            SML_FISHING_ROD,
+            SML_STOREROOM,
+            SML_STOREROOM_SECRET,
+            SML_DOLL,
+            SML_HALL_END,
+            SML_HALL_BEGIN,
+            SML_WINDOWS,
+            SML_WINDOWS_DOUBLE_HREN
+            ] + SML_FISH_EYES
+
+
+
+
 
 class TASKS_IDS:
     INITIALIZATION = 0

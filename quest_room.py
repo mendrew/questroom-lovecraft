@@ -11,6 +11,7 @@ from settings import Global
 from settings import DEVICES_TABLE
 from settings import SOUNDS_NAMES
 from settings import SOUNDS
+from settings import COLORS
 
 
 from deviceMaster.devicemaster import DeviceMaster
@@ -57,7 +58,7 @@ class QuestRoom(threading.Thread):
                 lovecraft_comport = process.communicate()[0]
             print("Use COM-port: {}".format(lovecraft_comport))
 
-        self.lovecraft_device = master.addSlave(Devices.LOVECRAFT_DEVICE_NAME, lovecraft_comport, 1, boudrate=0)
+        self.lovecraft_device = master.addSlave(Devices.LOVECRAFT_DEVICE_NAME, lovecraft_comport, 1, boudrate=4)
 
         master.start()
 
@@ -80,9 +81,9 @@ class QuestRoom(threading.Thread):
     def set_box_state(self, box_id, box_state):
         smartLeds = master.getSmartLeds(self.hallwayPuzzles)
         if(box_state == 0):
-            smartLeds.setOneLed(box_id + 8, Colors.BLUE)
+            smartLeds.setOneLed(box_id + 8, COLORS.BLUE)
         else:
-            smartLeds.setOneLed(box_id + 8, Colors.RED)
+            smartLeds.setOneLed(box_id + 8, COLORS.RED)
         relays = master.getRelays(self.hallwayPuzzles).get()
         relays[box_id] = box_state
         master.setRelays(self.hallwayPuzzles, relays)
@@ -136,6 +137,7 @@ class QuestRoom(threading.Thread):
         # convert color range from 255 to 4096
         color = [value * 16 for value in in_color]
         rooms_colors = [ color[2], color[1], color[0] ]
+        fish_colors= [ color[0], color[2], color[1] ]
         # print("Color {} in new range {}".format(in_color, color))
         smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
 
@@ -153,7 +155,7 @@ class QuestRoom(threading.Thread):
 
         elif room_led_id == "fishes":
             for index in DEVICES_TABLE.SML_FISH_EYES:
-                smart_leds.setOneLed(index, color)
+                smart_leds.setOneLed(index, fish_colors)
         else:
             print("Error in set_room_light in quest_room: unknown room led {}".format(room_led_id))
 
