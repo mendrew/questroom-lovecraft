@@ -12,7 +12,7 @@ from settings import SOUNDS_NAMES
 from settings import SOUNDS
 
 class GLOBAL_VARIABLES:
-    TABLE_CLOCK_VALUE = 1
+    TABLE_CLOCK_VALUE = 3
     TABLE_CLOCK_LAST_CHANGE_TIME = time.time()
 
     WALL_CLOCK_REAL_12 = 0
@@ -502,9 +502,9 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
     print("REQ_CLOCK_SYNCHRONIZATION: wall list {}".format(wall_clock_values_list))
     print("REQ_CLOCK_SYNCHRONIZATION: table time: {}, wall time: {}".format(GLOBAL_VARIABLES.TABLE_CLOCK_VALUE, wall_clock_time))
 
-    # if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE ==  wall_clock_time:
-    #     print("(REQ:{task_id}) Clocks sync!".format(task_id=task.id))
-    #     return True
+    if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE ==  wall_clock_time:
+        print("(REQ:{task_id}) Clocks sync!".format(task_id=task.id))
+        return True
 
     task.stack.append(wall_clock_values_list)
     # save time
@@ -659,10 +659,10 @@ def AC_ADD_CLOSE_THE_DOOR(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.CLOSE_THE_DOOR)
 
 def REQ_CLOSE_THE_DOOR(master, task, game_state):
-    TIME_TO_CLOSE = 15
-    TIME_TO_OPEN = 15
+    TIME_TO_CLOSE = 23
+    TIME_TO_OPEN = 12
     TIME_TO_WAIT_PLAYERS_ACTIONS = 90
-    TIME_BEFORE_CLOSE_AGAIN = 30
+    TIME_BEFORE_CLOSE_AGAIN = 3
 
     class Stages:
         CLOSE = 1
@@ -801,9 +801,10 @@ def REQ_ANOMALOUS_PHENOMENA_ENTER_NUMBERS(master, task, game_state):
         print("ANOMALOUS_PHENOMENA_ENTER_NUMBERS:\n number1: {}\tnumber2: {}\tnumber3: {}".format(
             number_1, number_2, number_3))
 
-    number_ok_1 = True if number_1 == DEVICES_TABLE.SYMBOL_1_VALUE else False
-    number_ok_2 = True if number_2 == DEVICES_TABLE.SYMBOL_2_VALUE else False
-    number_ok_3 = True if number_3 == DEVICES_TABLE.SYMBOL_3_VALUE else False
+    number_ok_1 = DEVICES_TABLE.SYMBOL_1_VALUE_RANGE[0] <= number_1 <= DEVICES_TABLE.SYMBOL_1_VALUE_RANGE[1]
+    number_ok_2 = DEVICES_TABLE.SYMBOL_2_VALUE_RANGE[0] <= number_2 <= DEVICES_TABLE.SYMBOL_2_VALUE_RANGE[1]
+    number_ok_3 = DEVICES_TABLE.SYMBOL_3_VALUE_RANGE[0] <= number_3 <= DEVICES_TABLE.SYMBOL_3_VALUE_RANGE[1]
+    print("numok 1: {} | 2: {} | 3: {}".format(number_ok_1, number_ok_2, number_ok_3))
 
     return number_ok_1 and number_ok_2 and number_ok_3
 
