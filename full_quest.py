@@ -100,9 +100,9 @@ def REQ_QUEST_INIT(master, task, game_state):
     for eye_index in DEVICES_TABLE.SML_FISH_EYES:
        smart_leds.setOneLed(eye_index, [1, 0, 0])
 
-    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-    for smart_index in range(0,20):
-        smart_leds.setOneLed(smart_index, [0x0, 0x0, 0x0])
+    # smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    # for smart_index in range(0,20):
+    #     smart_leds.setOneLed(smart_index, [0x0, 0x0, 0x0])
 
     # init doors
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()

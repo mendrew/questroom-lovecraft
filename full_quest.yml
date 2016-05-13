@@ -117,13 +117,13 @@
       success_actions:
         # печь разгорится
         [
-        AC_BAKE_FLARE_UP,
-        AC_PERFORMANCE_DOLL_GIFT,
-        AC_POLTERGEISTS,
-        AC_FALLING_BOOKS,
-        AC_ADD_COLLECT_DAD_FISHING,
-        AC_FALLING_FISHING_RODS,
-        AC_PLAY_SHE_ALL_I_HAVE]
+          AC_LIGHTNING,
+          AC_PERFORMANCE_DOLL_GIFT,
+          AC_POLTERGEISTS,
+          AC_FALLING_BOOKS,
+          AC_ADD_COLLECT_DAD_FISHING,
+          AC_FALLING_FISHING_RODS,
+          AC_PLAY_SHE_ALL_I_HAVE]
       failure_requirements:
         []
       failure_actions:
@@ -175,10 +175,9 @@
       success_requirements:
         [REQ_PUT_SECOND_COIN]
       success_actions:
-        [AC_BAKE_FLARE_UP,
-         AC_PERFORMANCE_YOU_NOT_MY_FATHER,
+        [
+         AC_LIGHTNING,
          AC_STRENGTHENING_OF_PRESENCE,
-         AC_SPIDERS_RUNNING,
          AC_ADD_CODE_LOCK,
          AC_SCARE_IN_LOCKER,
          AC_SOUND_BACKGROUND_STAGE_2
@@ -232,7 +231,9 @@
       success_requirements:
         [REQ_PUT_THIRD_COIN]
       success_actions:
-        [AC_SOUND_BACKGROUND_STAGE_3,
+        [
+         AC_LIGHTNING,
+         AC_SOUND_BACKGROUND_STAGE_3,
          AC_ADD_CLOSE_THE_DOOR,
         ]
       failure_requirements:
@@ -300,9 +301,12 @@
       success_requirements:
         [REQ_PUT_FOURTH_COIN]
       success_actions:
-        [ AC_SOUND_BACKGROUND_STAGE_4,
+        [
+          AC_LIGHTNING,
+          AC_SOUND_BACKGROUND_STAGE_4,
           AC_PERFORMANCE_CULMINATION,
-          AC_ADD_THE_FINAL]
+          AC_ADD_THE_FINAL
+        ]
       failure_requirements:
         []
       failure_actions:
