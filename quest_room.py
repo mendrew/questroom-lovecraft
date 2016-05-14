@@ -165,6 +165,22 @@ class QuestRoom(threading.Thread):
         else:
             CHANGE_MOVE_PICTURE(master, picture_id)
 
+    def pump_in(self, pump_action):
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP] = pump_action
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    def pump_out(self, pump_action):
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_AQUARIUM_PUMP] = pump_action
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    def aquarium_pump_in(self):
+        AC_ADD_FILL_QUARIUM(master, None, self.game_state)
+
+    def aquarium_pump_out(self):
+        AC_ADD_PUMPS_WATER(master, None, self.game_state)
+
     def button_pressed(self, button_id):
         self.game_state.state['pressed_buttons'].append(button_id)
         print(self.game_state.state)

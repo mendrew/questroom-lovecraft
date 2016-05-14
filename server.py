@@ -98,6 +98,20 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
             quest_room.set_room_light(room_led, rgb_color)
 
+        if "aquarium_pump" == message['message']:
+            pump_action = message['action']
+            quest_room.pump_out(int(pump_action))
+
+        if "eyes_pump" == message['message']:
+            pump_action = message['action']
+            quest_room.pump_in(int(pump_action))
+
+        if "aquarium_pump_in" == message['message']:
+            quest_room.aquarium_pump_in()
+
+        if "aquarium_pump_out" == message['message']:
+            quest_room.aquarium_pump_out()
+
     def on_close(self):
         if self.id not in clients: return
         del clients[self.id]

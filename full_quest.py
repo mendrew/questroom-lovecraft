@@ -706,14 +706,74 @@ def REQ_PLACE_THE_BOTTLES(master, task, game_state):
 
     return bottles_placed
 
-def AC_PUMPS_WATER(master, task, game_state):
-    TIME_TO_WORK = 10 # find time experimental
-    print("(ACTION:{task_id}) Pumps water | where pump? Ask Alexey".format(task_id=task.id))
+def AC_ADD_PUMPS_WATER(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.AQUARIUM_PUMP)
+
+def REQ_AQUARIUM_PUMPS_WATER_TIMER(master, task, game_state):
+    # find time experimental
+    TIME_TO_WORK = DEVICES_TABLE.AQUARIUM_PUMP_TIME
+
+    if task.stack == []:
+        print("(REQ:{task_id}) Start aquarium pump".format(task_id=task.id))
+        start_time = time.time()
+        task.stack.append(start_time)
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_AQUARIUM_PUMP] = 1
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    start_time = task.stack.pop()
+
+    passed_time = time.time() - start_time
+
+    if passed_time < TIME_TO_WORK:
+        task.stack.append(start_time)
+        return
+
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_AQUARIUM_PUMP] = 1
-    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-    time.sleep(TIME_TO_WORK)
     sl_controlls[DEVICES_TABLE.SL_AQUARIUM_PUMP] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    return True
+
+def AC_STOP_AQUARIUM_PUMP(master, task, game_state):
+    print("(ACTION:{task_id}) Stop aquarium pump".format(task_id=task.id))
+
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_AQUARIUM_PUMP] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+def AC_ADD_FILL_QUARIUM(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.AQUARIUM_FILL)
+
+def REQ_FILL_AQUARIUM(master, task, game_state):
+    # find time experimental
+    TIME_TO_WORK = DEVICES_TABLE.AQUARIUM_FILL_TIME
+
+    if task.stack == []:
+        print("(REQ:{task_id}) Start fill aquarium".format(task_id=task.id))
+        start_time = time.time()
+        task.stack.append(start_time)
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP] = 1
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    start_time = task.stack.pop()
+
+    passed_time = time.time() - start_time
+
+    if passed_time < TIME_TO_WORK:
+        task.stack.append(start_time)
+        return
+
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    return True
+
+def AC_STOP_AQUARIUM_FILL(master, task, game_state):
+    print("(ACTION:{task_id}) Stop aquarium fill".format(task_id=task.id))
+
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 def AC_ADD_PUT_THIRD_COIN(master, task, game_state):

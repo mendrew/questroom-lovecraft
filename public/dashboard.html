@@ -53,6 +53,27 @@
               ws.send('{"message": "moving_picture", "picture_id":"' + picture_id + '"}');
             }
 
+            function aquarium_pump(event){
+              action = event.currentTarget.dataset.action;
+              ws.send('{"message": "aquarium_pump", "action":"' + action + '"}');
+            }
+
+            function eyes_pump(event){
+              action = event.currentTarget.dataset.action;
+              ws.send('{"message": "eyes_pump", "action":"' + action + '"}');
+            }
+
+            function aquarium_pump_in(event){
+              action = event.currentTarget.dataset.action;
+              ws.send('{"message": "aquarium_pump_in"}');
+            }
+
+            function aquarium_pump_out(event){
+              action = event.currentTarget.dataset.action;
+              ws.send('{"message": "aquarium_pump_out"}');
+            }
+
+
             function toggle_skip_task(event) {
               task_id = document.getElementById("skip_task_input").value;
               ws.send('{"message": "skip_task", "task_id":"' + task_id + '"}');
@@ -126,6 +147,20 @@
            <td><button data-picture_id='3' onClick='changePicture(event)'>Картина №4</button></td>
          </tr>
          <tr>
+         </tr>
+         <th>Насосы</th>
+         <tr>
+           <td><button data-action='1' onClick='aquarium_pump(event)'>Аквариум вкл.</button></td>
+           <td><button data-action='0' onClick='aquarium_pump(event)'>Аквариум выкл.</button></td>
+         </tr>
+         <tr>
+           <td><button data-action='1' onClick='eyes_pump(event)'>Глаза вкл.</button></td>
+           <td><button data-action='0' onClick='eyes_pump(event)'>Глаза выкл.</button></td>
+         </tr>
+
+         <tr>
+           <td><button onClick='aquarium_pump_in(event)'>Заполнить аквариум</button></td>
+           <td><button onClick='aquarium_pump_out(event)'>Слить воду</button></td>
          </tr>
        </table>
 

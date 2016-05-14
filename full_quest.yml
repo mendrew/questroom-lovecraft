@@ -233,13 +233,37 @@
       success_requirements:
         [REQ_PLACE_THE_BOTTLES]
       success_actions:
-        [AC_PUMPS_WATER,
+        [AC_ADD_PUMPS_WATER,
          AC_ADD_PUT_THIRD_COIN]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Расставить склянки'
+
+    -
+      id: 90
+      success_requirements:
+        [REQ_AQUARIUM_PUMPS_WATER_TIMER]
+      success_actions:
+        [AC_STOP_AQUARIUM_PUMP]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Выкачиваем воду из аквариума'
+
+    -
+      id: 91
+      success_requirements:
+        [REQ_FILL_AQUARIUM]
+      success_actions:
+        [AC_STOP_AQUARIUM_FILL]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Закачиваем воду в аквариум'
 
     -
       id: 16
