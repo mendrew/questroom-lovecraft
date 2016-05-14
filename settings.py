@@ -17,12 +17,15 @@ class COLORS:
     FISH_LIGHTNING = [0x01, 0x00, 0x00]
 
     WHITE = [0xff, 0xff, 0xff]
-    RED = [0xff, 0, 0]
+    RED = [0xfff, 0, 0]
     LIGHT_RED = [0xff, 33, 33]
     GREEN = [0, 0xff, 0]
     LIGHT_GREEN = [33, 0xff, 33]
-    BLUE = [0, 0, 0xff]
+    BLUE = [0, 0, 0xfff]
     NONE = [0, 0, 0]
+    # for ROOMS it's RGB => BGR
+    ROOM_BLUE = [ BLUE[2], BLUE[1], BLUE[0] ]
+    ROOM_RED = [ RED[2], RED[1], RED[0] ]
 
 class DEVICES_TABLE:
 
@@ -196,5 +199,3 @@ class SOUNDS:
     stage_3 = None
     stage_4 = None
     stages = []
-    # stage_2 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_2)
-    # lightning = sound_manager.add_sound(SOUNDS_NAMES.LIGHTNING)
