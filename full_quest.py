@@ -73,6 +73,10 @@ def init_sounds(game_state):
     SOUNDS.stage_2 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_2)
     SOUNDS.stage_3 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_3)
     SOUNDS.stage_4 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_4)
+    SOUNDS.stages.append(SOUNDS.stage_1)
+    SOUNDS.stages.append(SOUNDS.stage_2)
+    SOUNDS.stages.append(SOUNDS.stage_3)
+    SOUNDS.stages.append(SOUNDS.stage_4)
 def REQ_QUEST_INIT(master, task, game_state):
     init_sounds(game_state)
     # return True

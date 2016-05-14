@@ -101,7 +101,7 @@ class SoundManager:
             # self.stream.close()
             # self.stream = None
         # with self.lock:
-        sound.file_pointer.seek(Seek.SET)
+        sound.file_pointer.seek(Seek.END)
         print("playing_files before remove: {}".format(self.playing_files))
         print("Remove playing file")
         self.playing_files.remove(sound)
