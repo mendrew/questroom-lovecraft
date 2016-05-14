@@ -88,6 +88,7 @@ def REQ_QUEST_INIT(master, task, game_state):
     sl_controlls[DEVICES_TABLE.SL_BOX_IN_CLOSET_WITH_KNIFE] = DEVICES_TABLE.CLOSE
     sl_controlls[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = DEVICES_TABLE.CLOSE
     sl_controlls[DEVICES_TABLE.SL_MIRROR_IN_CLOSET] = 0
+    sl_controlls[DEVICES_TABLE.SL_FISHING_RODS_HOLDERS] = 0
 
 
     for scare_index in DEVICES_TABLE.SL_SCARE_IN_LOCKER:
@@ -471,6 +472,10 @@ def AC_FALLING_FISHING_RODS(master, task, game_state):
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_FISHING_RODS_HOLDERS] = 1
 
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    time.sleep(2)
+    sl_controlls[DEVICES_TABLE.SL_FISHING_RODS_HOLDERS] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 def AC_PLAY_SHE_ALL_I_HAVE(master, task, game_state):
