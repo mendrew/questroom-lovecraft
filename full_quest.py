@@ -77,6 +77,7 @@ def init_sounds(game_state):
     SOUNDS.stages.append(SOUNDS.stage_2)
     SOUNDS.stages.append(SOUNDS.stage_3)
     SOUNDS.stages.append(SOUNDS.stage_4)
+
 def REQ_QUEST_INIT(master, task, game_state):
     init_sounds(game_state)
     # return True
@@ -1000,6 +1001,17 @@ def AC_SOUND_BACKGROUND_STAGE_4(master, task, game_state):
 
 def AC_PERFORMANCE_CULMINATION(master, task, game_state):
     print("(ACTION:{task_id}) Performance culmination".format(task_id=task.id))
+
+def AC_SET_FINAL_ROOMS_COLORS(master, task, game_state):
+    print("(ACTION:{task_id}) Set final rooms colors".format(task_id=task.id))
+    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    init_color = COLORS.ROOM_RED
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, init_color)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, init_color)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
+
 
 def AC_ADD_THE_FINAL(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.THE_FINAL)

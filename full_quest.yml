@@ -319,6 +319,7 @@
         [
           AC_LIGHTNING,
           AC_SOUND_BACKGROUND_STAGE_4,
+          AC_SET_FINAL_ROOMS_COLORS,
           AC_PERFORMANCE_CULMINATION,
           AC_ADD_THE_FINAL
         ]
