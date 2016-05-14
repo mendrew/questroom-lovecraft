@@ -1,5 +1,13 @@
 #### joe made this: http://goel.io/joe
 
+# project personal
+Pyro_NS_URI
+music/*
+!music/*/convert_music_all.bash
+!music/*/convert_music.bash
+!music/*/convert_music.bash_BACKUP
+*.tar.gz
+
 #####=== Python ===#####
 
 # Byte-compiled / optimized / DLL files
@@ -26,9 +34,6 @@ var/
 .installed.cfg
 *.egg
 *.swp
-Pyro_NS_URI
-music/
-*.tar.gz
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
