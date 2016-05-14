@@ -9,9 +9,12 @@
         [AC_SOUND_BACKGROUND_STAGE_1,
           AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
           AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
+          AC_ADD_BACKGROUND_PICTURE_MOVES,
           AC_ADD_PUT_STATUE_ON_LORDS_TABLE,
+          #
           # AC_ADD_CLOCK_SYNCHRONIZATION,
           # AC_ADD_MARINE_TROPHIES
+          # AC_ADD_KUNSTKAMERA,
           # AC_ADD_CLOSE_THE_DOOR,
           AC_ADD_WAIT_START_QUEST,
           ]
@@ -85,6 +88,18 @@
       failure_actions:
         []
       title: 'Инициализация настенных часов'
+
+    -
+      id: 111
+      success_requirements:
+        [REQ_BACKGROUND_PICTURE_MOVES]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Меняющаяся картина'
 
     -
       id: 4

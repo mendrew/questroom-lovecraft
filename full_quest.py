@@ -17,6 +17,7 @@ class GLOBAL_VARIABLES:
     TABLE_CLOCK_LAST_CHANGE_TIME = time.time()
 
     WALL_CLOCK_REAL_12 = 0
+    CURRENT_MOVE_PICTURE = None
 
 def puzzle_status(puzzle_name, status):
     PUZZLE_OK_MSG = "\tOK"
@@ -107,9 +108,9 @@ def REQ_QUEST_INIT(master, task, game_state):
 
     # init doors
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
-    # relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.OPEN
-    # relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = DEVICES_TABLE.CLOSE
-    # master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.OPEN
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = DEVICES_TABLE.CLOSE
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
     # init GODS table
     relays[DEVICES_TABLE.RELAY_GODS_TABLE_MOTOR] = DEVICES_TABLE.OPEN
@@ -117,6 +118,7 @@ def REQ_QUEST_INIT(master, task, game_state):
     time.sleep(10)
     relays[DEVICES_TABLE.RELAY_GODS_TABLE_MOTOR] = DEVICES_TABLE.CLOSE
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
+    time.sleep(2)
 
     # check_puzzles
     check_puzzles(master)
@@ -222,61 +224,48 @@ def REQ_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
 
     return True
 
+def AC_ADD_BACKGROUND_PICTURE_MOVES(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.BACKGROUND_PICTURE_MOVES)
+
+def CHANGE_MOVE_PICTURE(master, picture_index=None):
+    if GLOBAL_VARIABLES.CURRENT_MOVE_PICTURE is None:
+        picture_index = 0
+    elif picture_index is None:
+        picture_index = GLOBAL_VARIABLES.CURRENT_MOVE_PICTURE + 1
+
+    if picture_index >= len(DEVICES_TABLE.SL_MOVING_PICTURE):
+        picture_index = 0
+
+    print("Change picture move, index: {}".format(picture_index))
+    GLOBAL_VARIABLES.CURRENT_MOVE_PICTURE = picture_index
+
+    sl_control = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    for picture_value in DEVICES_TABLE.SL_MOVING_PICTURE:
+        sl_control[picture_value] = 0
+    sl_control[DEVICES_TABLE.SL_MOVING_PICTURE[picture_index]] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
 
 def REQ_BACKGROUND_PICTURE_MOVES(master, task, game_state):
-    INITIALIZATION_SET_TIME = 30
-    INITIALIZATION_UNSET_TIME = 20 + INITIALIZATION_SET_TIME
+    INITIALIZATION_SET_TIME = 10
     PICTURE_CHANGE_PERIOD = 15 * 60
-    #
-    # debug values
-    INITIALIZATION_SET_TIME = 0
-    INITIALIZATION_UNSET_TIME = 2 + INITIALIZATION_SET_TIME
-    CLOCK_CHANGE_PERIOD = 1 * 2
-    #
-    # clock_ctrl = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    #
-    stack = task.stack
-    if stack == []:
+
+    if task.stack == []:
+        CHANGE_MOVE_PICTURE(master)
         start_time = time.time()
-        clock_last_change_time = start_time + INITIALIZATION_UNSET_TIME + 1
-    else:
-        start_time = stack.pop()
-        clock_last_change_time = stack.pop()
+        task.stack.append(start_time)
 
+    start_time = task.stack.pop()
 
-    time_passed = time.time() - start_time
-    if time_passed < INITIALIZATION_SET_TIME:
-        pass
-    #     # Signals ZERO and NEXT CMD to SET
-    #     clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_ZERO_CMD] = 1
-    #     clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 1
-    #     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, clock_ctrl)
-    #
-    #     stack.append(clock_last_change_time)
-    #     stack.append(start_time)
-    #     return
-    elif time_passed < INITIALIZATION_UNSET_TIME:
-        pass
-    #     # Clear ZERO CMD around 20 sec
-    #     clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_ZERO_CMD] = 0
-    #     clock_ctrl[DEVICES_TABLE.SL_TABLE_CLOCK_NEXT_TIME_CMD] = 1
-    #     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, clock_ctrl)
-    #
-    #     stack.append(clock_last_change_time)
-    #     stack.append(start_time)
-    #     return
-    #
-    # change_clock_time_passed = time.time() - clock_last_change_time
-    #
-    if change_clock_time_passed > PICTURE_CHANGE_PERIOD:
-        pass
-    #     TABLE_CLOCK_UP(master)
-    #
-        clock_last_change_time = time.time()
-        print("(REQ:{task_id}) Change picture".format(task_id=task.id))
-    #
-    stack.append(clock_last_change_time)
-    stack.append(start_time)
+    passed_time = time.time() - start_time
+
+    if passed_time < PICTURE_CHANGE_PERIOD:
+        task.stack.append(start_time)
+        return
+
+    CHANGE_MOVE_PICTURE(master)
+    start_time = time.time()
+    task.stack.append(start_time)
+
 
 def AC_ADD_WAIT_START_QUEST(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.START_QUEST)
@@ -702,9 +691,9 @@ def AC_ADD_CLOSE_THE_DOOR(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.CLOSE_THE_DOOR)
 
 def REQ_CLOSE_THE_DOOR(master, task, game_state):
-    TIME_TO_CLOSE = 23
+    TIME_TO_CLOSE = 25
     TIME_TO_OPEN = 12
-    TIME_TO_WAIT_PLAYERS_ACTIONS = 90
+    TIME_TO_WAIT_PLAYERS_ACTIONS = 15
     TIME_BEFORE_CLOSE_AGAIN = 3
 
     class Stages:
@@ -812,6 +801,11 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
     task.stack.append(start_time)
 
 def AC_OPEN_MIRROR(master, task, game_state):
+    # finaly close the door
+    relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.RELAY_CLOSE
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
+
     sl_control = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_control[DEVICES_TABLE.SL_MIRROR_IN_CLOSET] = 1
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
@@ -937,14 +931,14 @@ def REQ_MARINE_TROPHIES(master, task, game_state):
 def AC_OPEN_CLOSET_DOOR(master, task, game_state):
     print("(ACTION:{task_id}) Open closet".format(task_id=task.id))
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
-    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.CLOSE
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.RELAY_OPEN
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
 
 def AC_OPEN_DOOR_WITH_SKELET(master, task, game_state):
     print("(ACTION:{task_id}) Open door with skelet".format(task_id=task.id))
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
-    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = DEVICES_TABLE.CLOSE
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = DEVICES_TABLE.RELAY_OPEN
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
 
