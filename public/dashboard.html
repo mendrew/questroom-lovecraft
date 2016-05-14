@@ -48,6 +48,11 @@
               ws.send('{"message": "box", "box_id":"' + box + '", "state": 1}');
             }
 
+            function changePicture(event){
+              picture_id = event.currentTarget.dataset.picture_id;
+              ws.send('{"message": "moving_picture", "picture_id":"' + picture_id + '"}');
+            }
+
             function toggle_skip_task(event) {
               task_id = document.getElementById("skip_task_input").value;
               ws.send('{"message": "skip_task", "task_id":"' + task_id + '"}');
@@ -102,21 +107,33 @@
          </tr>
          <th>Алтарь</th>
          <tr>
-           <td><button data-door_id='2' onClick='openDoor(event)'>Монеты</button></td>
            <td><button data-door_id='2' onClick='closeDoor(event)'>Статуэтка</button></td>
+           <td><button data-door_id='2' onClick='openDoor(event)'>Монеты</button></td>
          </tr>
          <th>Толкалка книг</th>
          <tr>
            <td><button data-door_id='3' onClick='closeDoor(event)'>Выдвинуть</button></td>
            <td><button data-door_id='3' onClick='openDoor(event)'>Спрятать</button></td>
          </tr>
+         <th>Меняющаяся картина</th>
+         <tr>
+           <td><button data-picture_id='0' onClick='changePicture(event)'>Картина №1</button></td>
+           <td><button data-picture_id='2' onClick='changePicture(event)'>Картина №3</button></td>
+           <td><button data-picture_id='100' onClick='changePicture(event)'>Следующая</button></td>
+         </tr>
+         <tr>
+           <td><button data-picture_id='1' onClick='changePicture(event)'>Картина №2</button></td>
+           <td><button data-picture_id='3' onClick='changePicture(event)'>Картина №4</button></td>
+         </tr>
+         <tr>
+         </tr>
        </table>
 
        <table>
          <th>Управление освещением</th>
          <tr>
-           <td><button data-light_id="lenin" onClick='turnOnLight(event)'>Лампочки вкл</button></td>
-           <td><button data-light_id="lenin" onClick='turnOffLight(event)'>Лампочки выкл</button></td>
+           <td><button data-light_id="eddisson_lamp" onClick='turnOnLight(event)'>Лампочки Эддисона вкл</button></td>
+           <td><button data-light_id="eddisson_lamp" onClick='turnOffLight(event)'>Лампочки Эддисона выкл</button></td>
          </tr>
          <tr>
            <td><button data-light_id="lightning" onClick='turnOffLight(event)'>Молнии</button></td>

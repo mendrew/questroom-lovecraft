@@ -99,7 +99,7 @@ def REQ_QUEST_INIT(master, task, game_state):
     # init colors
     # on lenin lamps
     sl_controlls =  master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_LENIN_LIGHT] = 1
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
     # init fish eyes
@@ -250,6 +250,15 @@ def CHANGE_MOVE_PICTURE(master, picture_index=None):
     sl_control[DEVICES_TABLE.SL_MOVING_PICTURE[picture_index]] = 1
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
 
+    # off eddison lamp
+    sl_controlls =  master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    time.sleep(2)
+    sl_controlls =  master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
 def REQ_BACKGROUND_PICTURE_MOVES(master, task, game_state):
     INITIALIZATION_SET_TIME = 10
     PICTURE_CHANGE_PERIOD = 15 * 60
@@ -310,9 +319,9 @@ def AC_LIGHTNING(master, task, game_state):
 
     # save lenin light color
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    lenin_ligth_value = sl_controlls[DEVICES_TABLE.SL_LENIN_LIGHT]
+    lenin_ligth_value = sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT]
     # lenin off
-    sl_controlls[DEVICES_TABLE.SL_LENIN_LIGHT] = 0
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
     # save lightning colors
@@ -348,7 +357,7 @@ def AC_LIGHTNING(master, task, game_state):
 
     # restore lenin light value
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_LENIN_LIGHT] = lenin_ligth_value
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = lenin_ligth_value
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 

@@ -77,6 +77,11 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             box_state = message['state']
             quest_room.set_box_state(box_id, box_state)
 
+        if "moving_picture" == message['message']:
+            picture_id = int(message['picture_id'])
+            print("Change picture with id: {}".format(picture_id))
+            quest_room.change_picture(picture_id)
+
         if "skip_task" in message['message']:
             if message['task_id'].isdigit():
                 task_id = int(message['task_id'])

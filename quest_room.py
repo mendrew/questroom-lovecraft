@@ -125,8 +125,8 @@ class QuestRoom(threading.Thread):
         global master
         sm_leds = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
 
-        if light_id == "lenin":
-            sm_leds[DEVICES_TABLE.SL_LENIN_LIGHT] = int(action)
+        if light_id == "eddisson_lamp":
+            sm_leds[DEVICES_TABLE.SL_EDDISON_LIGHT] = int(action)
 
         if light_id == "lightning":
             AC_LIGHTNING(master, None, self.game_state)
@@ -158,6 +158,12 @@ class QuestRoom(threading.Thread):
                 smart_leds.setOneLed(index, fish_colors)
         else:
             print("Error in set_room_light in quest_room: unknown room led {}".format(room_led_id))
+
+    def change_picture(self, picture_id):
+        if picture_id == 100:
+            CHANGE_MOVE_PICTURE(master, None)
+        else:
+            CHANGE_MOVE_PICTURE(master, picture_id)
 
     def button_pressed(self, button_id):
         self.game_state.state['pressed_buttons'].append(button_id)

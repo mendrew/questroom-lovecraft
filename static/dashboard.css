@@ -15,6 +15,13 @@ html, body {
   height: 55px;
 }
 
+button {
+  /* padding: 5px 25px; */
+  width: auto;
+  height: 40px;
+  /* background: #ffffff; */
+}
+
 .jscolor {
   position:'left';
   borderColor:'#FFF #666 #666 #FFF';
