@@ -380,24 +380,34 @@ def REQ_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
     PUT_RANGE = DEVICES_TABLE.LORDS_TABLE_STATUE_RANGE
     NONE_RANGE = DEVICES_TABLE.LORDS_TABLE_STATUE_NONE_RANGE
 
+    if task.stack == []:
+        old_value = 0
+        task.stack.append(old_value)
+
+    old_value = task.stack.pop()
     lords_table_value = master.getAdc(
             Devices.LOVECRAFT_DEVICE_NAME).get()[DEVICES_TABLE.ADC_LORDS_TABLE_STATUE]
     if PUT_RANGE[0] <= lords_table_value <= PUT_RANGE[1]:
         print("YES: REQ_PUT_STATUE_ON_LORDS_TABLE value: {}".format(lords_table_value))
         return True
     elif NONE_RANGE[0] <= lords_table_value <= NONE_RANGE[1]:
-        print("NONE: REQ_PUT_STATUE_ON_LORDS_TABLE value: {}".format(lords_table_value))
-        # it's ok. statue just absent
-        pass
+        if old_value != lords_table_value:
+            # it's ok. statue just absent
+            print("NONE: REQ_PUT_STATUE_ON_LORDS_TABLE value: {}".format(lords_table_value))
+            old_value = lords_table_value
     else:
         # error - puzzle is broken
         if not master.debugMode():
-            print("ERROR: REQ_PUT_STATUE_ON_LORDS_TABLE value: {}".format(lords_table_value))
+            if old_value != lords_table_value:
+                print("ERROR: REQ_PUT_STATUE_ON_LORDS_TABLE value: {}".format(lords_table_value))
+                old_value = lords_table_value
 
+    task.stack.append(old_value)
     return False
 
 def AC_TURN_LORDS_TABLE(master, task, game_state):
     print("(ACTION:{task_id})We turn lords table".format(task_id=task.id))
+    time.sleep(2)
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
     relays[DEVICES_TABLE.RELAY_GODS_TABLE_MOTOR] = DEVICES_TABLE.OPEN
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
@@ -699,6 +709,7 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
     TIME_TO_OPEN = 12
     TIME_TO_WAIT_PLAYERS_ACTIONS = 15
     TIME_BEFORE_CLOSE_AGAIN = 3
+    NUMBER_DELTA = 20
 
     class Stages:
         CLOSE = 1
@@ -789,8 +800,14 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
             if int(passed_time % 10) == 0:
                 print("(REQ:{task_id}) SYMBOLS_LIST: {symlist}".format(task_id=task.id, symlist=symbols_list))
 
+            players_active = False
+            for index in range(len(old_symbols_list)):
+                if symbols_list[index] < (old_symbols_list[index] - NUMBER_DELTA) or symbols_list[index] > (old_symbols_list[index] + NUMBER_DELTA):
+                    players_active = True
+                    break
 
-            if old_symbols_list != symbols_list:
+
+            if players_active:
                 print("Players start to play and door is closed - return TRUE")
                 return True
 
@@ -806,6 +823,7 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
 
 def AC_OPEN_MIRROR(master, task, game_state):
     # finaly close the door
+    time.sleep(1)
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
     relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.RELAY_CLOSE
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
