@@ -13,22 +13,21 @@ from settings import SOUNDS_NAMES
 from settings import SOUNDS
 from settings import COLORS
 
+from full_quest import *
+
 
 from deviceMaster.devicemaster import DeviceMaster
 
-import time
 import threading
 import tornado
 import subprocess
 # import pygame
 import platform
 
-from full_quest import *
-
-
-
 clients = None
 master = None
+
+
 class QuestRoom(threading.Thread):
 
     def __init__(self, cli):
@@ -52,13 +51,17 @@ class QuestRoom(threading.Thread):
                 lovecraft_comport = Devices.LOVECRAFT_DEVICE_COM_PORT_WIN
             else:
                 lovecraft_comport = "/dev/ttyUSB2"
-                bashCommand = Global.GET_TTY_USB_SCRIPT + Devices.LOVECRAFT_USB_SERIAL_NUMBER
-                process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+                bashCommand = Global.GET_TTY_USB_SCRIPT \
+                    + Devices.LOVECRAFT_USB_SERIAL_NUMBER
+                process = subprocess.Popen(
+                    bashCommand.split(),
+                    stdout=subprocess.PIPE)
 
                 lovecraft_comport = process.communicate()[0]
             print("Use COM-port: {}".format(lovecraft_comport))
 
-        self.lovecraft_device = master.addSlave(Devices.LOVECRAFT_DEVICE_NAME, lovecraft_comport, 1, boudrate=4)
+        self.lovecraft_device = master.addSlave(
+            Devices.LOVECRAFT_DEVICE_NAME, lovecraft_comport, 1, boudrate=4)
 
         master.start()
 
@@ -71,10 +74,12 @@ class QuestRoom(threading.Thread):
         # self.sound_manager.play()
         self.game_state.start_game_loop(self.send_state)
 
-
     def set_door_state(self, door_id, door_state):
         relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
-        print("Set door state in set_door_state in quest_room {}   {}".format(door_id, door_state))
+        print(
+            "Set door state in set_door_state in quest_room {}   {}".format(
+                door_id,
+                door_state))
         relays[door_id] = door_state
         master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
@@ -91,9 +96,12 @@ class QuestRoom(threading.Thread):
     def send_ws_message(self, client_id, message):
         # print("send_ws_message: to client {}".format(client_id))
         str_id = str(client_id)
-        if str_id not in clients: return
-        if 'progress_visible' not in message: message['progress_visible'] = True
-        if 'countdown_active' not in message: message['countdown_active'] = True
+        if str_id not in clients:
+            return
+        if 'progress_visible' not in message:
+            message['progress_visible'] = True
+        if 'countdown_active' not in message:
+            message['countdown_active'] = True
 
         clients[str_id]['object'].write_message(message)
 
@@ -104,7 +112,12 @@ class QuestRoom(threading.Thread):
         if self.game_state is None:
             return
 
-        message = {'message': [u" ({}).{}".format(x.id, x.title).encode('utf-8') for x in self.game_state.active_tasks]}
+        message = {
+            'message': [
+                u" ({}).{}".format(
+                    x.id,
+                    x.title).encode('utf-8')
+                for x in self.game_state.active_tasks]}
         message = tornado.escape.json_encode(message)
         try:
             if '42' in clients:
@@ -136,8 +149,8 @@ class QuestRoom(threading.Thread):
     def set_room_light(self, room_led_id, in_color):
         # convert color range from 255 to 4096
         color = [value * 16 for value in in_color]
-        rooms_colors = [ color[2], color[1], color[0] ]
-        fish_colors= [ color[0], color[2], color[1] ]
+        rooms_colors = [color[2], color[1], color[0]]
+        fish_colors = [color[0], color[2], color[1]]
         # print("Color {} in new range {}".format(in_color, color))
         smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
 
@@ -145,7 +158,9 @@ class QuestRoom(threading.Thread):
             smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, rooms_colors)
 
         elif room_led_id == "secret_storeroom":
-            smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, rooms_colors)
+            smart_leds.setOneLed(
+                DEVICES_TABLE.SML_STOREROOM_SECRET,
+                rooms_colors)
 
         elif room_led_id == "hall_begin":
             smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, rooms_colors)
@@ -157,7 +172,9 @@ class QuestRoom(threading.Thread):
             for index in DEVICES_TABLE.SML_FISH_EYES:
                 smart_leds.setOneLed(index, fish_colors)
         else:
-            print("Error in set_room_light in quest_room: unknown room led {}".format(room_led_id))
+            print(
+                "Error in set_room_light in quest_room:" +
+                " unknown room led {}".format(room_led_id))
 
     def change_picture(self, picture_id):
         if picture_id == 100:
@@ -218,9 +235,7 @@ class QuestRoom(threading.Thread):
         elif sound_id in SOUNDS_NAMES.LIFESAVER_1:
             self.game_state.sound_manager.play_sound(SOUNDS.lifesaver_begin)
 
-
     def play_stage_sound(self, stage_sound_file):
         for stage_sound in SOUNDS.stages:
             self.game_state.sound_manager.stop(stage_sound)
         self.game_state.sound_manager.play_sound(stage_sound_file)
-

@@ -7,6 +7,9 @@ music/*
 !music/*/convert_music.bash
 !music/*/convert_music.bash_BACKUP
 *.tar.gz
+# for vim python-mode plugin whom use rope
+.ropeproject
+
 
 #####=== Python ===#####
 
