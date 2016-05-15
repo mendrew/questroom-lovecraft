@@ -325,7 +325,6 @@ def AC_LIGHTNING(master, task, game_state):
     print("SML_ALL_LIGHTS in AC_LIGHTNING {}".format(
               DEVICES_TABLE.SML_ALL_LIGHTS))
 
-    game_state.sound_manager.play_sound(SOUNDS.lightning)
     # SOUNDS.lightning.play()
     sml_control = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     last_lightning_value = []
