@@ -360,6 +360,9 @@ def AC_LIGHTNING(master, task, game_state):
 
     time.sleep(1)
 
+    # start play sound
+    game_state.sound_manager.play_sound(SOUNDS.lightning)
+
     # lightning on
     for light_index in DEVICES_TABLE.SML_LIGHTNING:
         sml_control.setOneLed(light_index, [0xfff, 0xfff, 0xfff])
