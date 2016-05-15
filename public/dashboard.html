@@ -80,6 +80,11 @@
               document.getElementById("skip_task_input").value = '';
             }
 
+            function start_quest(event) {
+              console.log("start_quest")
+              ws.send('{"message": "skip_task", "task_id":"1000"}');
+            }
+
             function turnOnLight(event) {
               light_id = event.currentTarget.dataset.light_id;
               ws.send('{"message": "light", "light_id":"' + light_id + '", "action": "1"}');
@@ -115,6 +120,8 @@
          <input type="text" id="skip_task_input" placeholder="Номер задачи: ####" title="Номер задачи - только цифры">
          <input type="submit" id="skip_task_button" value="Пропустить задачу"></td>
        </form>
+
+       <!-- <input type="submit" id="skip_task_button" onsubmit='start_quest(event)' value=" <<== Старт квеста ==>>"></td> -->
 
        <table>
          <th>Управление дверями</th>

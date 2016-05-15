@@ -228,7 +228,7 @@ def AC_ADD_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
 
 def REQ_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
     # time to set 12 o'clock
-    INITIALIZATION_SET_12_TIME = 20
+    INITIALIZATION_SET_12_TIME = 10
 
     stack = task.stack
     if stack == []:

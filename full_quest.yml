@@ -7,10 +7,6 @@
       success_actions:
         # [AC_ADD_ANOMALOUS_PHENOMENA]
         [AC_SOUND_BACKGROUND_STAGE_1,
-          AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
-          AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
-          AC_ADD_BACKGROUND_PICTURE_MOVES,
-          AC_ADD_PUT_STATUE_ON_LORDS_TABLE,
           #
           # AC_ADD_CLOCK_SYNCHRONIZATION,
           # AC_ADD_MARINE_TROPHIES
@@ -30,9 +26,15 @@
         [REQ_START_QUEST]
       success_actions:
         [
-         AC_SOUND_RADIO_RESCUE,
-         AC_LIGHTNING,
-         AC_ADD_PLAY_SOUND_HELP]
+          AC_SOUND_RADIO_RESCUE,
+          AC_LIGHTNING,
+          AC_ADD_PLAY_SOUND_HELP,
+          AC_ADD_PUT_STATUE_ON_LORDS_TABLE,
+
+          AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
+          AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
+          AC_ADD_BACKGROUND_PICTURE_MOVES,
+        ]
       failure_requirements:
         []
       failure_actions:
