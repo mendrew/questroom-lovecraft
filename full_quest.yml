@@ -130,20 +130,32 @@
       success_requirements:
         [REQ_PUT_FIRST_COIN]
       success_actions:
-        # печь разгорится
-        [
+        [ AC_ADD_FALLING_BOOK_RODS_TIMER,
           AC_LIGHTNING,
           AC_PERFORMANCE_DOLL_GIFT,
           AC_POLTERGEISTS,
-          AC_FALLING_BOOKS,
           AC_ADD_COLLECT_DAD_FISHING,
-          AC_FALLING_FISHING_RODS,
           AC_PLAY_SHE_ALL_I_HAVE]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Вставить первую монету'
+
+    -
+      id: 120
+      success_requirements:
+        [REQ_FALLING_BOOK_RODS_TIMER]
+      success_actions:
+        [
+          AC_FALLING_BOOKS,
+          AC_FALLING_FISHING_RODS,
+        ]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Таймер на падение книг и Удочек'
 
     -
       id: 3

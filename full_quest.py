@@ -37,7 +37,7 @@ def check_puzzles(master):
     for slot_index in range(len(DEVICES_TABLE.BTN_KNIFE_SLOTS)):
         knife_slots.append(
                 buttons[DEVICES_TABLE.BTN_KNIFE_SLOTS[slot_index]])
-    puzzle_status("KNIFE_SLOTS: {}".format(knife_slots), knife_slots == [0]*5)
+    puzzle_status("KNIFE_SLOTS: {}".format(knife_slots), knife_slots == [1]*5)
 
     # # check monets
     # adc_list = master.getAdc(Devices.LOVECRAFT_DEVICE_NAME).get()
@@ -48,8 +48,10 @@ def check_puzzles(master):
     #
     # inserted_coins_number = 0
     # for index, coin_value in enumerate(adc_coins_values):
-    #     print("REQ: check_coins_inserted coin_id {} value: {}".format(index, coin_value))
-    #     if DEVICES_TABLE.COIN_INSERTED_RANGE[0] <= coin_value <= DEVICES_TABLE.COIN_INSERTED_RANGE[1]:
+    #         print("REQ: check_coins_inserted |"
+    #               " coin_id {} value: {}".format(index, coin_value))
+    #     if coin_value >= DEVICES_TABLE.COIN_INSERTED_RANGE[0] and
+    #             coin_value <= DEVICES_TABLE.COIN_INSERTED_RANGE[1]:
     #         inserted_coins_number = inserted_coins_number + 1
     #     elif DEVICES_TABLE.COIN_NONE_RANGE[0] <= coin_value <= DEVICES_TABLE.COIN_NONE_RANGE[1]:
     #         # all ok, just monet not inserted
@@ -281,7 +283,6 @@ def CHANGE_MOVE_PICTURE(master, picture_index=None):
 
 
 def REQ_BACKGROUND_PICTURE_MOVES(master, task, game_state):
-    INITIALIZATION_SET_TIME = 10
     PICTURE_CHANGE_PERIOD = 15 * 60
 
     if task.stack == []:
@@ -495,8 +496,6 @@ def REQ_PUT_FIRST_COIN(master, task, game_state):
     time.sleep(5)
     return check_coins_inserted(master, task, game_state, 1)
 
-#!!!
-
 
 def AC_BAKE_FLARE_UP(master, task, game_state):
     print("(ACTION:{task_id}) Bake flare up".format(task_id=task.id))
@@ -514,6 +513,23 @@ def AC_POLTERGEISTS(master, task, game_state):
             task_id=task.id))
     AC_SCARE_IN_LOCKER(master, task, game_state)
     pass
+
+def AC_ADD_FALLING_BOOK_RODS_TIMER(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.FALLING_BOOK_RODS_TIMER)
+
+def REQ_FALLING_BOOK_RODS_TIMER(master, task, game_state):
+    if task.stack == []:
+        start_time = time.time()
+        task.stack.append(start_time)
+
+    start_time = task.stack.pop()
+    passed_time = time.time() - start_time
+
+    if passed_time <= DEVICES_TABLE.FALLING_BOOK_RODS_TIMER:
+        task.stack.append(start_time)
+        return
+
+    return True
 
 
 def AC_FALLING_BOOKS(master, task, game_state):
@@ -910,18 +926,18 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
         pass
     elif Stages.WAIT_TILL_CLOSE == stage:
         if passed_time > TIME_TO_CLOSE:
-           # check is door really close, or something happend
+            # check is door really close, or something happend
             buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
             if buttons[DEVICES_TABLE.BTN_DOOR_OPEN]:
-                print(
-                    "(REQ:{task_id}) DOOR STILL OPEN. SOMETHING HAPPEND, need to open it!".format(
-                        task_id=task.id))
+                print("(REQ:{task_id}) DOOR STILL OPEN."
+                      " SOMETHING HAPPEND, need to open it!".format(
+                            task_id=task.id))
                 # door still open we must open doorPLAYERS NOT ACTIVE
                 start_time = time.time()
                 stage = Stages.OPEN
             else:
-                print(
-                    "(REQ:{task_id}) DOOR_CLOSED AND WE MUST WAIT PLAYERS ACTIONS!".format(
+                print("(REQ:{task_id}) DOOR_CLOSED AND WE MUST"
+                      " WAIT PLAYERS ACTIONS!".format(
                         task_id=task.id))
                 # door closed and we must wait to players actions
                 start_time = time.time()
