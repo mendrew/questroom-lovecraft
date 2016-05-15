@@ -1,16 +1,19 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
 class Global:
     SCENARY_FILE = "./full_quest.yml"
     GET_TTY_USB_SCRIPT = "./get_ttyUSB.sh "
     INIT_TASK_ID = 0
+
 
 class Devices:
     DEVICE = "DEVICE"
     LOVECRAFT_DEVICE_NAME = "LOVECRAFT_DEVICE_NAME"
     LOVECRAFT_USB_SERIAL_NUMBER = "AL0079C6"
     LOVECRAFT_DEVICE_COM_PORT_WIN = "COM3"
+
 
 class COLORS:
     FISH_NORMAL = [0x05, 0x02, 0x00]
@@ -24,12 +27,13 @@ class COLORS:
     BLUE = [0, 0, 0xfff]
     NONE = [0, 0, 0]
     # for ROOMS it's RGB => BGR
-    ROOM_BLUE = [ BLUE[2], BLUE[1], BLUE[0] ]
-    ROOM_RED = [ RED[2], RED[1], RED[0] ]
+    ROOM_BLUE = [BLUE[2], BLUE[1], BLUE[0]]
+    ROOM_RED = [RED[2], RED[1], RED[0]]
+
 
 class DEVICES_TABLE:
 
-    #ADC
+    # ADC
     ADC_LORDS_TABLE_STATUE = 0
     LORDS_TABLE_STATUE_RANGE = (90, 109)
     LORDS_TABLE_STATUE_NONE_RANGE = (110, 150)
@@ -41,7 +45,6 @@ class DEVICES_TABLE:
     SYMBOL_2_VALUE_RANGE = (0, 5)
     SYMBOL_3_VALUE_RANGE = (180, 190)
 
-
     COIN_1 = 1
     COIN_2 = 2
     COIN_3 = 3
@@ -49,18 +52,18 @@ class DEVICES_TABLE:
     COIN_INSERTED_RANGE = (30, 36)
     COIN_NONE_RANGE = (37, 130)
 
-    #RELAY
+    # RELAY
     RELAY_CLOSET_DOOR_1 = 0
-    RELAY_CLOSET_DOOR_WITH_SKELET= 1
+    RELAY_CLOSET_DOOR_WITH_SKELET = 1
     RELAY_GODS_TABLE_MOTOR = 2
     RELAY_PUSH = 3
     # relay actions
     RELAY_CLOSE = 1
     RELAY_OPEN = 0
 
-    #Btn
-    BTN_COLLECT_DAD_FISHING = 1;
-    BTN_PICTURE_BARLEY_BREAK = 5;
+    # Btn
+    BTN_COLLECT_DAD_FISHING = 1
+    BTN_PICTURE_BARLEY_BREAK = 5
     BTN_CODE_LOCKS_CODE_BUTTONS = 2
     BTN_CODE_LOCKS_ELSE_BUTTONS = 3
 
@@ -72,26 +75,24 @@ class DEVICES_TABLE:
 
     BTN_DOOR_OPEN = 15
 
-
     # SimpleLeds
     CLOSE = 1
     OPEN = 0
     SL_TABLE_CLOCK_ZERO_CMD = 0
     SL_TABLE_CLOCK_NEXT_TIME_CMD = 1
-    SL_TABLE_CLOCK_RING_OUT = 20 # led7 B
+    SL_TABLE_CLOCK_RING_OUT = 20  # led7 B
 
-    SL_FISHING_RODS_HOLDERS = 14 # change from 13
+    SL_FISHING_RODS_HOLDERS = 14  # change from 13
 
-    SL_WALL_CLOCK_LOCK_WITH_PICTURE = 11 # LOCK - 1
-    SL_WALL_CLOCK_LOCK_WITH_COIN = 10 # LOCK - 2
+    SL_WALL_CLOCK_LOCK_WITH_PICTURE = 11  # LOCK - 1
+    SL_WALL_CLOCK_LOCK_WITH_COIN = 10  # LOCK - 2
 
     SL_SCARES_ALL = [15, 16, 17]
     SL_SCARE_IN_LOCKER = [15, 16, 17]
 
-
     SL_CODE_LOCKS_LOCKER_LOCK = 9
 
-    SL_DOLL_EYES_PUMP = 3 # 2B
+    SL_DOLL_EYES_PUMP = 3  # 2B
     DOLL_EYES_PUMP_TIME = 4
     SL_AQUARIUM_PUMP = 4
     AQUARIUM_PUMP_TIME = 38
@@ -138,9 +139,6 @@ class DEVICES_TABLE:
             ] + SML_FISH_EYES
 
 
-
-
-
 class TASKS_IDS:
     INITIALIZATION = 0
     INITIALIZATION_GODS_TABLE = 101
@@ -178,6 +176,7 @@ class TASKS_IDS:
     PUT_FOURTH_COIN = 20
 
     THE_FINAL = 21
+
 
 class SOUNDS_NAMES:
     SOUNDS_DIR = "./music/changed/"

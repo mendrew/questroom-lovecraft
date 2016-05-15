@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
-import os, sys
-parentPath = os.path.abspath("..")
-if parentPath not in sys.path:
-    sys.path.insert(0, parentPath)
+import os
+import sys
+import copy
+import time
 from full_quest import *
 from settings import Global
 
-import copy
-import time
+parentPath = os.path.abspath("..")
+if parentPath not in sys.path:
+    sys.path.insert(0, parentPath)
+
 
 class GameState:
+
     def __init__(self):
         self.device_master = None
         self.sound_manager = None
@@ -18,14 +21,16 @@ class GameState:
         self.active_tasks = []
         self.active_tasks_old_state = []
 
-        self.skipped_tasks = [];
+        self.skipped_tasks = []
 
         # always allow to open enter door
         self.openDoorPermission = [True, False, False]
 
     def start_game_loop(self, callback):
-        if not self.device_master: return
-        if not self.slave: return
+        if not self.device_master:
+            return
+        if not self.slave:
+            return
 
         root_task = self.find_task_with_id(Global.INIT_TASK_ID)
         self.active_tasks.append(root_task)
@@ -46,7 +51,8 @@ class GameState:
 
     def perform_task_if_satisfies(self, task):
 
-        task_success = task.success_requirements_satisfied(self.device_master, task, self)
+        task_success = task.success_requirements_satisfied(
+            self.device_master, task, self)
 
         task_skipped = task in self.skipped_tasks
 
@@ -57,10 +63,10 @@ class GameState:
             self.remove_active_task(task)
             task.perform_success_actions(self.device_master, task, self)
 
-        elif task.failure_requirements_satisfied(self.device_master, task, self):
+        elif task.failure_requirements_satisfied(self.device_master,
+                                                 task, self):
             self.remove_active_task(task)
             task.perform_failure_actions(self.device_master, task, self)
-
 
     def add_task(self, task):
         self.tasks.append(task)
@@ -83,4 +89,3 @@ class GameState:
     def add_active_task_with_id(self, id):
         task = self.find_task_with_id(id)
         self.active_tasks.append(task)
-

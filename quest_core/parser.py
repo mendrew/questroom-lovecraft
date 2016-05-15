@@ -5,11 +5,14 @@ from requirement import Requirement
 from task import Task
 from action import Action
 
-import os, sys
+from full_quest import *
+
+import os
+import sys
 parentPath = os.path.abspath("..")
 if parentPath not in sys.path:
     sys.path.insert(0, parentPath)
-from full_quest import *
+
 
 def parse(file_name):
     game_state = GameState()
@@ -32,6 +35,8 @@ def fillTask(task_source):
     map(lambda req:    task.add_failure_requirement(
             Requirement(eval(req))), task_source["failure_requirements"])
     map(lambda action: task.add_success_action(
+
+
             Action(eval(action))), task_source["success_actions"])
     map(lambda action: task.add_failure_action(
             Action(eval(action))), task_source["failure_actions"])

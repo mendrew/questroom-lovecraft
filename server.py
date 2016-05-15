@@ -11,12 +11,8 @@ from time import sleep
 from quest_room import QuestRoom
 # from sound_manager import play_sound
 
-import platform
-if platform.system() == 'Windows':
-    from KeyboardListener import KeyboardListener
 from tornado.options import define, options, parse_command_line
 import json
-from full_quest import SOUNDS
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -32,21 +28,24 @@ keyboard_listener = None
 
 
 class DashboardHandler(tornado.web.RequestHandler):
+
     @tornado.web.asynchronous
     def get(self):
         self.render('public/dashboard.html')
 
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
+
     def open(self, *args):
         self.id = self.get_argument("Id")
         self.stream.set_nodelay(True)
         if self.id in clients:
             del clients[self.id]
-        clients[self.id] = { "id": self.id, "object": self }
+        clients[self.id] = {"id": self.id, "object": self}
 
         id_str = str(self.id)
-        # print("quest last_sended_messages: {}".format(quest_room.last_sended_messages))
+        # print("quest last_sended_messages: {}".format(
+        #     quest_room.last_sended_messages))
 
         init_data = {'init': 'True'}
         self.write_message(init_data)
@@ -93,8 +92,14 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         if "set_room_light" == message['message']:
             room_led = message['room_led_id']
             rgb_color_str = message['color']
-            rgb_color = [int(char_h + char_l, 16) for char_h, char_l in zip(rgb_color_str[0::2], rgb_color_str[1::2])]
-            print("We receive set_room_light with room_led_id: {} and color {} = {}".format(room_led, rgb_color_str, rgb_color))
+            rgb_color = [
+                int(char_h + char_l, 16) for char_h,
+                char_l in zip(rgb_color_str[0:: 2],
+                              rgb_color_str[1:: 2])]
+            print(
+                "We receive set_room_light with room_led_id:"
+                " {} and color {} = {}".format(
+                    room_led, rgb_color_str, rgb_color))
 
             quest_room.set_room_light(room_led, rgb_color)
 
@@ -113,7 +118,8 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             quest_room.aquarium_pump_out()
 
     def on_close(self):
-        if self.id not in clients: return
+        if self.id not in clients:
+            return
         del clients[self.id]
 
 app = tornado.web.Application([
