@@ -188,8 +188,8 @@
         [REQ_FAMILY_PICTURE_BARLEY_BREAK]
       success_actions:
         [
-          AC_PLAY_SOUND_GIRL_HEARD,
           AC_SECOND_COIN_FALL,
+          AC_PLAY_SOUND_GIRL_HEARD,
           ADD_PUT_SECOND_COIN]
       failure_requirements:
         []
