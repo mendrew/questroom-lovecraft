@@ -64,7 +64,7 @@ def check_puzzles(master):
 def init_sounds(game_state):
     sound_manager = game_state.sound_manager
     SOUNDS.stage_1 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_1)
-    SOUNDS.lifesaver_begin = sound_manager.add_sound(SOUNDS_NAMES.LIFESAVER_1)
+    SOUNDS.lifesaver_begin = sound_manager.add_sound(SOUNDS_NAMES.LIFESAVER_2_1)
     SOUNDS.lightning = sound_manager.add_sound(SOUNDS_NAMES.LIGHTNING)
     SOUNDS.girl_help = sound_manager.add_sound(SOUNDS_NAMES.GIRL_1_HELP)
     SOUNDS.girl_heard = sound_manager.add_sound(SOUNDS_NAMES.GIRL_2_HEARD)
@@ -602,6 +602,7 @@ def REQ_FAMILY_PICTURE_BARLEY_BREAK(master, task, game_state):
     return puzzle_collected
 
 def AC_PLAY_SOUND_GIRL_HEARD(master, task, game_state):
+    time.sleep(2)
     game_state.sound_manager.play_sound(SOUNDS.girl_heard)
 
 def AC_SECOND_COIN_FALL(master, task, game_state):

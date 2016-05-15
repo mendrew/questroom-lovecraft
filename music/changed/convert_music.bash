@@ -11,6 +11,9 @@
 # ffmpeg -i ../original/2_Я\ слышала....mp3 -map_channel 0.0.0 -map_channel 0.0.1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 girl_2_i_heard.wav
 # ffmpeg -i ../original/4_Она\ всё....mp3 -map_channel 0.0.0 -map_channel 0.0.1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 girl_4_she_all_i_have.wav
 
-# ffmpeg -i ../original/Спасатель_2.2.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 lifesaver_2_2.wav
+# ffmpeg -i ../original/Спасатель_2.2.mp3 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -ac 6 -ar 44100 lifesaver_2_2.wav
 # ffmpeg -i ../original/1_Помоги....mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 lifesaver_2_2.wav
 
+# radio on 5 channel
+# has creak at the end
+ffmpeg -i ../original/Спасатель_2.1.mp3 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel -1 -ac 6 -ar 44100 lifesaver_2_1.wav

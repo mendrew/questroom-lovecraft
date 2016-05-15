@@ -182,7 +182,9 @@ class TASKS_IDS:
 class SOUNDS_NAMES:
     SOUNDS_DIR = "./music/changed/"
     STAGE_1 = SOUNDS_DIR + "stage_one_whisper.wav"
-    LIFESAVER_1 = SOUNDS_DIR + "lifesaver_2_2.wav"
+    LIFESAVER_1 = SOUNDS_DIR + "lifesaver_2_1.wav"
+    LIFESAVER_2_2 = SOUNDS_DIR + "lifesaver_2_2.wav"
+    LIFESAVER_2_1 = SOUNDS_DIR + "lifesaver_2_1.wav"
     GIRL_1_HELP = SOUNDS_DIR + "girl_1_help.wav"
     GIRL_2_HEARD = SOUNDS_DIR + "girl_2_i_heard.wav"
     GIRL_4_SHE_ALL_I_HAVE = SOUNDS_DIR + "girl_4_she_all_i_have.wav"
