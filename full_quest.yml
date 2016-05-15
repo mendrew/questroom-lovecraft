@@ -5,15 +5,9 @@
       success_requirements:
         [REQ_QUEST_INIT]
       success_actions:
-        # [AC_ADD_ANOMALOUS_PHENOMENA]
         [AC_SOUND_BACKGROUND_STAGE_1,
-          #
-          # AC_ADD_CLOCK_SYNCHRONIZATION,
-          # AC_ADD_MARINE_TROPHIES
-          # AC_ADD_KUNSTKAMERA,
-          # AC_ADD_CLOSE_THE_DOOR,
           AC_ADD_WAIT_START_QUEST,
-          ]
+        ]
       failure_requirements:
         []
       failure_actions:
@@ -360,7 +354,8 @@
           AC_SET_FINAL_ROOMS_COLORS,
           AC_PERFORMANCE_CULMINATION,
           AC_ADD_THE_FINAL,
-          AC_OPEN_PICTURE_BOX
+          AC_OPEN_PICTURE_BOX,
+          AC_ADD_TIMER_PLAY_LIFESAVER_END
         ]
       failure_requirements:
         []
@@ -373,9 +368,22 @@
       success_requirements:
         [REQ_THE_FINAL]
       success_actions:
-        [AC_THE_FINAL, AC_OPEN_PICTURE_BOX]
+        [AC_THE_FINAL,
+        ]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Финал'
+
+    -
+      id: 121
+      success_requirements:
+        [REQ_TIMER_PLAY_LIFESAVER_END]
+      success_actions:
+        [AC_PLAY_LIFESAVER_END]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Минута до речи спасателя'

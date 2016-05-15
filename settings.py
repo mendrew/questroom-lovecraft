@@ -139,6 +139,7 @@ class DEVICES_TABLE:
             SML_WINDOWS_DOUBLE_HREN
             ] + SML_FISH_EYES
 
+    TIMER_PLAY_LIFESAVER_END = 60
 
 class TASKS_IDS:
     INITIALIZATION = 0
@@ -177,6 +178,8 @@ class TASKS_IDS:
 
     PUT_FOURTH_COIN = 20
 
+    TIMER_PLAY_LIFESAVER_END = 121
+
     THE_FINAL = 21
 
 
@@ -186,6 +189,7 @@ class SOUNDS_NAMES:
     LIFESAVER_1 = SOUNDS_DIR + "lifesaver_2_1.wav"
     LIFESAVER_2_2 = SOUNDS_DIR + "lifesaver_2_2.wav"
     LIFESAVER_2_1 = SOUNDS_DIR + "lifesaver_2_1.wav"
+    LIFESAVER_3_1 = SOUNDS_DIR + "lifesaver_3_1.wav"
     GIRL_1_HELP = SOUNDS_DIR + "girl_1_help.wav"
     GIRL_2_HEARD = SOUNDS_DIR + "girl_2_i_heard.wav"
     GIRL_4_SHE_ALL_I_HAVE = SOUNDS_DIR + "girl_4_she_all_i_have.wav"
@@ -198,6 +202,7 @@ class SOUNDS_NAMES:
 class SOUNDS:
     stage_1 = None
     lifesaver_begin = None
+    lifesaver_end = None
     lightning = None
     girl_help = None
     girl_heard = None

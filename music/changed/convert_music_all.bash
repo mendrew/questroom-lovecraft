@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ffmpeg -i ../original/Спасатель_2.1.mp3 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel -1 -ac 6 -ar 44100 lifesaver_2_1.wav
+ffmpeg -i ../original/Спасатель_3.1.mp3 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel -1 -ac 6 -ar 44100 lifesaver_3_1.wav
 ffmpeg -i ../original/LIGHTNING-THUNDER.mp3 -map_channel 0.0.0 -map_channel 0.0.0 -ac 2 -ar 44100 lightning_thunder.wav
 ffmpeg -i ../original/ЭМБ_МБ_1_Шепот_Зов.mp3 -map_channel 0.0.0 -map_channel 0.0.0 -ac 2 -ar 44100 stage_one_whisper.wav
 ffmpeg -i ../original/ЭМБ_МБ_2_Зов_Зов.mp3 -map_channel 0.0.0 -map_channel 0.0.1 -ac 2 -ar 44100 stage_two_call.wav

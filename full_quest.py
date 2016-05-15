@@ -65,6 +65,7 @@ def init_sounds(game_state):
     sound_manager = game_state.sound_manager
     SOUNDS.stage_1 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_1)
     SOUNDS.lifesaver_begin = sound_manager.add_sound(SOUNDS_NAMES.LIFESAVER_2_1)
+    SOUNDS.lifesaver_end = sound_manager.add_sound(SOUNDS_NAMES.LIFESAVER_3_1)
     SOUNDS.lightning = sound_manager.add_sound(SOUNDS_NAMES.LIGHTNING)
     SOUNDS.girl_help = sound_manager.add_sound(SOUNDS_NAMES.GIRL_1_HELP)
     SOUNDS.girl_heard = sound_manager.add_sound(SOUNDS_NAMES.GIRL_2_HEARD)
@@ -1142,32 +1143,16 @@ def REQ_MARINE_TROPHIES(master, task, game_state):
                     index]) and (knife_slots[index] == 0):
                 fishes_eyes[index] = toggleEyeColor(fishes_eyes[index])
                 if index == 0:
-                    fishes_eyes[
-                        index +
-                        1] = toggleEyeColor(
-                        fishes_eyes[
-                            index +
-                            1])
+                    fishes_eyes[index + 1] = toggleEyeColor(
+                        fishes_eyes[index + 1])
                 elif index == len(fishes_eyes) - 1:
-                    fishes_eyes[
-                        index -
-                        1] = toggleEyeColor(
-                        fishes_eyes[
-                            index -
-                            1])
+                    fishes_eyes[index - 1] = toggleEyeColor(
+                        fishes_eyes[index - 1])
                 else:
-                    fishes_eyes[
-                        index -
-                        1] = toggleEyeColor(
-                        fishes_eyes[
-                            index -
-                            1])
-                    fishes_eyes[
-                        index +
-                        1] = toggleEyeColor(
-                        fishes_eyes[
-                            index +
-                            1])
+                    fishes_eyes[index - 1] = toggleEyeColor(
+                        fishes_eyes[index - 1])
+                    fishes_eyes[index + 1] = toggleEyeColor(
+                        fishes_eyes[index + 1])
 
         smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
         for index in range(len(knife_slots)):
@@ -1253,3 +1238,27 @@ def AC_OPEN_PICTURE_BOX(master, task, game_state):
     sl_control = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_control[DEVICES_TABLE.SL_BOX_UNDER_PICTURE] = DEVICES_TABLE.OPEN
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
+
+
+def AC_ADD_TIMER_PLAY_LIFESAVER_END(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.TIMER_PLAY_LIFESAVER_END)
+
+
+def REQ_TIMER_PLAY_LIFESAVER_END(master, task, game_state):
+    if task.stack == []:
+        start_time = time.time()
+        task.stack.append(start_time)
+
+    start_time = task.stack.pop()
+    passed_time = time.time() - start_time
+
+    if passed_time <= DEVICES_TABLE.TIMER_PLAY_LIFESAVER_END:
+        task.stack.append(start_time)
+        return
+
+    return True
+
+
+def AC_PLAY_LIFESAVER_END(master, task, game_state):
+    print("(ACTION:{task_id}) Play lifesaver end".format(task_id=task.id))
+    game_state.sound_manager.play_sound(SOUNDS.lifesaver_end)
