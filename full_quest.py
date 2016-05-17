@@ -232,7 +232,7 @@ def AC_ADD_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
 
 def REQ_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
     # time to set 12 o'clock
-    INITIALIZATION_SET_12_TIME = 10
+    INITIALIZATION_SET_12_TIME = 5
 
     stack = task.stack
     if stack == []:
@@ -587,10 +587,11 @@ def AC_ADD_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
 
 def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
-    MAX_VALUE = 32576
+    MAX_VALUE = 32767
     OVERFLOW_DELTA = 20
     if task.stack == []:
         overflow = 0
+
         last_value = [GLOBAL_VARIABLES.WALL_CLOCK_REAL_12]
 
         task.stack.append(overflow)
@@ -614,7 +615,6 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
         task.stack.append(time.time())
         return
 
-
     overflow = task.stack.pop()
 
     if last_value < OVERFLOW_DELTA and current_value > (MAX_VALUE - OVERFLOW_DELTA):
@@ -623,6 +623,8 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
         overflow = overflow + 1
 
     real_cur_value = current_value + (MAX_VALUE) * overflow
+
+    INIT_VALUE = GLOBAL_VARIABLES.WALL_CLOCK_REAL_12
 
     if overflow >= 0:
         delta = abs(INIT_VALUE - real_cur_value)
@@ -641,6 +643,7 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
     wall_clock_last_value = last_value
     wall_clock_time = cur_time
+    wall_clock_value = current_value
 
     print("Wall clock TIME: {}".format(wall_clock_time))
 
@@ -656,7 +659,7 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
         print("(REQ:{task_id}) Clocks sync!".format(task_id=task.id))
         return True
 
-    tasl.satck.append(overflow)
+    task.stack.append(overflow)
     task.stack.append(wall_clock_values_list)
     # save time
     current_time = time.time()
