@@ -139,7 +139,8 @@ class DEVICES_TABLE:
             SML_WINDOWS_DOUBLE_HREN
             ] + SML_FISH_EYES
 
-    TIMER_PLAY_LIFESAVER_END = 60
+    TIMER_PLAY_LIFESAVER_END = 2*60
+    TIMER_PLAY_BAD_END = 60
 
 class TASKS_IDS:
     INITIALIZATION = 0
@@ -179,6 +180,7 @@ class TASKS_IDS:
     PUT_FOURTH_COIN = 20
 
     TIMER_PLAY_LIFESAVER_END = 121
+    TIMER_PLAY_BAD_END = 122
 
     THE_FINAL = 21
 
@@ -198,6 +200,10 @@ class SOUNDS_NAMES:
     STAGE_4 = SOUNDS_DIR + "stage_four_madness.wav"
     LIGHTNING = SOUNDS_DIR + "lightning_thunder.wav"
 
+    OLD_MAN = SOUNDS_DIR + "old_man_monolog.wav"
+    DAGON_PRIVATE = SOUNDS_DIR + "dagon.wav"
+
+    BAD_END = SOUNDS_DIR + "bad_end.wav"
 
 class SOUNDS:
     stage_1 = None
@@ -207,6 +213,10 @@ class SOUNDS:
     girl_help = None
     girl_heard = None
     girl_she_all_i_have = None
+
+    old_man = None
+    dagon_private = None
+    bad_end = None
 
     stage_2 = None
     stage_3 = None

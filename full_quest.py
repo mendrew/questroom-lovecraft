@@ -71,6 +71,9 @@ def init_sounds(game_state):
     SOUNDS.girl_heard = sound_manager.add_sound(SOUNDS_NAMES.GIRL_2_HEARD)
     SOUNDS.girl_she_all_i_have = sound_manager.add_sound(
         SOUNDS_NAMES.GIRL_4_SHE_ALL_I_HAVE)
+    SOUNDS.bad_end = sound_manager.add_sound(SOUNDS_NAMES.BAD_END)
+    SOUNDS.old_man = sound_manager.add_sound(SOUNDS_NAMES.OLD_MAN)
+    SOUNDS.dagon_private = sound_manager.add_sound(SOUNDS_NAMES.DAGON_PRIVATE)
 
     SOUNDS.stage_2 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_2)
     SOUNDS.stage_3 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_3)
@@ -1031,6 +1034,9 @@ def AC_OPEN_MIRROR(master, task, game_state):
     sl_control[DEVICES_TABLE.SL_MIRROR_IN_CLOSET] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
 
+def AC_PLAY_DAGON_PRIVATE(master, task, game_state):
+    print("(ACTION:{task_id}) Play Dagon private".format(task_id=task.id))
+    game_state.sound_manager.play_sound(SOUNDS.dagon_private)
 
 def AC_PARANORMAL_ACTIVITY(master, task, game_state):
     print("(ACTION:{task_id}) Paranormal activity".format(task_id=task.id))
@@ -1086,6 +1092,9 @@ def AC_OPEN_CLOSET_BOX_WITH_KNIFE(master, task, game_state):
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
+def AC_PLAY_OLD_MAN_MONOLOG(master, task, game_state):
+    print("(ACTION:{task_id}) play old man monolog".format(task_id=task.id))
+    game_state.sound_manager.play_sound(SOUNDS.old_man)
 
 def AC_ADD_MARINE_TROPHIES(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.MARINE_TROPHIES)
@@ -1243,6 +1252,8 @@ def AC_OPEN_PICTURE_BOX(master, task, game_state):
 def AC_ADD_TIMER_PLAY_LIFESAVER_END(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.TIMER_PLAY_LIFESAVER_END)
 
+def AC_ADD_TIMER_PLAY_BAD_END(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.TIMER_PLAY_BAD_END)
 
 def REQ_TIMER_PLAY_LIFESAVER_END(master, task, game_state):
     if task.stack == []:
@@ -1257,6 +1268,26 @@ def REQ_TIMER_PLAY_LIFESAVER_END(master, task, game_state):
         return
 
     return True
+
+
+def REQ_TIMER_PLAY_BAD_END(master, task, game_state):
+    if task.stack == []:
+        start_time = time.time()
+        task.stack.append(start_time)
+
+    start_time = task.stack.pop()
+    passed_time = time.time() - start_time
+
+    if passed_time <= DEVICES_TABLE.TIMER_PLAY_BAD_END:
+        task.stack.append(start_time)
+        return
+
+    return True
+
+
+def AC_PLAY_BAD_END(master, task, game_state):
+    print("(ACTION:{task_id}) Play Bad end".format(task_id=task.id))
+    game_state.sound_manager.play_sound(SOUNDS.bad_end)
 
 
 def AC_PLAY_LIFESAVER_END(master, task, game_state):

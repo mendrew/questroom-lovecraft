@@ -296,7 +296,8 @@
       success_actions:
         [
          AC_OPEN_MIRROR,
-         AC_ADD_ANOMALOUS_PHENOMENA
+         AC_ADD_ANOMALOUS_PHENOMENA,
+         AC_PLAY_DAGON_PRIVATE
         ]
       failure_requirements:
         []
@@ -322,7 +323,8 @@
         [REQ_ANOMALOUS_PHENOMENA_ENTER_NUMBERS]
       success_actions:
         [AC_OPEN_CLOSET_BOX_WITH_KNIFE,
-         AC_ADD_MARINE_TROPHIES]
+         AC_ADD_MARINE_TROPHIES,
+         AC_PLAY_OLD_MAN_MONOLOG]
       failure_requirements:
         []
       failure_actions:
@@ -355,7 +357,8 @@
           AC_PERFORMANCE_CULMINATION,
           AC_ADD_THE_FINAL,
           AC_OPEN_PICTURE_BOX,
-          AC_ADD_TIMER_PLAY_LIFESAVER_END
+          AC_ADD_TIMER_PLAY_LIFESAVER_END,
+          AC_ADD_TIMER_PLAY_BAD_END
         ]
       failure_requirements:
         []
@@ -386,4 +389,16 @@
         []
       failure_actions:
         []
-      title: 'Минута до речи спасателя'
+      title: '2 минуты до речи спасателя'
+
+    -
+      id: 122
+      success_requirements:
+        [REQ_TIMER_PLAY_BAD_END]
+      success_actions:
+        [AC_PLAY_BAD_END]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Минута до звука Плохой конец'
