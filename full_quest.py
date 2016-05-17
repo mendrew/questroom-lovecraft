@@ -584,8 +584,14 @@ def AC_ADD_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
 
 def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
+    MAX_VALUE = 32576
+    OVERFLOW_DELTA = 20
     if task.stack == []:
-        task.stack.append([GLOBAL_VARIABLES.WALL_CLOCK_REAL_12])
+        overflow = 0
+        last_value = [GLOBAL_VARIABLES.WALL_CLOCK_REAL_12]
+
+        task.stack.append(overflow)
+        task.stack.append(last_value)
         task.stack.append(time.time())
 
     last_time = task.stack.pop()
@@ -595,42 +601,47 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
         return
 
     wall_clock_values_list = task.stack.pop()
-    wall_clock_last_value = wall_clock_values_list[-1]
+    last_value = wall_clock_values_list[-1]
 
     encoders = master.getEncoders(Devices.LOVECRAFT_DEVICE_NAME).get()
-    wall_clock_value = encoders[DEVICES_TABLE.WALL_CLOCK]
+    current_value = encoders[DEVICES_TABLE.WALL_CLOCK]
 
-    if wall_clock_last_value == wall_clock_value:
+    if current_value == last_value:
         task.stack.append(wall_clock_values_list)
         task.stack.append(time.time())
         return
 
-    # choose clock direction
-    delta_time = GLOBAL_VARIABLES.WALL_CLOCK_REAL_12 - wall_clock_value
-    # if wall_clock_last_value > 1000 and wall_clock_value < 100:
-    #     clockwise_direction = False
-    # elif wall_clock_last_value < 100 and wall_clock_value > 1000:
-    #     clockwise_direction = True
-    # elif wall_clock_value > wall_clock_last_value:
-    #     clockwise_direction = True
-    # else:
-    #     clockwise_direction = False
 
-    if wall_clock_value >= GLOBAL_VARIABLES.WALL_CLOCK_REAL_12:
-        clockwise_direction = False
-    if wall_clock_value < GLOBAL_VARIABLES.WALL_CLOCK_REAL_12:
-        clockwise_direction = True
-    if clockwise_direction:
-        wall_clock_time = 0 + delta_time/2 - int((delta_time/2)/12) * 12
+    overflow = task.stack.pop()
+
+    if last_value < OVERFLOW_DELTA and current_value > (MAX_VALUE - OVERFLOW_DELTA):
+        overflow = overflow - 1
+    elif last_value > (MAX_VALUE - OVERFLOW_DELTA) and current_value < OVERFLOW_DELTA:
+        overflow = overflow + 1
+
+    real_cur_value = current_value + (MAX_VALUE) * overflow
+
+    if overflow >= 0:
+        delta = abs(INIT_VALUE - real_cur_value)
     else:
-        wall_clock_time = 12 - (delta_time/2 - int((delta_time/2)/12) * 12)
+        real_cur_value = abs(INIT_VALUE + abs(MAX_VALUE * overflow) - abs(current_value))
+        delta = - real_cur_value
+    # print("Overflow_value: {}, real_cur_value {}, delta {}".format(overflow, real_cur_value, delta))
 
-    if wall_clock_time == 12:
-        wall_clock_time = 0
+    if INIT_VALUE <= real_cur_value:
+        cur_time = 0 + delta/2  - int(delta/24) * 12
+    else:
+        cur_time = 12 - (delta/2 - int(delta/24) * 12)
+
+    if cur_time == 12:
+        cur_time = 0
+
+    wall_clock_last_value = last_value
+    wall_clock_time = cur_time
 
     print("Wall clock TIME: {}".format(wall_clock_time))
 
-    wall_clock_values_list.append(wall_clock_value)
+    wall_clock_values_list.append(current_value)
 
     print("REQ_CLOCK_SYNCHRONIZATION: wall late value: {}, new_value: {}  init_real {}".format(
         wall_clock_last_value, wall_clock_value, GLOBAL_VARIABLES.WALL_CLOCK_REAL_12))
@@ -642,6 +653,7 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
         print("(REQ:{task_id}) Clocks sync!".format(task_id=task.id))
         return True
 
+    tasl.satck.append(overflow)
     task.stack.append(wall_clock_values_list)
     # save time
     current_time = time.time()
