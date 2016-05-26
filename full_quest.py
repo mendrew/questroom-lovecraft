@@ -104,7 +104,6 @@ def REQ_QUEST_INIT(master, task, game_state):
         sl_controlls[scare_index] = 0
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-
     # init colors
     # on lenin lamps
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
@@ -129,6 +128,15 @@ def REQ_QUEST_INIT(master, task, game_state):
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     for light_index in DEVICES_TABLE.SML_LIGHTNING:
         smart_leds.setOneLed(light_index, [0, 0, 0])
+
+    # init head in window
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 1
+    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_ACTION] = DEVICES_TABLE.HEAD_ACTION_HIDE
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    time.sleep(1)
+    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
     # init doors
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
@@ -1309,3 +1317,81 @@ def AC_PLAY_BAD_END(master, task, game_state):
 def AC_PLAY_LIFESAVER_END(master, task, game_state):
     print("(ACTION:{task_id}) Play lifesaver end".format(task_id=task.id))
     game_state.sound_manager.play_sound(SOUNDS.lifesaver_end)
+
+
+def AC_ADD_TIMER_SCARE_WINDOW(master, task, game_state):
+    print("(ACTION:{task_id}) Timer start for SCARE in WINDOW".format(task_id=task.id))
+    game_state.add_active_task_with_id(TASKS_IDS.TIMER_SCARE_WINDOW)
+
+
+def REQ_TIMER_SCARE_WINDOW(master, task, game_state):
+    if task.stack == []:
+        start_time = time.time()
+        task.stack.append(start_time)
+
+    start_time = task.stack.pop()
+    passed_time = time.time() - start_time
+
+    if passed_time <= DEVICES_TABLE.TIMER_SCARE_WINDOW:
+        task.stack.append(start_time)
+        return
+
+    return True
+
+
+def AC_SCARE_WINDOW(master, task, game_state):
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_SCARE_WINDOW] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    time.sleep(3)
+    sl_controlls[DEVICES_TABLE.SL_SCARE_WINDOW] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+
+def AC_ADD_TIMER_SCARE_HEAD(master, task, game_state):
+    print("(ACTION:{task_id}) Timer start for SCARE HEAD".format(task_id=task.id))
+    game_state.add_active_task_with_id(TASKS_IDS.TIMER_SCARE_HEAD)
+
+
+def REQ_TIMER_SCARE_HEAD(master, task, game_state):
+    if task.stack == []:
+        start_time = time.time()
+        task.stack.append(start_time)
+
+    start_time = task.stack.pop()
+    passed_time = time.time() - start_time
+
+    if passed_time <= DEVICES_TABLE.TIMER_SCARE_HEAD:
+        task.stack.append(start_time)
+        return
+
+    return True
+
+def AC_SCARE_HEAD_APPEARANCE(master, task, game_state):
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 1
+    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_ACTION] = DEVICES_TABLE.HEAD_ACTION_APPEAR
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    time.sleep(0.5)
+    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+
+def AC_ADD_TIMER_PICTURE_BOX(master, task, game_state):
+    print("(ACTION:{task_id}) Timer start for OPEN PICTURE BOX".format(task_id=task.id))
+    game_state.add_active_task_with_id(TASKS_IDS.TIMER_PICTURE_BOX)
+
+
+def REQ_TIMER_PICTURE_BOX(master, task, game_state):
+    if task.stack == []:
+        start_time = time.time()
+        task.stack.append(start_time)
+
+    start_time = task.stack.pop()
+    passed_time = time.time() - start_time
+
+    if passed_time <= DEVICES_TABLE.TIMER_PICTURE_BOX:
+        task.stack.append(start_time)
+        return
+
+    return True
