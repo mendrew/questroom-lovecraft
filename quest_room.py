@@ -185,8 +185,15 @@ class QuestRoom(threading.Thread):
     def scare_face_turn(self, pump_action):
         if pump_action:
             AC_SCARE_WINDOW(master, None, self.game_state)
-        else:
             AC_SCARE_HEAD_APPEARANCE(master, None, self.game_state)
+        else:
+            sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+            sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 1
+            sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_ACTION] = DEVICES_TABLE.HEAD_ACTION_HIDE
+            master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+            time.sleep(1)
+            sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 0
+            master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
     def pump_in(self, pump_action):
         sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
