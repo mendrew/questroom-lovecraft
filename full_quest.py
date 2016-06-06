@@ -525,7 +525,7 @@ def AC_POLTERGEISTS(master, task, game_state):
     print(
         "(ACTION:{task_id}) Poltergeists, need to check scares in book closet".format(
             task_id=task.id))
-    AC_SCARE_IN_LOCKER(master, task, game_state)
+    # AC_SCARE_IN_LOCKER(master, task, game_state)
     pass
 
 def AC_ADD_FALLING_BOOK_RODS_TIMER(master, task, game_state):
