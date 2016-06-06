@@ -175,6 +175,18 @@ def TABLE_CLOCK_UP(master):
 
     print("TABLE CLOCK VALUE: {}".format(GLOBAL_VARIABLES.TABLE_CLOCK_VALUE))
 
+    # sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    # sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 1
+    #
+    # master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    # time.sleep(1)
+    #
+    # sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 0
+    # master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+
+
+def AC_TABLE_CLOCK_RING_OUT(master, tas, game_state):
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 1
 
@@ -183,7 +195,6 @@ def TABLE_CLOCK_UP(master):
 
     sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-
 
 def AC_ADD_BACKGROUND_TABLE_CLOCK_JOB(master, tas, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.BACKGROUND_TABLE_CLOCK)

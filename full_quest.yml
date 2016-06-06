@@ -159,7 +159,8 @@
         [REQ_COLLECT_DAD_FISHING]
       success_actions:
         [AC_TABLE_CLOCK_CHANGE_TIME,
-        AC_ADD_CLOCK_SYNCHRONIZATION]
+         AC_TABLE_CLOCK_RING_OUT,
+         AC_ADD_CLOCK_SYNCHRONIZATION]
       failure_requirements:
         []
       failure_actions:
