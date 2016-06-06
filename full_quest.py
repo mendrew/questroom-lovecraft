@@ -516,10 +516,6 @@ def AC_BAKE_FLARE_UP(master, task, game_state):
     pass
 
 
-def AC_PERFORMANCE_DOLL_GIFT(master, task, game_state):
-    print("(ACTION:{task_id}) Performance - doll gift".format(task_id=task.id))
-    pass
-
 
 def AC_POLTERGEISTS(master, task, game_state):
     print(

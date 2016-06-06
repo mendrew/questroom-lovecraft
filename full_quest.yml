@@ -128,7 +128,6 @@
       success_actions:
         [ AC_ADD_FALLING_BOOK_RODS_TIMER,
           AC_LIGHTNING,
-          AC_PERFORMANCE_DOLL_GIFT,
           AC_POLTERGEISTS,
           AC_ADD_COLLECT_DAD_FISHING,
           AC_PLAY_SHE_ALL_I_HAVE]
