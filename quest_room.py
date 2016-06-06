@@ -182,6 +182,12 @@ class QuestRoom(threading.Thread):
         else:
             CHANGE_MOVE_PICTURE(master, picture_id)
 
+    def scare_face_turn(self, pump_action):
+        if pump_action:
+            AC_SCARE_WINDOW(master, None, self.game_state)
+        else:
+            AC_SCARE_HEAD_APPEARANCE(master, None, self.game_state)
+
     def pump_in(self, pump_action):
         sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
         sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP] = pump_action

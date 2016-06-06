@@ -363,9 +363,9 @@
           AC_ADD_THE_FINAL,
           AC_ADD_TIMER_PICTURE_BOX,
           AC_ADD_TIMER_PLAY_LIFESAVER_END,
-          AC_ADD_TIMER_PLAY_BAD_END,
-          AC_ADD_TIMER_SCARE_WINDOW,
-          AC_ADD_TIMER_SCARE_HEAD
+          AC_ADD_TIMER_PLAY_BAD_END
+          # AC_ADD_TIMER_SCARE_WINDOW,
+          # AC_ADD_TIMER_SCARE_HEAD
         ]
       failure_requirements:
         []

@@ -73,6 +73,11 @@
               ws.send('{"message": "aquarium_pump_out"}');
             }
 
+            function scare_face_turn(event){
+              action = event.currentTarget.dataset.action;
+              ws.send('{"message": "scare_face_turn", "action":"' + action + '"}');
+            }
+
 
             function toggle_skip_task(event) {
               task_id = document.getElementById("skip_task_input").value;
@@ -143,6 +148,13 @@
            <td><button data-door_id='3' onClick='closeDoor(event)'>Выдвинуть</button></td>
            <td><button data-door_id='3' onClick='openDoor(event)'>Спрятать</button></td>
          </tr>
+
+         <th>Голова в окне</th>
+         <tr>
+           <td><button data-action='1' onClick='scare_face_turn(event)'>Испугать (с шумелкой)</button></td>
+           <td><button data-action='0' onClick='scare_face_turn(event)'>Спрятать</button></td>
+         </tr>
+
          <th>Меняющаяся картина</th>
          <tr>
            <td><button data-picture_id='0' onClick='changePicture(event)'>Картина №1</button></td>

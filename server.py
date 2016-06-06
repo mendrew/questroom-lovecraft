@@ -89,6 +89,9 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         if "light" == message['message']:
             quest_room.turn_light(message['light_id'], message['action'])
 
+        if "scare_face_turn" == message['message']:
+            quest_room.scare_face_turn(int(message['action']))
+
         if "set_room_light" == message['message']:
             room_led = message['room_led_id']
             rgb_color_str = message['color']
