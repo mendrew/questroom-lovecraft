@@ -28,6 +28,7 @@
           AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
           AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
           AC_ADD_BACKGROUND_PICTURE_MOVES,
+          AC_LIGHT_SHOW_WHERE_STATUE
         ]
       failure_requirements:
         []
