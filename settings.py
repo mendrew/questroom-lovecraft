@@ -26,6 +26,7 @@ class COLORS:
     LIGHT_GREEN = [33, 0xff, 33]
     BLUE = [0, 0, 0xfff]
     NONE = [0, 0, 0]
+    OFF = NONE
     # for ROOMS it's RGB => BGR
     ROOM_BLUE = [BLUE[2], BLUE[1], BLUE[0]]
     ROOM_RED = [RED[2], RED[1], RED[0]]

@@ -105,11 +105,6 @@ def REQ_QUEST_INIT(master, task, game_state):
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
     # init colors
-    # on lenin lamps
-    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
-    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-
     # init fish eyes
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     for eye_index in DEVICES_TABLE.SML_FISH_EYES:
@@ -117,12 +112,16 @@ def REQ_QUEST_INIT(master, task, game_state):
 
     # init lights in rooms
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-    init_color = COLORS.ROOM_BLUE
+    init_color = COLORS.OFF
     smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, init_color)
     smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, init_color)
     smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
     smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
+
+    # off lenin lamps
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
     # lightning off
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
