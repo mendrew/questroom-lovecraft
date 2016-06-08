@@ -438,22 +438,6 @@ def AC_PLAY_SOUND_HELP(master, task, game_state):
 def AC_ADD_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PUT_STATUE_ON_LORDS_TABLE)
 
-def AC_LIGHT_SHOW_WHERE_STATUE(master, task, game_state):
-    # wait radio rescue;
-    time.sleep(5)
-    # on light at the end of main room
-
-    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-    init_color = COLORS.OFF
-    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, init_color)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, init_color)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
-
-    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
-    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-    pass
 
 def REQ_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
     PUT_RANGE = DEVICES_TABLE.LORDS_TABLE_STATUE_RANGE
@@ -590,6 +574,31 @@ def AC_FALLING_FISHING_RODS(master, task, game_state):
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 
+def AC_LIGHT_SHOW_WHERE_COLLECT_DAD_FISHING(master, task, game_state):
+    print("(ACTION:{task_id}) Light show where collect dad fishing".format(task_id=task.id))
+    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.OFF)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.OFF)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, COLORS.ROOM_BLUE)
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    for index in range(2):
+        # on eddison light
+        time.sleep(5)
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+        time.sleep(5)
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    time.sleep(5)
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
 def AC_PLAY_SHE_ALL_I_HAVE(master, task, game_state):
     time.sleep(8)
     game_state.sound_manager.play_sound(SOUNDS.girl_she_all_i_have)
@@ -615,6 +624,19 @@ def AC_TABLE_CLOCK_CHANGE_TIME(master, task, game_state):
 def AC_ADD_CLOCK_SYNCHRONIZATION(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.CLOCK_SYNCHRONIZATION)
 
+def AC_ALL_LIGHT_ON(master, task, game_state):
+    # init lights in rooms
+    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    init_color = COLORS.ROOM_BLUE
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, init_color)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, init_color)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
+
+    # off lenin lamps
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
     MAX_VALUE = 32767
@@ -1264,7 +1286,7 @@ def AC_PERFORMANCE_CULMINATION(master, task, game_state):
     print("(ACTION:{task_id}) Performance culmination".format(task_id=task.id))
 
 
-def AC_SET_FINAL_ROOMS_COLORS(master, task, game_state):
+def AC_LIGHT_SHOW_WHERE_STATUE(master, task, game_state):
     print("(ACTION:{task_id}) Set final rooms colors".format(task_id=task.id))
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     init_color = COLORS.ROOM_RED
@@ -1286,7 +1308,7 @@ def AC_SET_FINAL_ROOMS_COLORS(master, task, game_state):
     sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
-    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.ROOM_BLUE)
+    # smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.ROOM_BLUE)
 
 def AC_ADD_THE_FINAL(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.THE_FINAL)

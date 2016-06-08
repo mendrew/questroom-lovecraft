@@ -146,6 +146,7 @@
         [
           AC_FALLING_BOOKS,
           AC_FALLING_FISHING_RODS,
+          AC_LIGHT_SHOW_WHERE_COLLECT_DAD_FISHING
         ]
       failure_requirements:
         []
@@ -160,7 +161,8 @@
       success_actions:
         [AC_TABLE_CLOCK_CHANGE_TIME,
          AC_TABLE_CLOCK_RING_OUT,
-         AC_ADD_CLOCK_SYNCHRONIZATION]
+         AC_ADD_CLOCK_SYNCHRONIZATION,
+         AC_ALL_LIGHT_ON]
       failure_requirements:
         []
       failure_actions:
