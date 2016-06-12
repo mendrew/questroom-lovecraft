@@ -162,6 +162,7 @@
         [AC_TABLE_CLOCK_CHANGE_TIME,
          AC_TABLE_CLOCK_RING_OUT,
          AC_ADD_CLOCK_SYNCHRONIZATION,
+         AC_LIGHT_SHOW_WHERE_CLOCK_SYNCHRONIZATION,
          AC_ALL_LIGHT_ON]
       failure_requirements:
         []
