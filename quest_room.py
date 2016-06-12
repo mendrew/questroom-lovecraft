@@ -195,6 +195,9 @@ class QuestRoom(threading.Thread):
             sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 0
             master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
+    def table_ring_out(self):
+        AC_TABLE_CLOCK_RING_OUT(master, None, self.game_state)
+
     def pump_in(self, pump_action):
         sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
         sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP] = pump_action

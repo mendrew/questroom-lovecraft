@@ -78,6 +78,9 @@
               ws.send('{"message": "scare_face_turn", "action":"' + action + '"}');
             }
 
+            function table_ring_out(event){
+              ws.send('{"message": "table_ring_out"}');
+            }
 
             function toggle_skip_task(event) {
               task_id = document.getElementById("skip_task_input").value;
@@ -147,6 +150,11 @@
          <tr>
            <td><button data-door_id='3' onClick='closeDoor(event)'>Выдвинуть</button></td>
            <td><button data-door_id='3' onClick='openDoor(event)'>Спрятать</button></td>
+         </tr>
+
+         <th>Настольные часы</th>
+         <tr>
+           <td><button onClick='table_ring_out(event)'>Звонок</button></td>
          </tr>
 
          <th>Голова в окне</th>
