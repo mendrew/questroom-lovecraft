@@ -58,9 +58,8 @@
               ws.send('{"message": "aquarium_pump", "action":"' + action + '"}');
             }
 
-            function eyes_pump(event){
-              action = event.currentTarget.dataset.action;
-              ws.send('{"message": "eyes_pump", "action":"' + action + '"}');
+            function mirror_on(event){
+              ws.send('{"message": "mirror_on"}');
             }
 
             function aquarium_pump_in(event){
@@ -155,6 +154,11 @@
          <th>Настольные часы</th>
          <tr>
            <td><button onClick='table_ring_out(event)'>Звонок</button></td>
+         </tr>
+
+         <th>Зеркало</th>
+         <tr>
+           <td><button onClick='mirror_on(event)'>Запусить</button></td>
          </tr>
 
          <th>Голова в окне</th>

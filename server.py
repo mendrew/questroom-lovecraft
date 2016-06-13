@@ -95,6 +95,9 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         if "table_ring_out" == message['message']:
             quest_room.table_ring_out()
 
+        if "mirror_on" == message['message']:
+            quest_room.mirror_on()
+
         if "set_room_light" == message['message']:
             room_led = message['room_led_id']
             rgb_color_str = message['color']

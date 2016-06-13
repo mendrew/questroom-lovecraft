@@ -203,6 +203,9 @@ class QuestRoom(threading.Thread):
     def table_ring_out(self):
         AC_TABLE_CLOCK_RING_OUT(master, None, self.game_state)
 
+    def mirror_on(self):
+        AC_OPEN_MIRROR(master, None, self.game_state)
+
     def pump_in(self, pump_action):
         sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
         sl_controlls[DEVICES_TABLE.SL_DOLL_EYES_PUMP] = pump_action
