@@ -121,8 +121,8 @@ class DEVICES_TABLE:
 
     # Smart LEDs
     SML_FISHING_ROD = 6
-    SML_STOREROOM = 7
-    SML_STOREROOM_SECRET = 6
+    SML_STOREROOM = 6
+    SML_STOREROOM_SECRET = 7
     SML_DOLL = 4
 
     # lightning
