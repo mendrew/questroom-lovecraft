@@ -847,6 +847,13 @@ def AC_SOUND_BACKGROUND_STAGE_2(master, task, game_state):
     game_state.sound_manager.play_sound(SOUNDS.stage_2)
 
 
+def AC_LIGHT_SHOW_WHERE_LOCKER(master, task, game_state):
+    print("(ACTION:{task_id}) show light where locker".format(task_id=task.id))
+    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.OFF)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_BLUE)
+
+
 def REQ_CODE_LOCK(master, task, game_state):
     buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
 
@@ -1340,6 +1347,11 @@ def REQ_THE_FINAL(master, task, game_state):
 def AC_THE_FINAL(master, task, game_state):
     print("(ACTION:{task_id}) The final".format(task_id=task.id))
 
+def AC_LIGHT_SHOW_WHERE_PICTURE_BOX(master, task, game_state):
+    print("(ACTION:{task_id}) show light where locker".format(task_id=task.id))
+    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_BLUE)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_BLUE)
 
 def AC_OPEN_PICTURE_BOX(master, task, game_state):
     print("(ACTION:{task_id}) Open picture box".format(task_id=task.id))
