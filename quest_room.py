@@ -184,8 +184,13 @@ class QuestRoom(threading.Thread):
 
     def scare_face_turn(self, pump_action):
         if pump_action:
+            AC_ALL_LIGHT_OFF(master, None, self.game_state)
             AC_SCARE_WINDOW(master, None, self.game_state)
             AC_SCARE_HEAD_APPEARANCE(master, None, self.game_state)
+            # sound: sit down on kneels
+            AC_LIGHTNING(master, None, self.game_state)
+            AC_LIGHTNING(master, None, self.game_state)
+            AC_LIGHTNING(master, None, self.game_state)
         else:
             sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
             sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 1

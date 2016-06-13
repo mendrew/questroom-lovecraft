@@ -379,7 +379,7 @@ def AC_LIGHTNING(master, task, game_state):
     for light_index in DEVICES_TABLE.SML_LIGHTNING:
         sml_control.setOneLed(light_index, [0, 0, 0])
 
-    time.sleep(1)
+    time.sleep(0.2)
 
     # start play sound
     game_state.sound_manager.play_sound(SOUNDS.lightning)
@@ -397,7 +397,7 @@ def AC_LIGHTNING(master, task, game_state):
             last_lightning_value[index_number]))
         sml_control.setOneLed(light_index, last_lightning_value[index_number])
 
-    time.sleep(2)
+    time.sleep(1)
 
     # RESTORE
     # restore room lights
@@ -680,6 +680,22 @@ def AC_ALL_LIGHT_ON(master, task, game_state):
     # off lenin lamps
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+
+def AC_ALL_LIGHT_OFF(master, task, game_state):
+    # init lights in rooms
+    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    # init_color = COLORS.ROOM_BLUE
+
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, COLORS.OFF)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.OFF)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.OFF)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.OFF)
+
+    # off lenin lamps
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
