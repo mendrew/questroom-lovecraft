@@ -436,6 +436,15 @@ def AC_PLAY_SOUND_HELP(master, task, game_state):
     game_state.sound_manager.play_sound(SOUNDS.girl_help)
 
 
+def AC_LIGHT_SHOW_WHERE_STATUE(master, task, game_state):
+    print("(ACTION:{task_id}) show light where statue".format(task_id=task.id))
+    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_BLUE)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, COLORS.ROOM_BLUE)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_GREEN)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.ROOM_GREEN)
+
+
 def AC_ADD_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PUT_STATUE_ON_LORDS_TABLE)
 
@@ -1369,12 +1378,6 @@ def AC_SOUND_BACKGROUND_STAGE_4(master, task, game_state):
 def AC_PERFORMANCE_CULMINATION(master, task, game_state):
     print("(ACTION:{task_id}) Performance culmination".format(task_id=task.id))
 
-
-def AC_LIGHT_SHOW_WHERE_STATUE(master, task, game_state):
-    print("(ACTION:{task_id}) show light where statue".format(task_id=task.id))
-    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_GREEN)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.ROOM_GREEN)
 
 
 def AC_ADD_THE_FINAL(master, task, game_state):
