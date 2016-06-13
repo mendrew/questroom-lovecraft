@@ -1026,6 +1026,10 @@ def AC_SOUND_BACKGROUND_STAGE_3(master, task, game_state):
     game_state.sound_manager.stop(SOUNDS.stage_2)
     game_state.sound_manager.play_sound(SOUNDS.stage_3)
 
+def AC_CLOSE_THE_STOOREROOM_DOOR(master, task, game_state):
+    relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.RELAY_CLOSE
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
 def AC_ADD_CLOSE_THE_DOOR(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.CLOSE_THE_DOOR)

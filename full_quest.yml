@@ -225,7 +225,9 @@
         [REQ_PLACE_THE_BOTTLES]
       success_actions:
         [AC_ADD_PUMPS_WATER,
-         AC_ADD_PUT_THIRD_COIN]
+         AC_ADD_PUT_THIRD_COIN,
+         AC_CLOSE_THE_STOOREROOM_DOOR
+        ]
       failure_requirements:
         []
       failure_actions:
@@ -264,7 +266,6 @@
         [
          AC_LIGHTNING,
          AC_SOUND_BACKGROUND_STAGE_3,
-         AC_ADD_CLOSE_THE_DOOR,
         ]
       failure_requirements:
         []
