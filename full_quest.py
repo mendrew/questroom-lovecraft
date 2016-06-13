@@ -1131,9 +1131,21 @@ def AC_ADD_MARINE_TROPHIES(master, task, game_state):
 
 
 class pColors:
-    RED = COLORS.RED
+    RED = COLORS.FISH_NORMAL
     GREEN = COLORS.GREEN
     BLUE = COLORS.BLUE
+
+
+def AC_SET_RANDOM_FISH_EYES(master, task, game_state):
+    ALLOW_COLORS = [pColors.RED, pColors.GREEN, pColors.BLUE]
+
+    for iteration in range(5):
+
+        smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+        for index in range(5):
+            smart_leds.setOneLed(
+                DEVICES_TABLE.SML_FISH_EYES[index],
+                ALLOW_COLORS[random.randint(0,2)])
 
 
 def toggleEyeColor(color):
@@ -1149,13 +1161,15 @@ def toggleEyeColor(color):
 
 
 def REQ_MARINE_TROPHIES(master, task, game_state):
-    WINNER_EYES_CLOLORS = [pColors.BLUE] * 5
+    WINNER_EYES_CLOLORS = [pColors.RED] * 5
     if task.stack == []:
 
         knife_slots = [1] * len(DEVICES_TABLE.BTN_KNIFE_SLOTS)
 
         # init eyes
-        fishes_eyes = [pColors.RED] * 5
+        # fishes_eyes = [pColors.RED] * 5
+        fishes_eyes = [pColors.RED, pColors.GREEN, pColors.BLUE,
+                       pColors.BLUE, pColors.GREEN]
 
         smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
         for index in range(len(knife_slots)):
