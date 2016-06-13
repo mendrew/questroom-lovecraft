@@ -147,7 +147,15 @@ class DEVICES_TABLE:
             SML_WINDOWS_DOUBLE_HREN
             ] + SML_FISH_EYES
 
-    SML_SCARE_ALL_LIGHT = SML_ALL_LIGHTS.remove(SML_HALL_BEGIN)
+    SML_SCARE_ALL_LIGHT = [
+            SML_FISHING_ROD,
+            SML_STOREROOM,
+            SML_STOREROOM_SECRET,
+            SML_DOLL,
+            SML_HALL_END,
+            SML_WINDOWS,
+            SML_WINDOWS_DOUBLE_HREN
+            ] + SML_FISH_EYES
 
     TIMER_PLAY_LIFESAVER_END = 2*60
     TIMER_PLAY_BAD_END = 60
