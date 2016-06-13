@@ -196,14 +196,14 @@ class QuestRoom(threading.Thread):
             AC_SCARE_LIGHTNING(master, None, self.game_state)
             time.sleep(0.5)
             AC_SCARE_LIGHTNING(master, None, self.game_state)
-        else:
-            sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-            sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 1
-            sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_ACTION] = DEVICES_TABLE.HEAD_ACTION_HIDE
-            master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-            time.sleep(1)
-            sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 0
-            master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 1
+        sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_ACTION] = DEVICES_TABLE.HEAD_ACTION_HIDE
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+        time.sleep(1)
+        sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 0
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
     def table_ring_out(self):
         AC_TABLE_CLOCK_RING_OUT(master, None, self.game_state)
