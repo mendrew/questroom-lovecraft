@@ -307,6 +307,7 @@
         [REQ_ANOMALOUS_PHENOMENA_ENTER_NUMBERS]
       success_actions:
         [AC_OPEN_CLOSET_BOX_WITH_KNIFE,
+         AC_SET_RANDOM_FISH_EYES,
          AC_ADD_MARINE_TROPHIES,
          AC_PLAY_OLD_MAN_MONOLOG]
       failure_requirements:
