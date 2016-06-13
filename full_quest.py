@@ -609,29 +609,37 @@ def AC_ADD_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
 def eddison_lamp_blink(master, task, SLEEP_STATE_TIME):
     if task.stack == []:
+        light_turn = False
+        task.stack.append(light_turn)
         task.stack.append(time.time())
         state_id = 0
         task.stack.append(state_id)
 
     state_id = task.stack.pop()
     start_time = task.stack.pop()
+    light_turn = task.stack.pop()
 
     if state_id >= len(SLEEP_STATE_TIME):
         return True
 
     # set lamp state
-    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    if SLEEP_STATE_TIME[state_id]["state"] == "on":
-        sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
-    else:
-        sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
-    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    if not light_turn:
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        if SLEEP_STATE_TIME[state_id]["state"] == "on":
+            sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
+        else:
+            sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+        light_turn = True
 
     spend_time = time.time() - start_time
     if spend_time > SLEEP_STATE_TIME[state_id]["time"]:
         state_id = state_id + 1
         start_time = time.time()
+        light_turn = False
 
+    task.stack.append(light_turn)
     task.stack.append(start_time)
     task.stack.append(state_id)
     return
