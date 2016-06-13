@@ -20,7 +20,7 @@ class COLORS:
     FISH_LIGHTNING = [0x100, 0x00, 0x00]
 
     WHITE = [0xff, 0xff, 0xff]
-    RED = [0xfff, 0, 0]
+    RED = [0xff, 0, 0]
     LIGHT_RED = [0xff, 33, 33]
     GREEN = [0, 0xff, 0]
     LIGHT_GREEN = [33, 0xff, 33]
