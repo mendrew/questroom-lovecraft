@@ -322,7 +322,9 @@
         [REQ_MARINE_TROPHIES]
       success_actions:
         [AC_OPEN_DOOR_WITH_SKELET,
-         AC_ADD_PUT_FOURTH_COIN]
+         AC_ADD_PUT_FOURTH_COIN,
+         AC_OPEN_CLOSET_DOOR,
+         ]
       failure_requirements:
         []
       failure_actions:
@@ -340,7 +342,6 @@
           AC_ADD_TIMER_PLAY_BAD_END,
           AC_LIGHTNING,
           AC_SOUND_BACKGROUND_STAGE_4,
-          AC_OPEN_CLOSET_DOOR,
           AC_PERFORMANCE_CULMINATION,
           AC_ADD_THE_FINAL,
           AC_ADD_TIMER_PICTURE_BOX,
