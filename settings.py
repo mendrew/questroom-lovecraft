@@ -30,6 +30,7 @@ class COLORS:
     # for ROOMS it's RGB => BGR
     ROOM_BLUE = [BLUE[2], BLUE[1], BLUE[0]]
     ROOM_RED = [RED[2], RED[1], RED[0]]
+    ROOM_GREEN = [GREEN[2], GREEN[1], GREEN[0]]
 
 
 class DEVICES_TABLE:

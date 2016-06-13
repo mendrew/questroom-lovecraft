@@ -578,9 +578,9 @@ def AC_FALLING_FISHING_RODS(master, task, game_state):
 def AC_LIGHT_SHOW_WHERE_COLLECT_DAD_FISHING(master, task, game_state):
     print("(ACTION:{task_id}) Light show where collect dad fishing".format(task_id=task.id))
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.OFF)
     smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.OFF)
     smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, COLORS.ROOM_BLUE)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_GREEN)
 
 
 def AC_PLAY_SHE_ALL_I_HAVE(master, task, game_state):
@@ -1373,8 +1373,8 @@ def AC_PERFORMANCE_CULMINATION(master, task, game_state):
 def AC_LIGHT_SHOW_WHERE_STATUE(master, task, game_state):
     print("(ACTION:{task_id}) show light where statue".format(task_id=task.id))
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_BLUE)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.ROOM_BLUE)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_GREEN)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.ROOM_GREEN)
 
 
 def AC_ADD_THE_FINAL(master, task, game_state):
@@ -1391,8 +1391,8 @@ def AC_THE_FINAL(master, task, game_state):
 def AC_LIGHT_SHOW_WHERE_PICTURE_BOX(master, task, game_state):
     print("(ACTION:{task_id}) show light where locker".format(task_id=task.id))
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_BLUE)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_BLUE)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_GREEN)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_GREEN)
 
 def AC_OPEN_PICTURE_BOX(master, task, game_state):
     print("(ACTION:{task_id}) Open picture box".format(task_id=task.id))
