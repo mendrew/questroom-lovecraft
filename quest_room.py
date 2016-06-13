@@ -188,9 +188,14 @@ class QuestRoom(threading.Thread):
             AC_SCARE_WINDOW(master, None, self.game_state)
             AC_SCARE_HEAD_APPEARANCE(master, None, self.game_state)
             # sound: sit down on kneels
-            AC_LIGHTNING(master, None, self.game_state)
-            AC_LIGHTNING(master, None, self.game_state)
-            AC_LIGHTNING(master, None, self.game_state)
+
+            smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+            smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_RED)
+            AC_SCARE_LIGHTNING(master, None, self.game_state)
+            time.sleep(0.5)
+            AC_SCARE_LIGHTNING(master, None, self.game_state)
+            time.sleep(0.5)
+            AC_SCARE_LIGHTNING(master, None, self.game_state)
         else:
             sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
             sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 1
