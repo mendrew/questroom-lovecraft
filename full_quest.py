@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 import time
+import random
 from settings import Devices, DEVICES_TABLE, TASKS_IDS
 from settings import SOUNDS_NAMES
 from settings import SOUNDS
@@ -1250,6 +1251,8 @@ def AC_SET_RANDOM_FISH_EYES(master, task, game_state):
             smart_leds.setOneLed(
                 DEVICES_TABLE.SML_FISH_EYES[index],
                 ALLOW_COLORS[random.randint(0,2)])
+
+        time.sleep(0.5)
 
 
 def toggleEyeColor(color):

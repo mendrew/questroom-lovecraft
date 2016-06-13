@@ -29,7 +29,9 @@
           AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
           AC_ADD_BACKGROUND_PICTURE_MOVES,
           AC_LIGHT_SHOW_WHERE_STATUE,
-          AC_ADD_EDDISON_LAMP_BLINK
+          AC_ADD_EDDISON_LAMP_BLINK,
+          AC_SET_RANDOM_FISH_EYES,
+          AC_ADD_MARINE_TROPHIES
         ]
       failure_requirements:
         []
@@ -343,7 +345,7 @@
           AC_LIGHTNING,
           AC_SOUND_BACKGROUND_STAGE_4,
           AC_OPEN_CLOSET_DOOR,
-          AC_SET_FINAL_ROOMS_COLORS,
+          # AC_SET_FINAL_ROOMS_COLORS,
           AC_PERFORMANCE_CULMINATION,
           AC_ADD_THE_FINAL,
           AC_ADD_TIMER_PICTURE_BOX,
