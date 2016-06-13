@@ -624,6 +624,50 @@ def AC_TABLE_CLOCK_CHANGE_TIME(master, task, game_state):
 def AC_ADD_CLOCK_SYNCHRONIZATION(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.CLOCK_SYNCHRONIZATION)
 
+def eddison_lamp_blink(master, task, SLEEP_STATE_TIME):
+    if task.stack == []:
+        task.stack.append(time.time())
+        state_id = 0
+        task.stack.append(state_id)
+
+    state_id = task.stack.pop()
+    start_time = task.stack.pop()
+
+    if state_id >= len(SLEEP_STATE_TIME):
+        return True
+
+    # set lamp state
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    if SLEEP_STATE_TIME[state_id]["state"] == "on":
+        sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
+    else:
+        sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    spend_time = time.time() - start_time
+    if spend_time > SLEEP_STATE_TIME[state_id]["time"]:
+        state_id = state_id + 1
+        start_time = time.time()
+
+    task.stack.append(start_time)
+    task.stack.append(state_id)
+    return
+
+def AC_ADD_EDDISON_LAMP_BLINK(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.EDDISON_LAMP_BLINK)
+
+def REQ_EDDISON_LAMP_BLINK(master, task, game_state):
+    SLEEP_STATE_TIME = [
+        {"state": "on", "time": 5},
+        {"state": "off", "time": 5},
+        {"state": "on", "time": 2},
+        {"state": "off", "time": 5},
+        {"state": "on", "time": 1},
+    ]
+
+    return eddison_lamp_blink(master, task, SLEEP_STATE_TIME)
+
+
 def AC_LIGHT_SHOW_WHERE_CLOCK_SYNCHRONIZATION(master, task, game_state):
     print("(ACTION:{task_id}) Light show where clock synchronization".format(task_id=task.id))
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
@@ -632,24 +676,6 @@ def AC_LIGHT_SHOW_WHERE_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
     smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_BLUE)
 
-    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
-    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-
-    for index in range(2):
-        # on eddison light
-        time.sleep(5)
-        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-        sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
-        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-        time.sleep(5)
-        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-        sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
-        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-    time.sleep(5)
-    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
-    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 
 def AC_ALL_LIGHT_ON(master, task, game_state):

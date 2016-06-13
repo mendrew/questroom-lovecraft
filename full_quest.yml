@@ -447,3 +447,16 @@
       failure_actions:
         []
       title: 'Таймер открывания ящика под картиной'
+
+    -
+      id: 140
+      success_requirements:
+        [REQ_EDDISON_LAMP_BLINK]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Мерцание ламп Эддисона'
+
