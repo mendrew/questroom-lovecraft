@@ -181,13 +181,12 @@
         [REQ_PUT_SECOND_COIN]
       success_actions:
         [
+         AC_ALL_LIGHT_ON,
          AC_LIGHTNING,
          AC_STRENGTHENING_OF_PRESENCE,
          AC_ADD_CODE_LOCK,
          AC_SCARE_IN_LOCKER,
          AC_SOUND_BACKGROUND_STAGE_2,
-         AC_LIGHT_SHOW_WHERE_LOCKER,
-         AC_ADD_EDDISON_LAMP_BLINK,
          ]
       failure_requirements:
         []
@@ -346,8 +345,6 @@
           AC_ADD_TIMER_PICTURE_BOX,
           AC_ADD_TIMER_PLAY_LIFESAVER_END,
           AC_ADD_TIMER_PLAY_BAD_END,
-          AC_LIGHT_SHOW_WHERE_PICTURE_BOX,
-          AC_ADD_EDDISON_LAMP_BLINK,
         ]
       failure_requirements:
         []

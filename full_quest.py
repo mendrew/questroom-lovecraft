@@ -674,10 +674,10 @@ def AC_LIGHT_SHOW_WHERE_CLOCK_SYNCHRONIZATION(master, task, game_state):
     print("(ACTION:{task_id}) Light show where clock synchronization".format(task_id=task.id))
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
 
-    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, COLORS.OFF)
-
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_BLUE)
-
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.ROOM_BLUE)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_BLUE)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, COLORS.ROOM_BLUE)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_GREEN)
 
 def AC_ALL_LIGHT_ON(master, task, game_state):
     # init lights in rooms
@@ -881,12 +881,6 @@ def AC_SOUND_BACKGROUND_STAGE_2(master, task, game_state):
     game_state.sound_manager.stop(SOUNDS.stage_1)
     game_state.sound_manager.play_sound(SOUNDS.stage_2)
 
-
-def AC_LIGHT_SHOW_WHERE_LOCKER(master, task, game_state):
-    print("(ACTION:{task_id}) show light where locker".format(task_id=task.id))
-    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.OFF)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_BLUE)
 
 
 def REQ_CODE_LOCK(master, task, game_state):
