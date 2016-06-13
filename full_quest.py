@@ -109,7 +109,7 @@ def REQ_QUEST_INIT(master, task, game_state):
     # init fish eyes
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     for eye_index in DEVICES_TABLE.SML_FISH_EYES:
-        smart_leds.setOneLed(eye_index, COLORS.FISH_NORMAL)
+        smart_leds.setOneLed(eye_index, COLORS.RED)
 
     # init lights in rooms
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
@@ -1236,7 +1236,7 @@ def AC_ADD_MARINE_TROPHIES(master, task, game_state):
 
 
 class pColors:
-    RED = COLORS.FISH_NORMAL
+    RED = COLORS.RED
     GREEN = COLORS.GREEN
     BLUE = COLORS.BLUE
 
