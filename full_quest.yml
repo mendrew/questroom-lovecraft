@@ -266,6 +266,8 @@
         [
          AC_LIGHTNING,
          AC_SOUND_BACKGROUND_STAGE_3,
+         AC_ADD_ANOMALOUS_PHENOMENA,
+         AC_PLAY_DAGON_PRIVATE
         ]
       failure_requirements:
         []
