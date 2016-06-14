@@ -9,8 +9,9 @@ _FORCE='-y'
 
 # lifesaver_begin
 ffmpeg $_FORCE -i ../original/Спасатель_2.1.mp3 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel -1 -ac 6 -ar 44100 lifesaver_2_1.wav
+
 # lifesaver_end
-ffmpeg $_FORCE -i ../original/Спасатель_3.1.mp3 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel -1 -ac 6 -ar 44100 lifesaver_3_1.wav
+ffmpeg $_FORCE -i ../original/Спасатель_3.1.mp3 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel -1 -ac 6 -ar 44100 lifesaver_1_1.wav
 
 ffmpeg $_FORCE -i ../original/LIGHTNING-THUNDER.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 lightning_thunder.wav
 ffmpeg $_FORCE -i ../original/ЭМБ_МБ_1_Шепот_Зов.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 stage_one_whisper.wav

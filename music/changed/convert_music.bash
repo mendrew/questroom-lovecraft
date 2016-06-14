@@ -27,5 +27,6 @@
 # ffmpeg -i ../original/Монолог\ старика.mp3 -map_channel -1 -map_channel 0.0.0 -ac 2 -ar 44100 old_man_monolog.wav
 # ffmpeg -i ../original/Дагон_Личное_Безумие.mp3 -map_channel 0.0.0 -map_channel -1 -ac 2 -ar 44100 dagon.wav
 
-ffmpeg -i ../original/Плохой\ конец_1.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 bad_end.wav
-ffmpeg -i ../original/Спасатель_3.1.mp3 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel -1 -ac 6 -ar 44100 lifesaver_3_1.wav
+# ffmpeg -i ../original/Плохой\ конец_1.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 bad_end.wav
+# ffmpeg -i ../original/Спасатель_2.1.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -ac 6 -ar 44100 lifesaver_2_1.wav
+ffmpeg -i ../original/Спасатель_3.1.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -ac 6 -ar 44100 lifesaver_3_1.wav
