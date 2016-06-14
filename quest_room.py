@@ -261,8 +261,11 @@ class QuestRoom(threading.Thread):
         elif sound_id in SOUNDS_NAMES.LIGHTNING:
             self.game_state.sound_manager.play_sound(SOUNDS.lightning)
 
-        elif sound_id in SOUNDS_NAMES.LIFESAVER_1:
+        elif sound_id in SOUNDS_NAMES.LIFESAVER_2_1:
             self.game_state.sound_manager.play_sound(SOUNDS.lifesaver_begin)
+
+        elif sound_id in SOUNDS_NAMES.LIFESAVER_3_1:
+            self.game_state.sound_manager.play_sound(SOUNDS.lifesaver_end)
 
     def play_stage_sound(self, stage_sound_file):
         for stage_sound in SOUNDS.stages:
