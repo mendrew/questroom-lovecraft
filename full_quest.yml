@@ -20,7 +20,6 @@
         [REQ_START_QUEST]
       success_actions:
         [ AC_OFF_EDDISON_LIGHT,
-          AC_SOUND_RADIO_RESCUE,
           AC_LIGHTNING,
           AC_ADD_PLAY_SOUND_HELP,
           AC_ADD_PUT_STATUE_ON_LORDS_TABLE,
@@ -30,6 +29,7 @@
           AC_ADD_BACKGROUND_PICTURE_MOVES,
           AC_LIGHT_SHOW_WHERE_STATUE,
           AC_ADD_EDDISON_LAMP_BLINK,
+          AC_SOUND_RADIO_RESCUE,
         ]
       failure_requirements:
         []
