@@ -1325,7 +1325,7 @@ class pColors:
 def AC_SET_RANDOM_FISH_EYES(master, task, game_state):
     ALLOW_COLORS = [pColors.RED, pColors.GREEN, pColors.BLUE]
 
-    for iteration in range(5):
+    for iteration in range(30):
 
         smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
         for index in range(5):
