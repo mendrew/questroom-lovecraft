@@ -19,7 +19,7 @@
       success_requirements:
         [REQ_START_QUEST]
       success_actions:
-        [
+        [ AC_OFF_EDDISON_LIGHT,
           AC_SOUND_RADIO_RESCUE,
           AC_LIGHTNING,
           AC_ADD_PLAY_SOUND_HELP,

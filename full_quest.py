@@ -119,9 +119,9 @@ def REQ_QUEST_INIT(master, task, game_state):
     smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
     smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
 
-    # off lenin lamps
+    # on lenin lamps
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
     # lightning off
@@ -334,6 +334,11 @@ def REQ_START_QUEST(master, task, game_state):
     pass
     # return True
 
+def AC_OFF_EDDISON_LIGHT(master, task, game_state):
+    # off lenin lamps
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 def AC_SOUND_BACKGROUND_STAGE_1(master, task, game_state):
     game_state.sound_manager.play_sound(SOUNDS.stage_1)
