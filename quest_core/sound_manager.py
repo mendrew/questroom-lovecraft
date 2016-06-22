@@ -69,6 +69,7 @@ class SoundManager:
 
     def add_sound(self, sound_name):
         if not os.path.exists(sound_name):
+            print("SoundFile: {} not found".format(sound_name))
             return None
 
         new_sound_file = SoundFile(sound_name)
