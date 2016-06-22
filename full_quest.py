@@ -89,6 +89,16 @@ def init_sounds(game_state):
     SOUNDS.music_on_demon_windgs = sound_manager.add_sound(SOUNDS_NAMES.MUSIC_ON_DEMON_WINGS)
     SOUNDS.operator_end = sound_manager.add_sound(SOUNDS_NAMES.OPERATOR_END)
 
+    SOUNDS.begin = sound_manager.add_sound(SOUNDS_NAMES.BEGIN)
+    SOUNDS.prey = sound_manager.add_sound(SOUNDS_NAMES.PREY)
+    SOUNDS.names = sound_manager.add_sound(SOUNDS_NAMES.NAMES)
+    SOUNDS.picture = sound_manager.add_sound(SOUNDS_NAMES.PICTURE)
+    SOUNDS.not_understand = sound_manager.add_sound(SOUNDS_NAMES.NOT_UNDERSTAND)
+    SOUNDS.division = sound_manager.add_sound(SOUNDS_NAMES.DIVISION)
+    SOUNDS.chest = sound_manager.add_sound(SOUNDS_NAMES.CHEST)
+    SOUNDS.closet = sound_manager.add_sound(SOUNDS_NAMES.CLOSET)
+    SOUNDS.he = sound_manager.add_sound(SOUNDS_NAMES.HE)
+
 
 def REQ_QUEST_INIT(master, task, game_state):
     init_sounds(game_state)

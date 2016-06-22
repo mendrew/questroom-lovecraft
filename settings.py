@@ -235,6 +235,17 @@ class SOUNDS_NAMES:
     MUSIC_ON_DEMON_WINGS = SOUNDS_DIR + "music_on_demon_windgs.wav"
     OPERATOR_END = SOUNDS_DIR + "operator_end.wav"
 
+    BEGIN = SOUNDS_DIR + "begin.wav"
+    PREY = SOUNDS_DIR + "prey.wav"
+    NAMES = SOUNDS_DIR + "names.wav"
+    PICTURE = SOUNDS_DIR + "picture.wav"
+    NOT_UNDERSTAND = SOUNDS_DIR + "not_understand.wav"
+    DIVISION = SOUNDS_DIR + "division.wav"
+    CHEST = SOUNDS_DIR + "chest.wav"
+    CLOSET = SOUNDS_DIR + "closet.wav"
+    HE = SOUNDS_DIR + "he.wav"
+    
+
 class SOUNDS:
     stage_1 = None
     lifesaver_begin = None
@@ -256,3 +267,15 @@ class SOUNDS:
     cthulhu_appear = None
     music_on_demon_wings = None
     operator_end = None
+
+    begin = None
+    prey = None
+    names = None
+    picture = None
+    not_understand = None
+    division = None
+    chest = None
+    closet = None
+    he = None
+
+

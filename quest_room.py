@@ -276,6 +276,33 @@ class QuestRoom(threading.Thread):
         elif sound_id in SOUNDS_NAMES.OPERATOR_END:
             self.game_state.sound_manager.play_sound(SOUNDS.operator_end)
 
+        elif sound_id in SOUNDS_NAMES.BEGIN:
+            self.game_state.sound_manager.play_sound(SOUNDS.begin)
+
+        elif sound_id in SOUNDS_NAMES.PREY:
+            self.game_state.sound_manager.play_sound(SOUNDS.prey)
+
+        elif sound_id in SOUNDS_NAMES.NAMES:
+            self.game_state.sound_manager.play_sound(SOUNDS.names)
+
+        elif sound_id in SOUNDS_NAMES.PICTURE:
+            self.game_state.sound_manager.play_sound(SOUNDS.picture)
+
+        elif sound_id in SOUNDS_NAMES.NOT_UNDERSTAND:
+            self.game_state.sound_manager.play_sound(SOUNDS.not_understand)
+
+        elif sound_id in SOUNDS_NAMES.DIVISION:
+            self.game_state.sound_manager.play_sound(SOUNDS.division)
+
+        elif sound_id in SOUNDS_NAMES.CHEST:
+            self.game_state.sound_manager.play_sound(SOUNDS.chest)
+
+        elif sound_id in SOUNDS_NAMES.CLOSET:
+            self.game_state.sound_manager.play_sound(SOUNDS.closet)
+
+        elif sound_id in SOUNDS_NAMES.HE:
+            self.game_state.sound_manager.play_sound(SOUNDS.he)
+
     def play_stage_sound(self, stage_sound_file):
         for stage_sound in SOUNDS.stages:
             self.game_state.sound_manager.stop(stage_sound)
