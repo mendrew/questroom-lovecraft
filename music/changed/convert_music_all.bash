@@ -7,11 +7,40 @@ _FORCE='-y'
 # 1 - HALL
 # 5 - RADIO
 
-# lifesaver_begin
-ffmpeg $_FORCE -i ../original/Спасатель_2.1.mp3 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel -1 -ac 6 -ar 44100 lifesaver_2_1.wav
+BUTTONS="buttons"
+HELP_SOUNDS="help_sounds"
 
+# lifesaver_begin
+ffmpeg $_FORCE -i ../original/Спасатель_2.1.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -ac 6 -ar 44100 lifesaver_2_1.wav
 # lifesaver_end
-ffmpeg $_FORCE -i ../original/Спасатель_3.1.mp3 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel -1 -ac 6 -ar 44100 lifesaver_1_1.wav
+ffmpeg $_FORCE -i ../original/Спасатель_3.1.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -ac 6 -ar 44100 lifesaver_3_1.wav
+
+# operator_end
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/14.\ Оператор,\ после\ Ктулху.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 operator_end.wav
+# cthulhu_appear
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/13.\ Древний\ ужас_дагон.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
+# music daemon
+# ffmpeg $_FORCE -i ../original/13.\ Древний\ ужас_дагон.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
+
+# begin
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/1.\ Начало,\ голос\ рассказчика.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 begin.wav
+# prey
+ffmpeg $_FORCE -i ../original/$BUTTONS/Жертва.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
+# names
+ffmpeg $_FORCE -i ../original/$BUTTONS/Имена.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 names.wav
+# picture
+ffmpeg $_FORCE -i ../original/$BUTTONS/Картина.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 picture.wav
+# not_understand
+ffmpeg $_FORCE -i ../original/$BUTTONS/Не\ понимали.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 not_understand.wav
+# division
+ffmpeg $_FORCE -i ../original/$BUTTONS/Разделение.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 division.wav
+# chest
+ffmpeg $_FORCE -i ../original/$BUTTONS/Сундук.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 chest.wav
+# closet
+ffmpeg $_FORCE -i ../original/$BUTTONS/Шкаф.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 closet.wav
+# he
+ffmpeg $_FORCE -i ../original/$BUTTONS/ОН.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 he.wav
+
 
 ffmpeg $_FORCE -i ../original/LIGHTNING-THUNDER.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 lightning_thunder.wav
 ffmpeg $_FORCE -i ../original/ЭМБ_МБ_1_Шепот_Зов.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 stage_one_whisper.wav
