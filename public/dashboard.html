@@ -58,6 +58,12 @@
               ws.send('{"message": "aquarium_pump", "action":"' + action + '"}');
             }
 
+
+            function eyes_pump(event){
+              action = event.currentTarget.dataset.action;
+              ws.send('{"message": "eyes_pump", "action":"' + action + '"}');
+            }
+
             function mirror_on(event){
               ws.send('{"message": "mirror_on"}');
             }
