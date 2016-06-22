@@ -1,6 +1,7 @@
 import pyaudio
 import time
 import sys
+import os
 import numpy
 from fractions import Fraction
 import threading
@@ -67,6 +68,9 @@ class SoundManager:
             numpy.float32, order='F')
 
     def add_sound(self, sound_name):
+        if not os.path.exists(sound_name):
+            return None
+
         new_sound_file = SoundFile(sound_name)
 
         for sound in self.files:
@@ -85,6 +89,9 @@ class SoundManager:
         sound.set_volume(volume)
 
     def play_sound(self, sound):
+        if sound is None:
+            return
+
         if sound not in self.files:
             self.add_sound(sound)
 
@@ -102,6 +109,9 @@ class SoundManager:
             self.play()
 
     def stop(self, sound):
+        if sound is None:
+            return
+
         if sound not in self.playing_files:
             return
         self.playing_data_list = numpy.zeros(

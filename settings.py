@@ -231,6 +231,10 @@ class SOUNDS_NAMES:
 
     BAD_END = SOUNDS_DIR + "bad_end.wav"
 
+    CTHULHU_APPEAR = SOUNDS_DIR + "cthulhu_appear.wav"
+    MUSIC_ON_DEMON_WINGS = SOUNDS_DIR + "music_on_demon_windgs.wav"
+    OPERATOR_END = SOUNDS_DIR + "operator_end.wav"
+
 class SOUNDS:
     stage_1 = None
     lifesaver_begin = None
@@ -248,3 +252,7 @@ class SOUNDS:
     stage_3 = None
     stage_4 = None
     stages = []
+
+    cthulhu_appear = None
+    music_on_demon_wings = None
+    operator_end = None

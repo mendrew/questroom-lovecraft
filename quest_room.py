@@ -267,6 +267,15 @@ class QuestRoom(threading.Thread):
         elif sound_id in SOUNDS_NAMES.LIFESAVER_3_1:
             self.game_state.sound_manager.play_sound(SOUNDS.lifesaver_end)
 
+        elif sound_id in SOUNDS_NAMES.CTHULHU_APPEAR:
+            self.game_state.sound_manager.play_sound(SOUNDS.cthulhu_appear)
+
+        elif sound_id in SOUNDS_NAMES.MUSIC_ON_DEMON_WINGS:
+            self.game_state.sound_manager.play_sound(SOUNDS.music_on_demon_windgs)
+
+        elif sound_id in SOUNDS_NAMES.OPERATOR_END:
+            self.game_state.sound_manager.play_sound(SOUNDS.operator_end)
+
     def play_stage_sound(self, stage_sound_file):
         for stage_sound in SOUNDS.stages:
             self.game_state.sound_manager.stop(stage_sound)

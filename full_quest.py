@@ -84,6 +84,11 @@ def init_sounds(game_state):
     SOUNDS.stages.append(SOUNDS.stage_3)
     SOUNDS.stages.append(SOUNDS.stage_4)
 
+    # new, not added yet
+    SOUNDS.cthulhu_appear = sound_manager.add_sound(SOUNDS_NAMES.CTHULHU_APPEAR)
+    SOUNDS.music_on_demon_windgs = sound_manager.add_sound(SOUNDS_NAMES.MUSIC_ON_DEMON_WINGS)
+    SOUNDS.operator_end = sound_manager.add_sound(SOUNDS_NAMES.OPERATOR_END)
+
 
 def REQ_QUEST_INIT(master, task, game_state):
     init_sounds(game_state)
