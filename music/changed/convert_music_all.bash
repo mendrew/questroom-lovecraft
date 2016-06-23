@@ -27,7 +27,7 @@ ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/Девочка_слышите_мен�
 # begin
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/1.\ Начало,\ голос\ рассказчика.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 begin.wav
 # music_on_demon_wings
-ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/Bohren\ \ -\ On\ Demon\ Wings.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 music_on_demon_wings.wav
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/Bohren\ \ -\ On\ Demon\ Wings.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 music_on_demon_wings.wav
 # begin_min_later
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/2.\ через\ 1\ мин\ после\ начала.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 begin_min_later.wav
 # before_books_fall
