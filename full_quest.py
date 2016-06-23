@@ -109,6 +109,10 @@ def init_sounds(game_state):
     SOUNDS.cthulhu_appear = sound_manager.add_sound(SOUNDS_NAMES.CTHULHU_APPEAR)
     SOUNDS.operator_end = sound_manager.add_sound(SOUNDS_NAMES.OPERATOR_END)
 
+    SOUNDS.girl_please_stop = sound_manager.add_sound(SOUNDS_NAMES.GIRL_PLEASE_STOP)
+    SOUNDS.girl_who_are_you = sound_manager.add_sound(SOUNDS_NAMES.GIRL_WHO_ARE_YOU)
+    SOUNDS.girl_hear_me = sound_manager.add_sound(SOUNDS_NAMES.GIRL_HEAR_ME)
+
 def REQ_QUEST_INIT(master, task, game_state):
     init_sounds(game_state)
     # return True

@@ -335,6 +335,16 @@ class QuestRoom(threading.Thread):
             self.game_state.sound_manager.play_sound(SOUNDS.operator_end)
 
 
+        elif sound_id in SOUNDS_NAMES.GIRL_PLEASE_STOP:
+            self.game_state.sound_manager.play_sound(SOUNDS.girl_please_stop)
+
+        elif sound_id in SOUNDS_NAMES.GIRL_WHO_ARE_YOU:
+            self.game_state.sound_manager.play_sound(SOUNDS.girl_who_are_you)
+
+        elif sound_id in SOUNDS_NAMES.GIRL_HEAR_ME:
+            self.game_state.sound_manager.play_sound(SOUNDS.girl_hear_me)
+
+
     def play_stage_sound(self, stage_sound_file):
         for stage_sound in SOUNDS.stages:
             self.game_state.sound_manager.stop(stage_sound)
