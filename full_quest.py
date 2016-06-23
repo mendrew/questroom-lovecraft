@@ -76,9 +76,9 @@ def init_sounds(game_state):
     SOUNDS.old_man = sound_manager.add_sound(SOUNDS_NAMES.OLD_MAN)
     SOUNDS.dagon_private = sound_manager.add_sound(SOUNDS_NAMES.DAGON_PRIVATE)
 
-    SOUNDS.stage_2 = stage_1
-    SOUNDS.stage_3 = stage_1
-    SOUNDS.stage_4 = stage_1
+    SOUNDS.stage_2 = SOUNDS.stage_1
+    SOUNDS.stage_3 = SOUNDS.stage_1
+    SOUNDS.stage_4 = SOUNDS.stage_1
     SOUNDS.stages.append(SOUNDS.stage_1)
     SOUNDS.stages.append(SOUNDS.stage_2)
     SOUNDS.stages.append(SOUNDS.stage_3)
