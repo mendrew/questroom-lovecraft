@@ -20,12 +20,12 @@ ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/14.\ Оператор,\ после\ �
 # cthulhu_appear
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/13.\ Древний\ ужас_дагон.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
 # music daemon
-# ffmpeg $_FORCE -i ../original/13.\ Древний\ ужас_дагон.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
+ffmpeg $_FORCE -i ../original/13.\ Древний\ ужас_дагон.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
 
 # begin
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/1.\ Начало,\ голос\ рассказчика.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 begin.wav
 # prey
-ffmpeg $_FORCE -i ../original/$BUTTONS/Жертва.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
+ffmpeg $_FORCE -i ../original/$BUTTONS/Жертва.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 prey.wav
 # names
 ffmpeg $_FORCE -i ../original/$BUTTONS/Имена.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 names.wav
 # picture
@@ -37,7 +37,7 @@ ffmpeg $_FORCE -i ../original/$BUTTONS/Разделение.mp3 -map_channel -1 
 # chest
 ffmpeg $_FORCE -i ../original/$BUTTONS/Сундук.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 chest.wav
 # closet
-ffmpeg $_FORCE -i ../original/$BUTTONS/Шкаф.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 closet.wav
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/8.\ Шкаф,\ через\ 5\ сек\ после\ открытия\ шкафа.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 closet.wav
 # he
 ffmpeg $_FORCE -i ../original/$BUTTONS/ОН.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 he.wav
 
