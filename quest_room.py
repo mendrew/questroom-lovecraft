@@ -297,14 +297,14 @@ class QuestRoom(threading.Thread):
 
         elif sound_id in SOUNDS_NAMES.MUSIC_ON_DEMON_WINGS:
             self.game_state.sound_manager.play_sound(SOUNDS.music_on_demon_wings)
-    
+
         elif sound_id in SOUNDS_NAMES.BEGIN_MIN_LATER:
             self.game_state.sound_manager.play_sound(SOUNDS.begin_min_later)
 
-        elif sound_id in SOUNDS_NAMES.BEFORE_BOOKS_FAL:
+        elif sound_id in SOUNDS_NAMES.BEFORE_BOOKS_FALL:
             self.game_state.sound_manager.play_sound(SOUNDS.before_books_fall)
 
-        elif sound_id in SOUNDS_NAMES.AFTER_BOOKS_FAL:
+        elif sound_id in SOUNDS_NAMES.AFTER_BOOKS_FALL:
             self.game_state.sound_manager.play_sound(SOUNDS.after_books_fall)
 
         elif sound_id in SOUNDS_NAMES.FISHING:

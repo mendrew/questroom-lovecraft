@@ -97,7 +97,15 @@ def init_sounds(game_state):
     # new, not added yet
     SOUNDS.begin = sound_manager.add_sound(SOUNDS_NAMES.BEGIN)
     SOUNDS.music_on_demon_windgs = sound_manager.add_sound(SOUNDS_NAMES.MUSIC_ON_DEMON_WINGS)
-
+    SOUNDS.begin_min_later = sound_manager.add_sound(SOUNDS_NAMES.BEGIN_MIN_LATER)
+    SOUNDS.before_books_fall = sound_manager.add_sound(SOUNDS_NAMES.BEFORE_BOOKS_FALL)
+    SOUNDS.after_books_fall = sound_manager.add_sound(SOUNDS_NAMES.AFTER_BOOKS_FALL)
+    SOUNDS.fishing = sound_manager.add_sound(SOUNDS_NAMES.FISHING)
+    SOUNDS.clock_sync = sound_manager.add_sound(SOUNDS_NAMES.CLOCK_SYNC)
+    SOUNDS.second_coin = sound_manager.add_sound(SOUNDS_NAMES.SECOND_COIN)
+    SOUNDS.knife_achieved = sound_manager.add_sound(SOUNDS_NAMES.KNIFE_ACHIEVED)
+    SOUNDS.all_coins_on_place = sound_manager.add_sound(SOUNDS_NAMES.ALL_COINS_ON_PLACE)
+    SOUNDS.after_skelet_door_open = sound_manager.add_sound(SOUNDS_NAMES.AFTER_SKELET_DOOR_OPEN)
     SOUNDS.cthulhu_appear = sound_manager.add_sound(SOUNDS_NAMES.CTHULHU_APPEAR)
     SOUNDS.operator_end = sound_manager.add_sound(SOUNDS_NAMES.OPERATOR_END)
 
