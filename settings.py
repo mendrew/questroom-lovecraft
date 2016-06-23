@@ -241,7 +241,6 @@ class SOUNDS_NAMES:
     HE = SOUNDS_DIR + "he.wav"
 
     BEGIN = SOUNDS_DIR + "begin.wav"
-    MUSIC_ON_DEMON_WINGS = SOUNDS_DIR + "music_on_demon_windgs.wav"
     MUSIC_ON_DEMON_WINGS = SOUNDS_DIR + "music_on_demon_wings.wav"
     BEGIN_MIN_LATER = SOUNDS_DIR + "begin_min_later.wav"
     BEFORE_BOOKS_FALL = SOUNDS_DIR + "before_books_fall.wav"

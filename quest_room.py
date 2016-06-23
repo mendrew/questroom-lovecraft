@@ -267,18 +267,6 @@ class QuestRoom(threading.Thread):
         elif sound_id in SOUNDS_NAMES.LIFESAVER_3_1:
             self.game_state.sound_manager.play_sound(SOUNDS.lifesaver_end)
 
-        elif sound_id in SOUNDS_NAMES.CTHULHU_APPEAR:
-            self.game_state.sound_manager.play_sound(SOUNDS.cthulhu_appear)
-
-        elif sound_id in SOUNDS_NAMES.MUSIC_ON_DEMON_WINGS:
-            self.game_state.sound_manager.play_sound(SOUNDS.music_on_demon_windgs)
-
-        elif sound_id in SOUNDS_NAMES.OPERATOR_END:
-            self.game_state.sound_manager.play_sound(SOUNDS.operator_end)
-
-        elif sound_id in SOUNDS_NAMES.BEGIN:
-            self.game_state.sound_manager.play_sound(SOUNDS.begin)
-
         elif sound_id in SOUNDS_NAMES.PREY:
             self.game_state.sound_manager.play_sound(SOUNDS.prey)
 
@@ -302,6 +290,50 @@ class QuestRoom(threading.Thread):
 
         elif sound_id in SOUNDS_NAMES.HE:
             self.game_state.sound_manager.play_sound(SOUNDS.he)
+
+
+        elif sound_id in SOUNDS_NAMES.BEGIN:
+            self.game_state.sound_manager.play_sound(SOUNDS.begin)
+
+        elif sound_id in SOUNDS_NAMES.MUSIC_ON_DEMON_WINGS:
+            self.game_state.sound_manager.play_sound(SOUNDS.music_on_demon_wings)
+    
+        elif sound_id in SOUNDS_NAMES.BEGIN_MIN_LATER:
+            self.game_state.sound_manager.play_sound(SOUNDS.begin_min_later)
+
+        elif sound_id in SOUNDS_NAMES.BEFORE_BOOKS_FAL:
+            self.game_state.sound_manager.play_sound(SOUNDS.before_books_fall)
+
+        elif sound_id in SOUNDS_NAMES.AFTER_BOOKS_FAL:
+            self.game_state.sound_manager.play_sound(SOUNDS.after_books_fall)
+
+        elif sound_id in SOUNDS_NAMES.FISHING:
+            self.game_state.sound_manager.play_sound(SOUNDS.fishing)
+
+        elif sound_id in SOUNDS_NAMES.CLOCK_SYNC:
+            self.game_state.sound_manager.play_sound(SOUNDS.clock_sync)
+
+        elif sound_id in SOUNDS_NAMES.SECOND_COIN:
+            self.game_state.sound_manager.play_sound(SOUNDS.second_coin)
+
+        elif sound_id in SOUNDS_NAMES.KNIFE_ACHIEVED:
+            self.game_state.sound_manager.play_sound(SOUNDS.knife_achieved)
+
+        elif sound_id in SOUNDS_NAMES.ALL_COINS_ON_PLACE:
+            self.game_state.sound_manager.play_sound(SOUNDS.all_coins_on_place)
+
+        elif sound_id in SOUNDS_NAMES.AFTER_SKELET_DOOR_OPEN:
+            self.game_state.sound_manager.play_sound(SOUNDS.after_skelet_door_open)
+
+        elif sound_id in SOUNDS_NAMES.CTHULHU_APPEAR:
+            self.game_state.sound_manager.play_sound(SOUNDS.cthulhu_appear)
+
+        elif sound_id in SOUNDS_NAMES.MUSIC_ON_DEMON_WINGS:
+            self.game_state.sound_manager.play_sound(SOUNDS.music_on_demon_windgs)
+
+        elif sound_id in SOUNDS_NAMES.OPERATOR_END:
+            self.game_state.sound_manager.play_sound(SOUNDS.operator_end)
+
 
     def play_stage_sound(self, stage_sound_file):
         for stage_sound in SOUNDS.stages:
