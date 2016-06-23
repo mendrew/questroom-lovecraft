@@ -16,6 +16,12 @@ ffmpeg $_FORCE -i ../original/Спасатель_2.1.mp3 -map_channel -1 -map_ch
 ffmpeg $_FORCE -i ../original/Спасатель_3.1.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -ac 6 -ar 44100 lifesaver_3_1.wav
 
 
+# girl
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/Девочка_остановись.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 girl_please_stop.wav
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/Девочка_кто_ты.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 girl_who_are_you.wav
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/Девочка_слышите_меня.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 girl_hear_me.wav
+# music_on_demon_wings
+
 
 
 # begin
