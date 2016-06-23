@@ -96,7 +96,7 @@ def init_sounds(game_state):
 
     # new, not added yet
     SOUNDS.begin = sound_manager.add_sound(SOUNDS_NAMES.BEGIN)
-    SOUNDS.music_on_demon_windgs = sound_manager.add_sound(SOUNDS_NAMES.MUSIC_ON_DEMON_WINGS)
+    SOUNDS.music_on_demon_wings = sound_manager.add_sound(SOUNDS_NAMES.MUSIC_ON_DEMON_WINGS)
     SOUNDS.begin_min_later = sound_manager.add_sound(SOUNDS_NAMES.BEGIN_MIN_LATER)
     SOUNDS.before_books_fall = sound_manager.add_sound(SOUNDS_NAMES.BEFORE_BOOKS_FALL)
     SOUNDS.after_books_fall = sound_manager.add_sound(SOUNDS_NAMES.AFTER_BOOKS_FALL)
