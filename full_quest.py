@@ -64,7 +64,7 @@ def check_puzzles(master):
 
 def init_sounds(game_state):
     sound_manager = game_state.sound_manager
-    SOUNDS.stage_1 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_1)
+    SOUNDS.stage_1 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_2)
     SOUNDS.lifesaver_begin = sound_manager.add_sound(SOUNDS_NAMES.LIFESAVER_2_1)
     SOUNDS.lifesaver_end = sound_manager.add_sound(SOUNDS_NAMES.LIFESAVER_3_1)
     SOUNDS.lightning = sound_manager.add_sound(SOUNDS_NAMES.LIGHTNING)
@@ -76,9 +76,9 @@ def init_sounds(game_state):
     SOUNDS.old_man = sound_manager.add_sound(SOUNDS_NAMES.OLD_MAN)
     SOUNDS.dagon_private = sound_manager.add_sound(SOUNDS_NAMES.DAGON_PRIVATE)
 
-    SOUNDS.stage_2 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_2)
-    SOUNDS.stage_3 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_3)
-    SOUNDS.stage_4 = sound_manager.add_sound(SOUNDS_NAMES.STAGE_4)
+    SOUNDS.stage_2 = stage_1
+    SOUNDS.stage_3 = stage_1
+    SOUNDS.stage_4 = stage_1
     SOUNDS.stages.append(SOUNDS.stage_1)
     SOUNDS.stages.append(SOUNDS.stage_2)
     SOUNDS.stages.append(SOUNDS.stage_3)
