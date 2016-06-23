@@ -231,20 +231,30 @@ class SOUNDS_NAMES:
 
     BAD_END = SOUNDS_DIR + "bad_end.wav"
 
-    CTHULHU_APPEAR = SOUNDS_DIR + "cthulhu_appear.wav"
-    MUSIC_ON_DEMON_WINGS = SOUNDS_DIR + "music_on_demon_windgs.wav"
-    OPERATOR_END = SOUNDS_DIR + "operator_end.wav"
 
-    BEGIN = SOUNDS_DIR + "begin.wav"
     PREY = SOUNDS_DIR + "prey.wav"
     NAMES = SOUNDS_DIR + "names.wav"
     PICTURE = SOUNDS_DIR + "picture.wav"
     NOT_UNDERSTAND = SOUNDS_DIR + "not_understand.wav"
     DIVISION = SOUNDS_DIR + "division.wav"
     CHEST = SOUNDS_DIR + "chest.wav"
-    CLOSET = SOUNDS_DIR + "closet.wav"
     HE = SOUNDS_DIR + "he.wav"
-    
+
+    BEGIN = SOUNDS_DIR + "begin.wav"
+    MUSIC_ON_DEMON_WINGS = SOUNDS_DIR + "music_on_demon_windgs.wav"
+    MUSIC_ON_DEMON_WINGS = SOUNDS_DIR + "music_on_demon_wings.wav"
+    BEGIN_MIN_LATER = SOUNDS_DIR + "begin_min_later.wav"
+    BEFORE_BOOKS_FALL = SOUNDS_DIR + "before_books_fall.wav"
+    AFTER_BOOKS_FALL = SOUNDS_DIR + "after_books_fall.wav"
+    FISHING = SOUNDS_DIR + "fishing.wav"
+    CLOCK_SYNC = SOUNDS_DIR + "clock_sync.wav"
+    SECOND_COIN = SOUNDS_DIR + "second_coin.wav"
+    CLOSET = SOUNDS_DIR + "closet.wav"
+    KNIFE_ACHIEVED  = SOUNDS_DIR + "knife_achieved.wav"
+    ALL_COINS_ON_PLACE = SOUNDS_DIR + "all_coins_on_place.wav"
+    AFTER_SKELET_DOOR_OPEN = SOUNDS_DIR + "after_skelet_door_open.wav"
+    CTHULHU_APPEAR = SOUNDS_DIR + "cthulhu_appear.wav"
+    OPERATOR_END = SOUNDS_DIR + "operator_end.wav"
 
 class SOUNDS:
     stage_1 = None
@@ -264,18 +274,27 @@ class SOUNDS:
     stage_4 = None
     stages = []
 
-    cthulhu_appear = None
-    music_on_demon_wings = None
-    operator_end = None
 
-    begin = None
     prey = None
     names = None
     picture = None
     not_understand = None
     division = None
     chest = None
-    closet = None
     he = None
 
+    begin = None
+    music_on_demon_wings = None
+    begin_min_later = None
+    before_books_fall = None
+    after_books_fall = None
+    fishing = None
+    clock_sync = None
+    second_coin = None
+    closet = None
+    knife_achieved = None
+    all_coins_on_place = None
+    after_skelet_door_open = None
+    cthulhu_appear = None
+    operator_end = None
 
