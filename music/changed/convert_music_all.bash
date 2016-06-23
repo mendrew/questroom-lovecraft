@@ -15,15 +15,36 @@ ffmpeg $_FORCE -i ../original/Спасатель_2.1.mp3 -map_channel -1 -map_ch
 # lifesaver_end
 ffmpeg $_FORCE -i ../original/Спасатель_3.1.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -ac 6 -ar 44100 lifesaver_3_1.wav
 
-# operator_end
-ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/14.\ Оператор,\ после\ Ктулху.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 operator_end.wav
-# cthulhu_appear
-ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/13.\ Древний\ ужас_дагон.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
-# music daemon
-ffmpeg $_FORCE -i ../original/13.\ Древний\ ужас_дагон.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
+
+
 
 # begin
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/1.\ Начало,\ голос\ рассказчика.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 begin.wav
+# begin_min_later
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/2.\ через\ 1\ мин\ после\ начала.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 begin_min_later.wav
+# before_books_fall
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/3.\ перд\ падением\ книг.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 before_books_fall.wav
+# after_books_fall
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/4.\ как\ только\ книги\ упали.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 after_books_fall.wav
+# fishing
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/5.\ На\ рыбалку\ -\ сразу\ же.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 fishing.wav
+# clock_sync
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/6.\ Часы,\ сразу.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 clock_sync.wav
+# second_coin
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/7.\ \ Вторая\ монета.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 second_coin.wav
+# closet
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/8.\ Шкаф,\ через\ 5\ сек\ после\ открытия\ шкафа.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 closet.wav
+# knife_achieved
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/9.\ как\ только\ получен\ нож.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 knife_achieved.wav
+# all_coins_on_place
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/11.все\ монеты\ на\ месте.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 all_coins_on_place.wav
+# after_skelet_door_open
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/12.\ Труп,\ через\ 3\ сек\ после\ открытия\ второй\ двери.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 after_skelet_door_open.wav
+# cthulhu_appear
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/13.\ Древний\ ужас_дагон.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
+# operator_end
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/14.\ Оператор,\ после\ Ктулху.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 operator_end.wav
+
 # prey
 ffmpeg $_FORCE -i ../original/$BUTTONS/Жертва.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 prey.wav
 # names
@@ -36,8 +57,6 @@ ffmpeg $_FORCE -i ../original/$BUTTONS/Не\ понимали.mp3 -map_channel -
 ffmpeg $_FORCE -i ../original/$BUTTONS/Разделение.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 division.wav
 # chest
 ffmpeg $_FORCE -i ../original/$BUTTONS/Сундук.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 chest.wav
-# closet
-ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/8.\ Шкаф,\ через\ 5\ сек\ после\ открытия\ шкафа.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 closet.wav
 # he
 ffmpeg $_FORCE -i ../original/$BUTTONS/ОН.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 he.wav
 
