@@ -372,9 +372,6 @@ def AC_SOUND_BACKGROUND_STAGE_1(master, task, game_state):
     game_state.sound_manager.play_sound(SOUNDS.stage_1)
 
 
-def AC_SOUND_RADIO_RESCUE(master, task, game_state):
-    game_state.sound_manager.play_sound(SOUNDS.lifesaver_begin)
-
 def AC_LIGHTNING(master, task, game_state):
 
     print("SML_ALL_LIGHTS in AC_LIGHTNING {}".format(

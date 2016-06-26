@@ -29,7 +29,6 @@
           AC_ADD_BACKGROUND_PICTURE_MOVES,
           AC_LIGHT_SHOW_WHERE_STATUE,
           AC_ADD_EDDISON_LAMP_BLINK,
-          AC_SOUND_RADIO_RESCUE,
         ]
       failure_requirements:
         []
