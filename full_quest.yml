@@ -243,13 +243,8 @@
       success_actions:
         [
          AC_ALL_LIGHT_ON,
-         # AC_LIGHTNING,
          AC_CHANGE_MOVE_PICTURE,
-         # AC_STRENGTHENING_OF_PRESENCE,
-         AC_ADD_CODE_LOCK,
          AC_ADD_PLAY_ABOUT_COINS_AND_CLOSET,
-         AC_SCARE_IN_LOCKER,
-         # AC_SOUND_BACKGROUND_STAGE_2,
          ]
       failure_requirements:
         []
@@ -262,12 +257,30 @@
       success_requirements:
         [REQ_PLAY_ABOUT_COINS_AND_CLOSET]
       success_actions:
-        []
+        [
+          AC_OPEN_PICTURE_BOX,
+          AC_ADD_PLAY_SHE_ALL_WHAT_I_HAVE,
+         ]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Воспроизведение о монетах и шкафе'
+
+    -
+      id: 207
+      success_requirements:
+        [REQ_PLAY_SHE_ALL_WHAT_I_HAVE]
+      success_actions:
+        [
+         AC_ADD_CODE_LOCK,
+         AC_SCARE_IN_LOCKER,
+         ]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизведение <<Она все>>'
 
     -
       id: 8
@@ -422,7 +435,6 @@
           AC_SOUND_BACKGROUND_STAGE_4,
           AC_PERFORMANCE_CULMINATION,
           AC_ADD_THE_FINAL,
-          AC_ADD_TIMER_PICTURE_BOX,
           AC_ADD_TIMER_PLAY_LIFESAVER_END,
           AC_ADD_TIMER_PLAY_BAD_END,
         ]

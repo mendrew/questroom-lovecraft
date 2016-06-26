@@ -1082,24 +1082,45 @@ def AC_ADD_PLAY_ABOUT_COINS_AND_CLOSET(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_ABOUT_COINS_AND_CLOSET)
 
 def REQ_PLAY_ABOUT_COINS_AND_CLOSET(master, task, game_state):
-    print("Play about sound and closet")
-    # game_state.sound_manager.play_sound(SOUNDS.stage_2)
-    pass
-    return True
+    DELAY_TIME = 0
+    if task.stack == []:
+        game_state.sound_manager.play_sound(SOUNDS.second_coin)
+        task.stack.append(time.time())
 
-def AC_PERFORMANCE_YOU_NOT_MY_FATHER(master, task, game_state):
-    print(
-        "(ACTION:{task_id}) Performance - you not my father".format(task_id=task.id))
-    pass
+    start_time = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.second_coin)
+
+    if not playing:
+        return True
 
 
-def AC_STRENGTHENING_OF_PRESENCE(master, task, game_state):
-    # усиление присутствия
-    print(
-        "(ACTION:{task_id}) Feel of strengthening presence".format(
-            task_id=task.id))
-    # LEDS and what else
-    pass
+def AC_ADD_PLAY_SHE_ALL_WHAT_I_HAVE(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_SHE_ALL_WHAT_I_HAVE)
+
+
+def REQ_PLAY_SHE_ALL_WHAT_I_HAVE(master, task, game_state):
+    DELAY_TIME = 2
+    if task.stack == []:
+        game_state.sound_manager.play_sound(SOUNDS.girl_she_all_i_have)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.girl_she_all_i_have)
+
+    if not playing:
+        return True
 
 
 def AC_ADD_CODE_LOCK(master, task, game_state):
@@ -1120,7 +1141,7 @@ def AC_SCARE_IN_LOCKER(master, task, game_state):
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
-    time.sleep(2)
+    time.sleep(4)
 
     for scare_index in DEVICES_TABLE.SL_SCARE_IN_LOCKER:
         sl_controlls[scare_index] = 0
