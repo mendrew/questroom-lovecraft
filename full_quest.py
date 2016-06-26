@@ -1824,6 +1824,28 @@ def REQ_MARINE_TROPHIES(master, task, game_state):
     task.stack.append(fishes_eyes)
 
 
+def AC_ADD_OPEN_STOORE_ROOM_DOOR(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.OPEN_STOORE_ROOM_DOOR)
+
+def REQ_OPEN_STOORE_ROOM_DOOR(master, task, game_state):
+    DELAY_TIME = 5
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+
+    print("(ACTION:{task_id}) Open door with skelet".format(task_id=task.id))
+    relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = DEVICES_TABLE.RELAY_OPEN
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
+    return True
+
 def AC_OPEN_DOOR_WITH_SKELET(master, task, game_state):
     print("(ACTION:{task_id}) Open door with skelet".format(task_id=task.id))
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
@@ -1831,7 +1853,6 @@ def AC_OPEN_DOOR_WITH_SKELET(master, task, game_state):
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
 def AC_ADD_PLAY_AFTER_SKELET_DOOR_OPEN(master, task, game_state):
-
     game_state.add_active_task_with_id(TASKS_IDS.PLAY_AFTER_SKELET_DOOR_OPEN)
 
 def REQ_PLAY_AFTER_SKELET_DOOR_OPEN(master, task, game_state):
@@ -1865,7 +1886,6 @@ def REQ_PLAY_AFTER_SKELET_DOOR_OPEN(master, task, game_state):
 
 
 def AC_OPEN_CLOSET_DOOR(master, task, game_state):
-    time.sleep(12)
     print("(ACTION:{task_id}) Open closet".format(task_id=task.id))
     relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
     relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.RELAY_OPEN
@@ -1879,6 +1899,38 @@ def AC_ADD_PUT_FOURTH_COIN(master, task, game_state):
 def REQ_PUT_FOURTH_COIN(master, task, game_state):
     return check_coins_inserted(master, task, game_state, 4)
 
+
+def AC_ADD_PLAY_ALL_COINS_ON_PLACE(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_ALL_COINS_ON_PLACE)
+
+def REQ_PLAY_ALL_COINS_ON_PLACE(master, task, game_state):
+    DELAY_TIME = 0
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    sound_start = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.all_coins_on_place)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.all_coins_on_place)
+
+    if not playing:
+        return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
 
 def AC_SOUND_BACKGROUND_STAGE_4(master, task, game_state):
     game_state.sound_manager.stop(SOUNDS.stage_3)

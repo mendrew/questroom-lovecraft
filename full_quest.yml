@@ -505,7 +505,6 @@
         [AC_OPEN_DOOR_WITH_SKELET,
          AC_ADD_PLAY_AFTER_SKELET_DOOR_OPEN,
          AC_ADD_PUT_FOURTH_COIN,
-         AC_OPEN_CLOSET_DOOR,
          ]
       failure_requirements:
         []
@@ -514,7 +513,7 @@
       title: 'Выставить ножом цвет глаз у морских трофеев'
 
     -
-      id: 215
+      id: 216
       success_requirements:
         [REQ_PLAY_AFTER_SKELET_DOOR_OPEN]
       success_actions:
@@ -527,26 +526,48 @@
       title: 'Воспроизведение <<Труп>>'
 
     -
+      id: 215
+      success_requirements:
+        [REQ_OPEN_STOORE_ROOM_DOOR]
+      success_actions:
+        [
+         ]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Открытие двери в кладовку'
+
+    -
       id: 20
       success_requirements:
         [REQ_PUT_FOURTH_COIN]
       success_actions:
         [
-          AC_ADD_TIMER_PICTURE_BOX,
-          AC_ADD_TIMER_PLAY_LIFESAVER_END,
-          AC_ADD_TIMER_PLAY_BAD_END,
-          AC_LIGHTNING,
-          AC_SOUND_BACKGROUND_STAGE_4,
-          AC_PERFORMANCE_CULMINATION,
+          AC_ADD_OPEN_STOORE_ROOM_DOOR,
+          AC_ADD_PLAY_ALL_COINS_ON_PLACE,
+          # AC_SOUND_BACKGROUND_STAGE_4,
           AC_ADD_THE_FINAL,
-          AC_ADD_TIMER_PLAY_LIFESAVER_END,
-          AC_ADD_TIMER_PLAY_BAD_END,
+          # AC_ADD_TIMER_PLAY_LIFESAVER_END,
+          # AC_ADD_TIMER_PLAY_BAD_END,
         ]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Вставить четвёртую монету'
+
+    -
+      id: 217
+      success_requirements:
+        [REQ_PLAY_ALL_COINS_ON_PLACE]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизведение <<Все монеты на месте>>'
 
     -
       id: 21
