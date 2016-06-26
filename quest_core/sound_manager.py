@@ -89,6 +89,10 @@ class SoundManager:
             return
         sound.set_volume(volume)
 
+    def is_playing(self, sound):
+        if sound in self.files:
+            return True
+
     def play_sound(self, sound):
         if sound is None:
             return
