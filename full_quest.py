@@ -1064,6 +1064,14 @@ def ADD_PUT_SECOND_COIN(master, task, game_state):
 def REQ_PUT_SECOND_COIN(master, task, game_state):
     return check_coins_inserted(master, task, game_state, 2)
 
+def AC_ADD_PLAY_ABOUT_COINS_AND_CLOSET(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_ABOUT_COINS_AND_CLOSET)
+
+def REQ_PLAY_ABOUT_COINS_AND_CLOSET(master, task, game_state):
+    print("Play about sound and closet")
+    # game_state.sound_manager.play_sound(SOUNDS.stage_2)
+    pass
+    return True
 
 def AC_PERFORMANCE_YOU_NOT_MY_FATHER(master, task, game_state):
     print(

@@ -233,6 +233,7 @@
         []
       title: 'Собрать пазл (семья)'
 
+
     -
       id: 7
       success_requirements:
@@ -240,18 +241,31 @@
       success_actions:
         [
          AC_ALL_LIGHT_ON,
-         AC_LIGHTNING,
+         # AC_LIGHTNING,
          AC_CHANGE_MOVE_PICTURE,
-         AC_STRENGTHENING_OF_PRESENCE,
+         # AC_STRENGTHENING_OF_PRESENCE,
          AC_ADD_CODE_LOCK,
+         AC_ADD_PLAY_ABOUT_COINS_AND_CLOSET,
          AC_SCARE_IN_LOCKER,
-         AC_SOUND_BACKGROUND_STAGE_2,
+         # AC_SOUND_BACKGROUND_STAGE_2,
          ]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Вставить вторую монетку'
+
+    -
+      id: 206
+      success_requirements:
+        [REQ_PLAY_ABOUT_COINS_AND_CLOSET]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизведение о монетах и шкафе'
 
     -
       id: 8
