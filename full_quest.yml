@@ -1,5 +1,3 @@
----
-  tasks:
     -
       id: 0
       success_requirements:
@@ -287,7 +285,12 @@
       success_requirements:
         [REQ_CODE_LOCK]
       success_actions:
-        [AC_LOCKER_OPEN, AC_ADD_KUNSTKAMERA]
+        [
+          AC_LOCKER_OPEN,
+          # liquid and bottles
+          AC_ADD_KUNSTKAMERA,
+          AC_ADD_PLAY_CLOSET,
+         ]
       failure_requirements:
         []
       failure_actions:
@@ -295,12 +298,55 @@
       title: 'Открыть кодовый замок шкафа'
 
     -
+      id: 208
+      success_requirements:
+        [REQ_PLAY_CLOSET]
+      success_actions:
+        [
+          AC_ADD_PLAY_PRAY,
+         ]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизведение <<Шкаф>>'
+
+    -
+      id: 209
+      success_requirements:
+        [REQ_PLAY_PRAY]
+      success_actions:
+        [
+          AC_ADD_PLAY_GIRL_YOU_HEAR_ME,
+         ]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизведение <<Жертва>>'
+
+    -
+      id: 210
+      success_requirements:
+        [REQ_PLAY_GIRL_YOU_HEAR_ME]
+      success_actions:
+        [
+         ]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизведение <<Вы слышите меня>>'
+
+
+    -
       id: 9
       success_requirements:
         [REQ_ONCOMING_TO_KUNSTKAMERA]
       success_actions:
-        [AC_OCTOPUS_SPIT_LIQUID,
-         AC_PLAY_OCTOPUS_SPRUT]
+        [
+          AC_OCTOPUS_SPIT_LIQUID,
+         ]
       failure_requirements:
         []
       failure_actions:

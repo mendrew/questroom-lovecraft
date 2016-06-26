@@ -1228,11 +1228,106 @@ def AC_OCTOPUS_SPIT_LIQUID(master, task, game_state):
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
     # maybe here play sound or in external action
 
+def AC_ADD_PLAY_CLOSET(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_CLOSET)
 
-def AC_PLAY_OCTOPUS_SPRUT(master, task, game_state):
-    print("(ACTION:{task_id}) Octopus sprut sound".format(task_id=task.id))
-    pass
 
+def REQ_PLAY_CLOSET(master, task, game_state):
+    DELAY_TIME = 5
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    sound_start = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.closet)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.closet)
+
+    if not playing:
+        return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
+
+
+def AC_ADD_PLAY_PRAY(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_PRAY)
+
+
+def REQ_PLAY_PRAY(master, task, game_state):
+    DELAY_TIME = 5
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    sound_start = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.pray)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.pray)
+
+    if not playing:
+        return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
+
+
+def AC_ADD_PLAY_GIRL_YOU_HEAR_ME(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_GIRL_YOU_HEAR_ME)
+
+
+def REQ_PLAY_GIRL_YOU_HEAR_ME(master, task, game_state):
+    DELAY_TIME = 20
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    sound_start = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.girl_hear_me)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.girl_hear_me)
+
+    if not playing:
+        return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
 
 def REQ_PLACE_THE_BOTTLES(master, task, game_state):
     buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
