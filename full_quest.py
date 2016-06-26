@@ -675,7 +675,7 @@ def AC_TURN_LORDS_TABLE(master, task, game_state):
 
 def AC_PLAY_COINS_PULLED_US(master, task, game_state):
     print("(ACTION:{task_id}) Coins pulled us".format(task_id=task.id))
-    game_state.sound_manager.play_sound(SOUNDS.second_coin)
+    game_state.sound_manager.play_sound(SOUNDS.first_coin)
 
 
 def AC_ADD_PUT_FIRST_COIN(master, task, game_state):
