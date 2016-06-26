@@ -208,7 +208,10 @@
       success_requirements:
         [REQ_CLOCK_SYNCHRONIZATION]
       success_actions:
-        [AC_BOX_UNDER_CLOCK_FACE_OPEN, ADD_FAMILY_PICTURE_BARLEY_BREAK]
+        [ AC_PLAY_CLOCK_OPEN,
+          AC_BOX_UNDER_CLOCK_FACE_OPEN,
+          ADD_FAMILY_PICTURE_BARLEY_BREAK
+         ]
       failure_requirements:
         []
       failure_actions:

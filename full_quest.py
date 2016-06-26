@@ -1016,6 +1016,10 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
     return False
 
 
+def AC_PLAY_CLOCK_OPEN(master, task, game_state):
+    game_state.sound_manager.play_sound(SOUNDS.clock_sync)
+
+
 def AC_BOX_UNDER_CLOCK_FACE_OPEN(master, task, game_state):
     print(
         "(ACTION:{task_id}) Lock under clock face opened".format(
