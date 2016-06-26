@@ -1649,9 +1649,73 @@ def AC_OPEN_CLOSET_BOX_WITH_KNIFE(master, task, game_state):
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
-def AC_PLAY_OLD_MAN_MONOLOG(master, task, game_state):
-    print("(ACTION:{task_id}) play old man monolog".format(task_id=task.id))
-    game_state.sound_manager.play_sound(SOUNDS.old_man)
+def AC_ADD_PLAY_KNIFE_ACHIEVED(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_KNIFE_ACHIEVED)
+
+
+def REQ_PLAY_KNIFE_ACHIEVED(master, task, game_state):
+    DELAY_TIME = 5
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    sound_start = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.knife_achieved)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.knife_achieved)
+
+    if not playing:
+        return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
+
+
+def AC_ADD_PLAY_OLD_MAN_MONOLOG(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_OLD_MAN_MONOLOG)
+
+
+def REQ_PLAY_OLD_MAN_MONOLOG(master, task, game_state):
+    DELAY_TIME = 5
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    sound_start = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.old_man)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.old_man)
+
+    if not playing:
+        return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
+
 
 def AC_ADD_MARINE_TROPHIES(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.MARINE_TROPHIES)

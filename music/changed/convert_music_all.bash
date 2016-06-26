@@ -84,7 +84,7 @@ ffmpeg $_FORCE -i ../original/2_Я\ слышала....mp3 -map_channel 0.0.0 -ma
 ffmpeg $_FORCE -i ../original/4_Она\ всё....mp3 -map_channel 0.0.0 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 girl_4_she_all_i_have.wav
 
 # in hall
-ffmpeg $_FORCE -i ../original/Монолог\ старика.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 old_man_monolog.wav
+ffmpeg $_FORCE -i ../original/Монолог\ старика.mp3 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 old_man_monolog.wav
 # in storeroom
 ffmpeg $_FORCE -i ../original/Дагон_Личное_Безумие.mp3 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 dagon.wav
 
