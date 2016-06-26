@@ -13,6 +13,8 @@ class GLOBAL_VARIABLES:
     TABLE_CLOCK_VALUE = 3
     TABLE_CLOCK_LAST_CHANGE_TIME = time.time()
 
+    CLOCKS_SYNCHRONIZE = False
+
     WALL_CLOCK_REAL_12 = 0
     CURRENT_MOVE_PICTURE = None
 
@@ -213,18 +215,57 @@ def TABLE_CLOCK_UP(master):
     # master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 
+def AC_ADD_TABLE_CLOCK_RING_OUT(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.TABLE_CLOCK_RING_OUT_ALWAYS)
 
-def AC_TABLE_CLOCK_RING_OUT(master, tas, game_state):
+
+def REQ_TABLE_CLOCK_RING_OUT_ALWAYS(master, task, game_state):
+    REPEAT_RING_OUT = 8 # sec
+    UNSET_RING_OUT = 1
+    if task.stack == []:
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    time_passed = time.time() - start_time
+
+    if time_passed < REPEAT_RING_OUT:
+        pass
+
+    elif REPEAT_RING_OUT < time_passed < REPEAT_RING_OUT + UNSET_RING_OUT:
+        # ring out table clock
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 1
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+    else:
+        # unset ring out command
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 0
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+        start_time = time.time()
+
+    if GLOBAL_VARIABLES.CLOCKS_SYNCHRONIZE:
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 0
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+        return True
+
+    task.stack.append(start_time)
+    return
+
+
+def AC_TABLE_CLOCK_RING_OUT(master, task, game_state):
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 1
 
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-    time.sleep(1)
+    time.sleep(0.4)
 
     sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
-def AC_ADD_BACKGROUND_TABLE_CLOCK_JOB(master, tas, game_state):
+
+def AC_ADD_BACKGROUND_TABLE_CLOCK_JOB(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.BACKGROUND_TABLE_CLOCK)
 
 
@@ -880,6 +921,7 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
     if GLOBAL_VARIABLES.TABLE_CLOCK_VALUE == wall_clock_time:
         print("(REQ:{task_id}) Clocks sync!".format(task_id=task.id))
+        GLOBAL_VARIABLES.CLOCKS_SYNCHRONIZE = True
         return True
 
     task.stack.append(overflow)

@@ -135,7 +135,7 @@
         [REQ_COLLECT_DAD_FISHING]
       success_actions:
         [AC_TABLE_CLOCK_CHANGE_TIME,
-         AC_TABLE_CLOCK_RING_OUT,
+         AC_ADD_TABLE_CLOCK_RING_OUT,
          AC_ADD_CLOCK_SYNCHRONIZATION,
          AC_LIGHT_SHOW_WHERE_CLOCK_SYNCHRONIZATION,
          AC_ADD_EDDISON_LAMP_BLINK,
@@ -146,6 +146,19 @@
       failure_actions:
         []
       title: 'Собрать Папу на рыбалку'
+
+
+    -
+      id: 112
+      success_requirements:
+        [REQ_TABLE_CLOCK_RING_OUT_ALWAYS]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Звон часов'
 
     -
       id: 5
