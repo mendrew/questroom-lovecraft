@@ -513,21 +513,6 @@
       title: 'Выставить ножом цвет глаз у морских трофеев'
 
     -
-      id: 19
-      success_requirements:
-        [REQ_MARINE_TROPHIES]
-      success_actions:
-        [AC_OPEN_DOOR_WITH_SKELET,
-         AC_ADD_PUT_FOURTH_COIN,
-         AC_OPEN_CLOSET_DOOR,
-         ]
-      failure_requirements:
-        []
-      failure_actions:
-        []
-      title: 'Выставить ножом цвет глаз у морских трофеев'
-
-    -
       id: 20
       success_requirements:
         [REQ_PUT_FOURTH_COIN]
