@@ -402,7 +402,8 @@
          AC_CHANGE_MOVE_PICTURE,
          # AC_SOUND_BACKGROUND_STAGE_3,
          # AC_ADD_ANOMALOUS_PHENOMENA,
-         AC_PLAY_DAGON_PRIVATE
+         # AC_PLAY_DAGON_PRIVATE
+         AC_ADD_CLOSE_THE_DOOR,
         ]
       failure_requirements:
         []
@@ -418,13 +419,40 @@
         [
          AC_OPEN_MIRROR,
          AC_ADD_ANOMALOUS_PHENOMENA,
-         AC_PLAY_DAGON_PRIVATE
+         AC_ADD_PLAY_DIVISION,
         ]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Закрывание двери в кладовку'
+
+    -
+      id: 211
+      success_requirements:
+        [REQ_PLAY_DIVISION]
+      success_actions:
+        [
+          AC_ADD_PLAY_DAGON_PRIVATE,
+         ]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизведение <<Разделение>>'
+
+    -
+      id: 212
+      success_requirements:
+        [REQ_PLAY_DAGON_PRIVATE]
+      success_actions:
+        [
+         ]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизведение <<Дагон личное>>'
 
     -
       id: 18

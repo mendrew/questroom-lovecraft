@@ -1533,13 +1533,74 @@ def AC_OPEN_MIRROR(master, task, game_state):
     sl_control[DEVICES_TABLE.SL_MIRROR_IN_CLOSET] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
 
-def AC_PLAY_DAGON_PRIVATE(master, task, game_state):
-    print("(ACTION:{task_id}) Play Dagon private".format(task_id=task.id))
-    game_state.sound_manager.play_sound(SOUNDS.dagon_private)
 
-def AC_PARANORMAL_ACTIVITY(master, task, game_state):
-    print("(ACTION:{task_id}) Paranormal activity".format(task_id=task.id))
-    pass
+def AC_ADD_PLAY_DIVISION(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_DIVISION)
+
+
+def REQ_PLAY_DIVISION(master, task, game_state):
+    DELAY_TIME = 1
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    sound_start = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.division)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.division)
+
+    if not playing:
+        return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
+
+
+def AC_ADD_PLAY_DAGON_PRIVATE(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_DAGON_PRIVATE)
+
+
+def REQ_PLAY_DAGON_PRIVATE(master, task, game_state):
+    DELAY_TIME = 3
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    sound_start = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.dagon_private)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.dagon_private)
+
+    if not playing:
+        return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
+
 
 
 def AC_PERFORMANCE_GIRL_GONE(master, task, game_state):
