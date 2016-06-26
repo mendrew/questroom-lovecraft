@@ -250,6 +250,7 @@ class SOUNDS_NAMES:
     BEGIN = SOUNDS_DIR + "begin.wav"
     MUSIC_ON_DEMON_WINGS = SOUNDS_DIR + "music_on_demon_wings.wav"
     BEGIN_MIN_LATER = SOUNDS_DIR + "begin_min_later.wav"
+    FIRST_COIN = SOUNDS_DIR + "first_coin.wav"
     BEFORE_BOOKS_FALL = SOUNDS_DIR + "before_books_fall.wav"
     AFTER_BOOKS_FALL = SOUNDS_DIR + "after_books_fall.wav"
     FISHING = SOUNDS_DIR + "fishing.wav"
@@ -297,6 +298,7 @@ class SOUNDS:
     begin = None
     music_on_demon_wings = None
     begin_min_later = None
+    first_coin = None
     before_books_fall = None
     after_books_fall = None
     fishing = None

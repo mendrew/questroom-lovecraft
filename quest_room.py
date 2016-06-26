@@ -306,6 +306,9 @@ class QuestRoom(threading.Thread):
         elif sound_id in SOUNDS_NAMES.BEGIN_MIN_LATER:
             self.game_state.sound_manager.play_sound(SOUNDS.begin_min_later)
 
+        elif sound_id in SOUNDS_NAMES.FIRST_COIN:
+            self.game_state.sound_manager.play_sound(SOUNDS.first_coin)
+
         elif sound_id in SOUNDS_NAMES.BEFORE_BOOKS_FALL:
             self.game_state.sound_manager.play_sound(SOUNDS.before_books_fall)
 

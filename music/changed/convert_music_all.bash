@@ -30,6 +30,8 @@ ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/1.\ Начало,\ голос\ рас
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/Bohren\ \ -\ On\ Demon\ Wings.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 music_on_demon_wings.wav
 # begin_min_later
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/2.\ через\ 1\ мин\ после\ начала.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 begin_min_later.wav
+# first_coin
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/Первая\ монета.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 first_coin.wav
 # before_books_fall
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/3.\ перд\ падением\ книг.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 before_books_fall.wav
 # after_books_fall
