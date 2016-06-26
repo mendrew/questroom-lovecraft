@@ -174,6 +174,9 @@ def REQ_QUEST_INIT(master, task, game_state):
     relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = DEVICES_TABLE.CLOSE
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
+    # init picture on the wall
+    CHANGE_MOVE_PICTURE(master, 0)
+
     # init GODS table
     relays[DEVICES_TABLE.RELAY_GODS_TABLE_MOTOR] = DEVICES_TABLE.OPEN
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
@@ -340,6 +343,10 @@ def REQ_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
               GLOBAL_VARIABLES.WALL_CLOCK_REAL_12))
 
     return True
+
+
+def AC_CHANGE_MOVE_PICTURE(master, task, game_state):
+    CHANGE_MOVE_PICTURE(master)
 
 
 def CHANGE_MOVE_PICTURE(master, picture_index=None):

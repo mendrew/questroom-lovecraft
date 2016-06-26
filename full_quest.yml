@@ -90,6 +90,7 @@
       success_actions:
         [ AC_ADD_FALLING_BOOK_RODS_TIMER,
           AC_LIGHTNING,
+          AC_CHANGE_MOVE_PICTURE,
           AC_POLTERGEISTS,
           AC_ADD_COLLECT_DAD_FISHING,
           AC_PLAY_SHE_ALL_I_HAVE]
@@ -182,6 +183,7 @@
         [
          AC_ALL_LIGHT_ON,
          AC_LIGHTNING,
+         AC_CHANGE_MOVE_PICTURE,
          AC_STRENGTHENING_OF_PRESENCE,
          AC_ADD_CODE_LOCK,
          AC_SCARE_IN_LOCKER,
@@ -264,6 +266,7 @@
       success_actions:
         [
          AC_LIGHTNING,
+         AC_CHANGE_MOVE_PICTURE,
          AC_SOUND_BACKGROUND_STAGE_3,
          AC_ADD_ANOMALOUS_PHENOMENA,
          AC_PLAY_DAGON_PRIVATE
