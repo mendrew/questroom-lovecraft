@@ -763,9 +763,6 @@ def AC_ADD_EDDISON_LAMP_BLINK(master, task, game_state):
 
 def REQ_EDDISON_LAMP_BLINK(master, task, game_state):
     SLEEP_STATE_TIME = [
-        {"state": "on", "time": 5},
-        {"state": "off", "time": 5},
-        {"state": "on", "time": 2},
         {"state": "off", "time": 5},
         {"state": "on", "time": 1},
     ]
