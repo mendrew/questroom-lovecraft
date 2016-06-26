@@ -164,10 +164,7 @@
         [REQ_COLLECT_DAD_FISHING]
       success_actions:
         [AC_TABLE_CLOCK_CHANGE_TIME,
-         AC_ADD_TABLE_CLOCK_RING_OUT,
-         AC_ADD_CLOCK_SYNCHRONIZATION,
-         AC_LIGHT_SHOW_WHERE_CLOCK_SYNCHRONIZATION,
-         AC_ADD_EDDISON_LAMP_BLINK,
+         AC_ADD_PLAY_FISHING,
          # AC_ALL_LIGHT_ON
         ]
       failure_requirements:
@@ -176,6 +173,23 @@
         []
       title: 'Собрать Папу на рыбалку'
 
+
+    -
+      id: 205
+      success_requirements:
+        [REQ_PLAY_FISHING]
+      success_actions:
+        [
+         AC_ADD_TABLE_CLOCK_RING_OUT,
+         AC_ADD_CLOCK_SYNCHRONIZATION,
+         AC_LIGHT_SHOW_WHERE_CLOCK_SYNCHRONIZATION,
+         AC_ADD_EDDISON_LAMP_BLINK,
+         ]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизведение <<Собрали Папу>>'
 
     -
       id: 112

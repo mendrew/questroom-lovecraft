@@ -822,6 +822,20 @@ def REQ_COLLECT_DAD_FISHING(master, task, game_state):
     return dad_collected
 
 
+def AC_ADD_PLAY_FISHING(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_FISHING)
+
+def REQ_PLAY_SOUND_FISHING(master, task, game_state):
+    if task.stack == []:
+        task.stack.append(True)
+        game_state.sound_manager.play_sound(SOUNDS.fishing)
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.fishing)
+
+    if not playing:
+        return True
+
+
 def AC_TABLE_CLOCK_CHANGE_TIME(master, task, game_state):
     print("(ACTION:{task_id}) Table clock change time".format(task_id=task.id))
     # Time must set to random value
