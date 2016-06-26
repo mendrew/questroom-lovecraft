@@ -730,6 +730,7 @@ def REQ_PLAY_BEFORE_FALLING_BOOKS(master, task, game_state):
     spend_time = time.time() - start_time
 
     if game_state.sound_manager.is_playing(SOUNDS.picture):
+        print("Sound about picture still playing")
         task.stack.append(sound_start)
         task.stack.append(time.time())
         return
