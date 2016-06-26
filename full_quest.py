@@ -393,9 +393,17 @@ def AC_ADD_PLAY_INTRO(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_BEGIN)
 
 def REQ_PLAY_INTRO(master, task, game_state):
+    DELAY_TIME = 10
     if task.stack == []:
         game_state.sound_manager.play_sound(SOUNDS.begin)
         task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
 
     playing = game_state.sound_manager.is_playing(SOUNDS.begin)
 
