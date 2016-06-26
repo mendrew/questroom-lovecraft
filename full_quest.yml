@@ -20,20 +20,44 @@
         [REQ_START_QUEST]
       success_actions:
         [ AC_OFF_EDDISON_LIGHT,
-          AC_LIGHTNING,
-          AC_ADD_PLAY_SOUND_HELP,
+          AC_ADD_PLAY_INTRO,
           AC_ADD_PUT_STATUE_ON_LORDS_TABLE,
 
           AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
           AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
-          AC_LIGHT_SHOW_WHERE_STATUE,
-          AC_ADD_EDDISON_LAMP_BLINK,
         ]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Начать квест(старт звуков)'
+
+    -
+      id: 202
+      success_requirements:
+        [REQ_PLAY_INTRO]
+      success_actions:
+        [AC_ON_EDDISON_LIGHT,
+         AC_LIGHT_SHOW_WHERE_STATUE,
+         AC_ADD_PLAY_BEGINNING_AFTER_MINUTE
+         ]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизвести <<Начало>>'
+
+    -
+      id: 203
+      success_requirements:
+        [REQ_PLAY_BEGINNING_AFTER_MINUTE]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизвести <<Начало через минуту>>'
 
     -
       id: 201

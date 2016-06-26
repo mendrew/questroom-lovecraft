@@ -143,7 +143,7 @@ def REQ_QUEST_INIT(master, task, game_state):
 
     # init lights in rooms
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-    init_color = COLORS.OFF
+    init_color = COLORS.ROOM_BLUE
     smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, init_color)
     smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, init_color)
     smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
@@ -385,11 +385,54 @@ def REQ_START_QUEST(master, task, game_state):
     pass
     # return True
 
+def AC_ADD_PLAY_INTRO(master, task, game_state):
+
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_BEGIN)
+
+def REQ_PLAY_INTRO(master, task, game_state):
+    if task.stack == []:
+        game_state.sound_manager.play_sound(SOUNDS.begin)
+        task.stack.append(time.time())
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.begin)
+
+    if not playing:
+        return True
+
+    print("Intro still playing")
+
+
+def AC_ADD_PLAY_BEGINNING_AFTER_MINUTE(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_BEGINNING_AFTER_MINUTE)
+
+def REQ_PLAY_BEGINNING_AFTER_MINUTE(master, task, game_state):
+    if task.stack == []:
+        start_time = time.time()
+        task.stack.append(start_time)
+
+    start_time = task.stack.pop()
+
+    spend_time = time.time() - start_time
+    if spend_time >  DEVICES_TABLE.TIMER_PLAY_BEGGINING_AFTER_MINUTE:
+        game_state.sound_manager.play_sound(SOUNDS.begin_min_later)
+        return True
+
+    task.stack.append(start_time)
+    return
+
 def AC_OFF_EDDISON_LIGHT(master, task, game_state):
     # off lenin lamps
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+
+def AC_ON_EDDISON_LIGHT(master, task, game_state):
+    # on eddison
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
 
 def AC_SOUND_BACKGROUND_STAGE_1(master, task, game_state):
     game_state.sound_manager.play_sound(SOUNDS.stage_1)
