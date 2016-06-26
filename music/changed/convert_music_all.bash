@@ -49,7 +49,7 @@ ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/9.\ как\ только\ получ�
 # all_coins_on_place
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/11.все\ монеты\ на\ месте.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 all_coins_on_place.wav
 # after_skelet_door_open
-ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/12.\ Труп,\ через\ 3\ сек\ после\ открытия\ второй\ двери.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 after_skelet_door_open.wav
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/12.\ Труп,\ через\ 3\ сек\ после\ открытия\ второй\ двери.mp3 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 after_skelet_door_open.wav
 # cthulhu_appear
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/13.\ Древний\ ужас_дагон.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
 # operator_end

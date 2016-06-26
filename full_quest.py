@@ -1830,6 +1830,39 @@ def AC_OPEN_DOOR_WITH_SKELET(master, task, game_state):
     relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = DEVICES_TABLE.RELAY_OPEN
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
+def AC_ADD_PLAY_AFTER_SKELET_DOOR_OPEN(master, task, game_state):
+
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_AFTER_SKELET_DOOR_OPEN)
+
+def REQ_PLAY_AFTER_SKELET_DOOR_OPEN(master, task, game_state):
+    DELAY_TIME = 3
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    sound_start = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.after_skelet_door_open)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.after_skelet_door_open)
+
+    if not playing:
+        return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
+
 
 def AC_OPEN_CLOSET_DOOR(master, task, game_state):
     time.sleep(12)
