@@ -397,21 +397,31 @@ def AC_ADD_PLAY_INTRO(master, task, game_state):
 def REQ_PLAY_INTRO(master, task, game_state):
     DELAY_TIME = 10
     if task.stack == []:
-        game_state.sound_manager.play_sound(SOUNDS.begin)
+        sound_start = False
+        task.stack.append(sound_start)
         task.stack.append(time.time())
 
     start_time = task.stack.pop()
+    sound_start = task.stack.pop()
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
         task.stack.append(start_time)
         return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.begin)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
 
     playing = game_state.sound_manager.is_playing(SOUNDS.begin)
 
     if not playing:
         return True
 
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
 
 def AC_ADD_PLAY_BEGINNING_AFTER_MINUTE(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_BEGINNING_AFTER_MINUTE)
@@ -1084,20 +1094,31 @@ def AC_ADD_PLAY_ABOUT_COINS_AND_CLOSET(master, task, game_state):
 def REQ_PLAY_ABOUT_COINS_AND_CLOSET(master, task, game_state):
     DELAY_TIME = 0
     if task.stack == []:
-        game_state.sound_manager.play_sound(SOUNDS.second_coin)
+        sound_start = False
+        task.stack.append(sound_start)
         task.stack.append(time.time())
 
     start_time = task.stack.pop()
+    sound_start = task.stack.pop()
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
         task.stack.append(start_time)
         return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.second_coin)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
 
     playing = game_state.sound_manager.is_playing(SOUNDS.second_coin)
 
     if not playing:
         return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
 
 
 def AC_ADD_PLAY_SHE_ALL_WHAT_I_HAVE(master, task, game_state):
@@ -1107,20 +1128,31 @@ def AC_ADD_PLAY_SHE_ALL_WHAT_I_HAVE(master, task, game_state):
 def REQ_PLAY_SHE_ALL_WHAT_I_HAVE(master, task, game_state):
     DELAY_TIME = 2
     if task.stack == []:
-        game_state.sound_manager.play_sound(SOUNDS.girl_she_all_i_have)
+        sound_start = False
+        task.stack.append(sound_start)
         task.stack.append(time.time())
 
     start_time = task.stack.pop()
+    sound_start = task.stack.pop()
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
         task.stack.append(start_time)
         return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.girl_she_all_i_have)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
 
     playing = game_state.sound_manager.is_playing(SOUNDS.girl_she_all_i_have)
 
     if not playing:
         return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
 
 
 def AC_ADD_CODE_LOCK(master, task, game_state):
