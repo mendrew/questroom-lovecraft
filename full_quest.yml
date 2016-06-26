@@ -583,6 +583,18 @@
       title: 'Финал'
 
     -
+      id: 218
+      success_requirements:
+        [REQ_PLAY_CHEST]
+      success_actions:
+        [AC_SCARE_WINDOW]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Сундук с шумелкой'
+
+    -
       id: 121
       success_requirements:
         [REQ_TIMER_PLAY_LIFESAVER_END]

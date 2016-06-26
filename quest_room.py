@@ -1,5 +1,4 @@
 from __future__ import print_function
-Кукла (+ Помоги)
 from quest_core import parse
 from quest_core import Requirement
 from quest_core import Task
@@ -284,6 +283,9 @@ class QuestRoom(threading.Thread):
 
         elif sound_id in SOUNDS_NAMES.CHEST:
             self.game_state.sound_manager.play_sound(SOUNDS.chest)
+
+        elif sound_id in "play_chest":
+            AC_ADD_PLAY_CHEST(master, None, self.game_state)
 
         elif sound_id in SOUNDS_NAMES.CLOSET:
             self.game_state.sound_manager.play_sound(SOUNDS.closet)

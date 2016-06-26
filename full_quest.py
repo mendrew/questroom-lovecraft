@@ -1950,6 +1950,38 @@ def REQ_THE_FINAL(master, task, game_state):
     pass
 
 
+def AC_ADD_PLAY_CHEST(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_CHEST)
+
+def REQ_PLAY_CHEST(master, task, game_state):
+    DELAY_TIME = 0
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    sound_start = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.chest)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.chest)
+
+    if not playing:
+        return True
+
+    task.stack.append(sound_start)
+    task.stack.append(start_time)
+
 def AC_THE_FINAL(master, task, game_state):
     print("(ACTION:{task_id}) The final".format(task_id=task.id))
 
