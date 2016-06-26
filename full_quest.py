@@ -662,6 +662,11 @@ def AC_TURN_LORDS_TABLE(master, task, game_state):
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
 
+def AC_PLAY_COINS_PULLED_US(master, task, game_state):
+    print("(ACTION:{task_id}) Coins pulled us".format(task_id=task.id))
+    game_state.sound_manager.play_sound(SOUNDS.second_coin)
+
+
 def AC_ADD_PUT_FIRST_COIN(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PUT_FIRST_COIN)
 
@@ -705,16 +710,9 @@ def AC_BAKE_FLARE_UP(master, task, game_state):
     pass
 
 
-
-def AC_POLTERGEISTS(master, task, game_state):
-    print(
-        "(ACTION:{task_id}) Poltergeists, need to check scares in book closet".format(
-            task_id=task.id))
-    # AC_SCARE_IN_LOCKER(master, task, game_state)
-    pass
-
 def AC_ADD_FALLING_BOOK_RODS_TIMER(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.FALLING_BOOK_RODS_TIMER)
+
 
 def REQ_FALLING_BOOK_RODS_TIMER(master, task, game_state):
     if task.stack == []:

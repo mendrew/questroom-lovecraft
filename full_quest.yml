@@ -100,7 +100,9 @@
       success_requirements:
         [REQ_PUT_STATUE_ON_LORDS_TABLE]
       success_actions:
-        [AC_TURN_LORDS_TABLE, AC_ADD_PUT_FIRST_COIN]
+        [AC_TURN_LORDS_TABLE,
+         AC_ADD_PUT_FIRST_COIN,
+         AC_PLAY_COINS_PULLED_US]
       failure_requirements:
         []
       failure_actions:
@@ -113,11 +115,11 @@
         [REQ_PUT_FIRST_COIN]
       success_actions:
         [ AC_ADD_FALLING_BOOK_RODS_TIMER,
-          AC_LIGHTNING,
+          # AC_LIGHTNING,
           AC_CHANGE_MOVE_PICTURE,
-          AC_POLTERGEISTS,
           AC_ADD_COLLECT_DAD_FISHING,
-          AC_PLAY_SHE_ALL_I_HAVE]
+          # AC_PLAY_SHE_ALL_I_HAVE
+          ]
       failure_requirements:
         []
       failure_actions:
