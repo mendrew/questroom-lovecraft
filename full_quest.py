@@ -2102,6 +2102,54 @@ def AC_SCARE_HEAD_APPEARANCE(master, task, game_state):
     sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
+def AC_FINAL_DAGON(master, task, game_state):
+    AC_OFF_EDDISON_LIGHT(master, task, game_state)
+    # init lights in rooms
+    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+    init_color = COLORS.OFF
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, init_color)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, init_color)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, ROOM_RED)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
+    time.sleep(1)
+
+    AC_SCARE_HEAD_APPEARANCE(master, task, game_state)
+
+    AC_SCARE_LIGHTNING(master, task, game_state)
+
+    game_state.sound_manager.play_sound(SOUNDS.cthulhu_appear)
+
+    while game_state.sound_manager.is_playing(SOUNDS.cthulhu_appear):
+        pass
+
+    # head turn back
+    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 1
+    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_ACTION] = DEVICES_TABLE.HEAD_ACTION_HIDE
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    time.sleep(1)
+    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 0
+    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+
+    game_state.sound_manager.play_sound(SOUNDS.lifesaver_end)
+
+    # game_state.sound_manager.play_sound(SOUNDS.lifesaver_end_first)
+    # while game_state.sound_manager.is_playing(SOUNDS.lifesaver_end_first):
+    #     pass
+
+    # game_state.sound_manager.play_sound(SOUNDS.lifesaver_end_second)
+    # while game_state.sound_manager.is_playing(SOUNDS.lifesaver_end_second):
+    #     pass
+
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
+
+    game_state.sound_manager.play_sound(SOUNDS.music_on_demon_wings)
+
+    time.sleep(10)
+
+    game_state.sound_manager.play_sound(SOUNDS.operator_end)
+
 
 def AC_ADD_TIMER_PICTURE_BOX(master, task, game_state):
     print("(ACTION:{task_id}) Timer start for OPEN PICTURE BOX".format(task_id=task.id))
