@@ -21,7 +21,6 @@
       success_actions:
         [ AC_OFF_EDDISON_LIGHT,
           AC_ADD_PLAY_INTRO,
-          AC_ADD_PUT_STATUE_ON_LORDS_TABLE,
 
           AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
           AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
@@ -37,9 +36,11 @@
       success_requirements:
         [REQ_PLAY_INTRO]
       success_actions:
-        [AC_ON_EDDISON_LIGHT,
-         AC_LIGHT_SHOW_WHERE_STATUE,
-         AC_ADD_PLAY_BEGINNING_AFTER_MINUTE
+        [
+          AC_ADD_PUT_STATUE_ON_LORDS_TABLE,
+          AC_ON_EDDISON_LIGHT,
+          AC_LIGHT_SHOW_WHERE_STATUE,
+          AC_ADD_PLAY_BEGINNING_AFTER_MINUTE
          ]
       failure_requirements:
         []

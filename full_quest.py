@@ -399,8 +399,6 @@ def REQ_PLAY_INTRO(master, task, game_state):
     if not playing:
         return True
 
-    print("Intro still playing")
-
 
 def AC_ADD_PLAY_BEGINNING_AFTER_MINUTE(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_BEGINNING_AFTER_MINUTE)
@@ -727,6 +725,8 @@ def REQ_PLAY_BEFORE_FALLING_BOOKS(master, task, game_state):
         task.stack.append(time.time())
 
 
+    start_time = task.stack.pop()
+    sound_start = task.stack.pop()
     spend_time = time.time() - start_time
 
     if game_state.sound_manager.is_playing(SOUNDS.picture):

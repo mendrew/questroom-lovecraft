@@ -90,14 +90,14 @@ class SoundManager:
         sound.set_volume(volume)
 
     def is_playing(self, sound):
-        print("Sound n frames: {}".format(sound.nframes))
-        for sound not in self.playing_files:
-            return True
+        if sound not in self.playing_files:
+            return False
         if sound.nframes == 0:
             self.playing_files.remove(sound)
-            return True
+            return False
         if sound not in self.files:
-            return True
+            return False
+        return True
 
     def play_sound(self, sound):
         if sound is None:
