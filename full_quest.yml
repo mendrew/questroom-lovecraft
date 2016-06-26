@@ -398,10 +398,10 @@
         [REQ_PUT_THIRD_COIN]
       success_actions:
         [
-         AC_LIGHTNING,
+         # AC_LIGHTNING,
          AC_CHANGE_MOVE_PICTURE,
-         AC_SOUND_BACKGROUND_STAGE_3,
-         AC_ADD_ANOMALOUS_PHENOMENA,
+         # AC_SOUND_BACKGROUND_STAGE_3,
+         # AC_ADD_ANOMALOUS_PHENOMENA,
          AC_PLAY_DAGON_PRIVATE
         ]
       failure_requirements:
@@ -425,18 +425,6 @@
       failure_actions:
         []
       title: 'Закрывание двери в кладовку'
-
-    -
-      id: 17
-      success_requirements:
-        [REQ_ANOMALOUS_PHENOMENA_LEDS]
-      success_actions:
-        []
-      failure_requirements:
-        []
-      failure_actions:
-        []
-      title: 'Появляются аномальные явления(следы, отпечатки)'
 
     -
       id: 18

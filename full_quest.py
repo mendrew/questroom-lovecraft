@@ -1435,8 +1435,8 @@ def AC_ADD_CLOSE_THE_DOOR(master, task, game_state):
 
 
 def REQ_CLOSE_THE_DOOR(master, task, game_state):
-    TIME_TO_CLOSE = 25
-    TIME_TO_OPEN = 12
+    TIME_TO_CLOSE = 8
+    TIME_TO_OPEN = 7
     TIME_TO_WAIT_PLAYERS_ACTIONS = 15
     TIME_BEFORE_CLOSE_AGAIN = 3
     NUMBER_DELTA = 20
@@ -1484,20 +1484,10 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
                 start_time = time.time()
                 stage = Stages.OPEN
             else:
-                print("(REQ:{task_id}) DOOR_CLOSED AND WE MUST"
+                print("(REQ:{task_id}) DOOR_CLOSED"
                       " WAIT PLAYERS ACTIONS!".format(
                         task_id=task.id))
-                # door closed and we must wait to players actions
-                start_time = time.time()
-                # get symbols state for detect players activity in future
-                adcs = master.getAdc(Devices.LOVECRAFT_DEVICE_NAME).get()
-                symbols_list = []
-                symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_1])
-                symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_2])
-                symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_3])
-                task.stack.append(symbols_list)
-
-                stage = Stages.WAIT_PLAYERS_ACTIONS
+                return True
 
     elif Stages.OPEN == stage:
         print("(REQ:{task_id}) OPEN_THE_DOOR!".format(task_id=task.id))
@@ -1519,39 +1509,6 @@ def REQ_CLOSE_THE_DOOR(master, task, game_state):
             start_time = time.time()
             stage = Stages.WAIT_TO_CLOSE_AGAIN
 
-    elif Stages.WAIT_PLAYERS_ACTIONS == stage:
-        old_symbols_list = task.stack.pop()
-        if passed_time > TIME_TO_WAIT_PLAYERS_ACTIONS:
-            print("(REQ:{task_id}) PLAYERS NOT ACTIVE!".format(task_id=task.id))
-            # all we can is open the door again
-            start_time = time.time()
-            stage = Stages.OPEN
-        else:
-            # check players activity
-            adcs = master.getAdc(Devices.LOVECRAFT_DEVICE_NAME).get()
-            symbols_list = []
-            symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_1])
-            symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_2])
-            symbols_list.append(adcs[DEVICES_TABLE.BOX_LOCK_SYMBOL_3])
-            if int(passed_time % 10) == 0:
-                print("(REQ:{task_id}) SYMBOLS_LIST: {symlist}".format(
-                          task_id=task.id, symlist=symbols_list))
-
-            players_active = False
-            for index in range(len(old_symbols_list)):
-                if symbols_list[index] < (
-                        old_symbols_list[index] -
-                        NUMBER_DELTA) or symbols_list[index] > (
-                        old_symbols_list[index] +
-                        NUMBER_DELTA):
-                    players_active = True
-                    break
-
-            if players_active:
-                print("Players start to play and door is closed - return TRUE")
-                return True
-
-            task.stack.append(old_symbols_list)
 
     elif Stages.WAIT_TO_CLOSE_AGAIN == stage:
         if passed_time > TIME_BEFORE_CLOSE_AGAIN:
@@ -1591,13 +1548,10 @@ def AC_PERFORMANCE_GIRL_GONE(master, task, game_state):
 
 
 def AC_ADD_ANOMALOUS_PHENOMENA(master, task, game_state):
-    game_state.add_active_task_with_id(TASKS_IDS.ANOMALOUS_PHENOMENA_LEDS)
     game_state.add_active_task_with_id(
         TASKS_IDS.ANOMALOUS_PHENOMENA_ENTER_NUMBERS)
 
 
-def REQ_ANOMALOUS_PHENOMENA_LEDS(master, task, game_state):
-    return True
 
 
 def REQ_ANOMALOUS_PHENOMENA_ENTER_NUMBERS(master, task, game_state):
