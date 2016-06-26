@@ -177,7 +177,7 @@
     -
       id: 205
       success_requirements:
-        [REQ_PLAY_FISHING]
+        [REQ_PLAY_SOUND_FISHING]
       success_actions:
         [
          AC_ADD_TABLE_CLOCK_RING_OUT,
