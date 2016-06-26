@@ -668,6 +668,7 @@ def AC_PLAY_COINS_PULLED_US(master, task, game_state):
 
 
 def AC_ADD_PUT_FIRST_COIN(master, task, game_state):
+    time.sleep(4)
     game_state.add_active_task_with_id(TASKS_IDS.PUT_FIRST_COIN)
 
 
@@ -701,7 +702,7 @@ def check_coins_inserted(master, task, game_state, nubmer_of_coins):
 
 
 def REQ_PUT_FIRST_COIN(master, task, game_state):
-    time.sleep(5)
+    # time.sleep(5)
     return check_coins_inserted(master, task, game_state, 1)
 
 
@@ -709,6 +710,8 @@ def AC_BAKE_FLARE_UP(master, task, game_state):
     print("(ACTION:{task_id}) Bake flare up".format(task_id=task.id))
     pass
 
+def AC_PLAY_PICTURE(master, task, game_state):
+    game_state.sound_manager.play_sound(SOUNDS.picture)
 
 def AC_ADD_FALLING_BOOK_RODS_TIMER(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.FALLING_BOOK_RODS_TIMER)

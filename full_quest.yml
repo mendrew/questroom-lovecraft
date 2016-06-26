@@ -114,7 +114,8 @@
       success_requirements:
         [REQ_PUT_FIRST_COIN]
       success_actions:
-        [ AC_ADD_FALLING_BOOK_RODS_TIMER,
+        [ AC_PLAY_PICTURE,
+          AC_ADD_FALLING_BOOK_RODS_TIMER,
           # AC_LIGHTNING,
           AC_CHANGE_MOVE_PICTURE,
           AC_ADD_COLLECT_DAD_FISHING,
