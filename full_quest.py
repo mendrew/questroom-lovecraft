@@ -342,10 +342,6 @@ def REQ_BACKGROUND_WALL_CLOCK_INIT(master, task, game_state):
     return True
 
 
-def AC_ADD_BACKGROUND_PICTURE_MOVES(master, task, game_state):
-    game_state.add_active_task_with_id(TASKS_IDS.BACKGROUND_PICTURE_MOVES)
-
-
 def CHANGE_MOVE_PICTURE(master, picture_index=None):
     if GLOBAL_VARIABLES.CURRENT_MOVE_PICTURE is None:
         picture_index = 0
@@ -364,35 +360,14 @@ def CHANGE_MOVE_PICTURE(master, picture_index=None):
     sl_control[DEVICES_TABLE.SL_MOVING_PICTURE[picture_index]] = 1
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_control)
 
-    # off eddison lamp
-    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
-    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-    time.sleep(2)
-    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
-    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-
-
-def REQ_BACKGROUND_PICTURE_MOVES(master, task, game_state):
-    PICTURE_CHANGE_PERIOD = 15 * 60
-
-    if task.stack == []:
-        CHANGE_MOVE_PICTURE(master)
-        start_time = time.time()
-        task.stack.append(start_time)
-
-    start_time = task.stack.pop()
-
-    passed_time = time.time() - start_time
-
-    if passed_time < PICTURE_CHANGE_PERIOD:
-        task.stack.append(start_time)
-        return
-
-    CHANGE_MOVE_PICTURE(master)
-    start_time = time.time()
-    task.stack.append(start_time)
+    # # off eddison lamp
+    # sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    # sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 0
+    # master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+    # time.sleep(2)
+    # sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+    # sl_controlls[DEVICES_TABLE.SL_EDDISON_LIGHT] = 1
+    # master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
 
 def AC_ADD_WAIT_START_QUEST(master, task, game_state):
