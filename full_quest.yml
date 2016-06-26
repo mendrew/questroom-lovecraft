@@ -115,7 +115,7 @@
         [REQ_PUT_FIRST_COIN]
       success_actions:
         [ AC_PLAY_PICTURE,
-          AC_ADD_FALLING_BOOK_RODS_TIMER,
+          AC_ADD_PLAY_BEFORE_FALLING_BOOKS,
           # AC_LIGHTNING,
           AC_CHANGE_MOVE_PICTURE,
           AC_ADD_COLLECT_DAD_FISHING,
@@ -126,6 +126,20 @@
       failure_actions:
         []
       title: 'Вставить первую монету'
+
+    -
+      id: 204
+      success_requirements:
+        [REQ_PLAY_BEFORE_FALLING_BOOKS]
+      success_actions:
+        [
+          AC_ADD_FALLING_BOOK_RODS_TIMER,
+        ]
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Воспроизведение перед падением удочек'
 
     -
       id: 120

@@ -710,8 +710,51 @@ def AC_BAKE_FLARE_UP(master, task, game_state):
     print("(ACTION:{task_id}) Bake flare up".format(task_id=task.id))
     pass
 
+
 def AC_PLAY_PICTURE(master, task, game_state):
     game_state.sound_manager.play_sound(SOUNDS.picture)
+
+
+def AC_ADD_PLAY_BEFORE_FALLING_BOOKS(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_BEFORE_FALLING_BOOKS)
+
+
+def REQ_PLAY_BEFORE_FALLING_BOOKS(master, task, game_state):
+    WAIT_TILL_PLAY = 3
+    if task.stack == []:
+        sound_start = False
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+
+    spend_time = time.time() - start_time
+
+    if game_state.sound_manager.is_playing(SOUNDS.picture):
+        task.stack.append(sound_start)
+        task.stack.append(time.time())
+        return
+
+    elif spend_time < WAIT_TILL_PLAY:
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+        return
+
+    elif not sound_start:
+        game_state.sound_manager.play_sound(SOUNDS.before_books_fall)
+        sound_start = True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+        return
+
+    else:
+        playing = game_state.sound_manager.is_playing(SOUNDS.before_books_fall)
+        print("Sound before books still playing")
+        if not playing:
+            return True
+        task.stack.append(sound_start)
+        task.stack.append(start_time)
+        return
+
 
 def AC_ADD_FALLING_BOOK_RODS_TIMER(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.FALLING_BOOK_RODS_TIMER)
