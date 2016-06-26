@@ -19,7 +19,8 @@
       success_requirements:
         [REQ_START_QUEST]
       success_actions:
-        [ AC_OFF_EDDISON_LIGHT,
+        [
+          AC_OFF_EDDISON_LIGHT,
           AC_ADD_PLAY_INTRO,
 
           AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
@@ -119,7 +120,6 @@
           AC_ADD_PLAY_BEFORE_FALLING_BOOKS,
           # AC_LIGHTNING,
           AC_CHANGE_MOVE_PICTURE,
-          AC_ADD_COLLECT_DAD_FISHING,
           # AC_PLAY_SHE_ALL_I_HAVE
           ]
       failure_requirements:
@@ -151,7 +151,8 @@
           AC_FALLING_BOOKS,
           AC_FALLING_FISHING_RODS,
           AC_LIGHT_SHOW_WHERE_COLLECT_DAD_FISHING,
-          AC_ADD_EDDISON_LAMP_BLINK
+          # AC_ADD_EDDISON_LAMP_BLINK,
+          AC_ADD_COLLECT_DAD_FISHING,
         ]
       failure_requirements:
         []
@@ -184,7 +185,7 @@
          AC_ADD_TABLE_CLOCK_RING_OUT,
          AC_ADD_CLOCK_SYNCHRONIZATION,
          AC_LIGHT_SHOW_WHERE_CLOCK_SYNCHRONIZATION,
-         AC_ADD_EDDISON_LAMP_BLINK,
+         # AC_ADD_EDDISON_LAMP_BLINK,
          ]
       failure_requirements:
         []

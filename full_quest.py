@@ -10,7 +10,7 @@ from settings import COLORS
 
 
 class GLOBAL_VARIABLES:
-    TABLE_CLOCK_VALUE = 3
+    TABLE_CLOCK_VALUE = 1
     TABLE_CLOCK_LAST_CHANGE_TIME = time.time()
 
     CLOCKS_SYNCHRONIZE = False
@@ -226,6 +226,9 @@ def REQ_TABLE_CLOCK_RING_OUT_ALWAYS(master, task, game_state):
     REPEAT_RING_OUT = 8 # sec
     UNSET_RING_OUT = 1
     if task.stack == []:
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 1
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
         task.stack.append(time.time())
 
     start_time = task.stack.pop()
@@ -730,7 +733,6 @@ def REQ_PLAY_BEFORE_FALLING_BOOKS(master, task, game_state):
     spend_time = time.time() - start_time
 
     if game_state.sound_manager.is_playing(SOUNDS.picture):
-        print("Sound about picture still playing")
         task.stack.append(sound_start)
         task.stack.append(time.time())
         return
@@ -1026,6 +1028,7 @@ def AC_BOX_UNDER_CLOCK_FACE_OPEN(master, task, game_state):
         "(ACTION:{task_id}) Lock under clock face opened".format(
             task_id=task.id))
     # What box is opened ? On Device table looks like it not my job
+    time.sleep(2)
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[DEVICES_TABLE.SL_WALL_CLOCK_LOCK_WITH_PICTURE] = 0
 
