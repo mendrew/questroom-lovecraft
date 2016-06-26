@@ -95,6 +95,7 @@ def init_sounds(game_state):
     SOUNDS.chest = sound_manager.add_sound(SOUNDS_NAMES.CHEST)
     SOUNDS.closet = sound_manager.add_sound(SOUNDS_NAMES.CLOSET)
     SOUNDS.he = sound_manager.add_sound(SOUNDS_NAMES.HE)
+    SOUNDS.doll = sound_manager.add_sound(SOUNDS_NAMES.DOLL)
 
     # new, not added yet
     SOUNDS.begin = sound_manager.add_sound(SOUNDS_NAMES.BEGIN)

@@ -1,5 +1,5 @@
 from __future__ import print_function
-
+Кукла (+ Помоги)
 from quest_core import parse
 from quest_core import Requirement
 from quest_core import Task
@@ -290,6 +290,11 @@ class QuestRoom(threading.Thread):
 
         elif sound_id in SOUNDS_NAMES.HE:
             self.game_state.sound_manager.play_sound(SOUNDS.he)
+
+        elif sound_id in SOUNDS_NAMES.DOLL:
+            self.game_state.sound_manager.play_sound(SOUNDS.doll)
+            time.sleep(7)
+            self.game_state.sound_manager.play_sound(SOUNDS.girl_help)
 
 
         elif sound_id in SOUNDS_NAMES.BEGIN:

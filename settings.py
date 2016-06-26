@@ -245,6 +245,7 @@ class SOUNDS_NAMES:
     DIVISION = SOUNDS_DIR + "division.wav"
     CHEST = SOUNDS_DIR + "chest.wav"
     HE = SOUNDS_DIR + "he.wav"
+    DOLL = SOUNDS_DIR + "doll.wav"
 
     BEGIN = SOUNDS_DIR + "begin.wav"
     MUSIC_ON_DEMON_WINGS = SOUNDS_DIR + "music_on_demon_wings.wav"
@@ -291,6 +292,7 @@ class SOUNDS:
     division = None
     chest = None
     he = None
+    doll = None
 
     begin = None
     music_on_demon_wings = None
