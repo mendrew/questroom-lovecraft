@@ -20,6 +20,7 @@
         [REQ_START_QUEST]
       success_actions:
         [
+
           AC_OFF_EDDISON_LIGHT,
           AC_ADD_PLAY_INTRO,
 

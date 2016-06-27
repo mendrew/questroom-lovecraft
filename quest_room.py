@@ -235,7 +235,7 @@ class QuestRoom(threading.Thread):
 
     def add_task(self, task):
         if 'final_dagon' in task:
-            AC_ADD_FINAL_DAGON(master, task, game_state)
+            AC_ADD_FINAL_DAGON(master, None, self.game_state)
 
     def play_sound(self, sound_id):
         # stages

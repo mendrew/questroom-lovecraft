@@ -277,6 +277,10 @@ class SOUNDS_NAMES:
     CTHULHU_APPEAR = SOUNDS_DIR + "cthulhu_appear.wav"
     OPERATOR_END = SOUNDS_DIR + "operator_end.wav"
 
+
+    LIFESAVER_3_1_FIRST = SOUNDS_DIR + "lifesaver_3_1_first.wav"
+    LIFESAVER_3_1_SECOND = SOUNDS_DIR + "lifesaver_3_1_second.wav"
+
     GIRL_PLEASE_STOP = SOUNDS_DIR + "girl_please_stop.wav"
     GIRL_WHO_ARE_YOU = SOUNDS_DIR + "girl_who_are_you.wav"
     GIRL_HEAR_ME = SOUNDS_DIR + "girl_hear_me.wav"
@@ -328,3 +332,6 @@ class SOUNDS:
     girl_please_stop = None
     girl_who_are_you = None
     girl_hear_me = None
+
+    lifesaver_end_first = None
+    lifesaver_end_second = None

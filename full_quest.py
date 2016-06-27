@@ -113,6 +113,9 @@ def init_sounds(game_state):
     SOUNDS.cthulhu_appear = sound_manager.add_sound(SOUNDS_NAMES.CTHULHU_APPEAR)
     SOUNDS.operator_end = sound_manager.add_sound(SOUNDS_NAMES.OPERATOR_END)
 
+    SOUNDS.lifesaver_end_first = sound_manager.add_sound(SOUNDS_NAMES.LIFESAVER_3_1_FIRST)
+    SOUNDS.lifesaver_end_second = sound_manager.add_sound(SOUNDS_NAMES.LIFESAVER_3_1_SECOND)
+
     SOUNDS.girl_please_stop = sound_manager.add_sound(SOUNDS_NAMES.GIRL_PLEASE_STOP)
     SOUNDS.girl_who_are_you = sound_manager.add_sound(SOUNDS_NAMES.GIRL_WHO_ARE_YOU)
     SOUNDS.girl_hear_me = sound_manager.add_sound(SOUNDS_NAMES.GIRL_HEAR_ME)
@@ -1290,14 +1293,14 @@ def REQ_PLAY_PRAY(master, task, game_state):
         task.stack.append(start_time)
         return
     elif not sound_start:
-        game_state.sound_manager.play_sound(SOUNDS.pray)
+        game_state.sound_manager.play_sound(SOUNDS.prey)
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
         return
 
 
-    playing = game_state.sound_manager.is_playing(SOUNDS.pray)
+    playing = game_state.sound_manager.is_playing(SOUNDS.prey)
 
     if not playing:
         return True
@@ -2149,7 +2152,7 @@ def REQ_TIMER_PICTURE_BOX(master, task, game_state):
 
 
 def AC_ADD_FINAL_DAGON(master, task, game_state):
-    print("(ACTION:{task_id}) Add final dagon".format(task_id=task.id))
+    print("ACTION: Add final dagon")
     game_state.add_active_task_with_id(TASKS_IDS.FINAL_DAGON)
 
 
@@ -2172,6 +2175,7 @@ def REQ_FINAL_DAGON(master, task, game_state):
         PLAY_RADIO_2 = 11
         FINALE_MUSIC = 12
         FINALE_OPERATOR = 13
+        WAIT_TILL_OPERATOR_END = 14
 
     if task.stack == []:
         stage = Stages.COLOR_OFF
@@ -2208,7 +2212,7 @@ def REQ_FINAL_DAGON(master, task, game_state):
 
     elif Stages.RED_LIGHT_ON_CTHULHU == stage:
         smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-        smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, ROOM_RED)
+        smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_RED)
 
         stage = Stages.CTHULHU_START_TALKING
 
@@ -2285,7 +2289,7 @@ def REQ_FINAL_DAGON(master, task, game_state):
         start_time = time.time()
 
     elif Stages.FINALE_OPERATOR == stage:
-        if spend_time > OPERATOR_SOUND_DELAY:
+        if passed_time > OPERATOR_SOUND_DELAY:
             game_state.sound_manager.play_sound(SOUNDS.operator_end)
             stage = Stages.WAIT_TILL_OPERATOR_END
 
