@@ -2102,55 +2102,6 @@ def AC_SCARE_HEAD_APPEARANCE(master, task, game_state):
     sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 0
     master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
-def AC_FINAL_DAGON(master, task, game_state):
-    AC_OFF_EDDISON_LIGHT(master, task, game_state)
-    # init lights in rooms
-    smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-    init_color = COLORS.OFF
-    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, init_color)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, init_color)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, ROOM_RED)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
-    time.sleep(1)
-
-    AC_SCARE_HEAD_APPEARANCE(master, task, game_state)
-
-    AC_SCARE_LIGHTNING(master, task, game_state)
-
-    game_state.sound_manager.play_sound(SOUNDS.cthulhu_appear)
-
-    while game_state.sound_manager.is_playing(SOUNDS.cthulhu_appear):
-        pass
-
-    # head turn back
-    sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 1
-    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_ACTION] = DEVICES_TABLE.HEAD_ACTION_HIDE
-    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-    time.sleep(1)
-    sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 0
-    master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-
-
-    game_state.sound_manager.play_sound(SOUNDS.lifesaver_end)
-
-    # game_state.sound_manager.play_sound(SOUNDS.lifesaver_end_first)
-    # while game_state.sound_manager.is_playing(SOUNDS.lifesaver_end_first):
-    #     pass
-
-    # game_state.sound_manager.play_sound(SOUNDS.lifesaver_end_second)
-    # while game_state.sound_manager.is_playing(SOUNDS.lifesaver_end_second):
-    #     pass
-
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
-
-    game_state.sound_manager.play_sound(SOUNDS.music_on_demon_wings)
-
-    time.sleep(10)
-
-    game_state.sound_manager.play_sound(SOUNDS.operator_end)
-
-
 def AC_ADD_TIMER_PICTURE_BOX(master, task, game_state):
     print("(ACTION:{task_id}) Timer start for OPEN PICTURE BOX".format(task_id=task.id))
     game_state.add_active_task_with_id(TASKS_IDS.TIMER_PICTURE_BOX)
@@ -2169,3 +2120,153 @@ def REQ_TIMER_PICTURE_BOX(master, task, game_state):
         return
 
     return True
+
+
+def AC_FINAL_DAGON(master, task, game_state):
+    # TIME
+    OPERATOR_SOUND_DELAY = 10
+
+    class Stages:
+        COLOR_OFF = 1
+        CTHULHU_APPEAR = 2
+        LIGHTNING = 3
+        RED_LIGHT_ON_CTHULHU = 4
+        CTHULHU_START_TALKING = 5
+        CTHULHU_TALK = 6
+        LIGHT_OFF_CTHULHU_DISAPPEAR = 7
+        LIGHTNING_AGAIN = 8
+        TURN_ON_RED_LIGHT = 9
+        # RADIO_1_START
+        PLAY_RADIO_1 = 10
+        PLAY_RADIO_2 = 11
+        FINALE_MUSIC = 12
+        FINALE_OPERATOR = 13
+
+    if task.stack == []:
+        stage = Stages.COLOR_OFF
+        start_time = time.time()
+        task.stack.append(stage)
+        task.stack.append(start_time)
+
+    start_time = task.stack.pop()
+    stage = task.stack.pop()
+
+    passed_time = time.time() - start_time
+
+    if Stages.COLOR_OFF == stage:
+        AC_OFF_EDDISON_LIGHT(master, task, game_state)
+        # off all light-diod
+        smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+        init_color = COLORS.OFF
+        smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, init_color)
+        smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, init_color)
+        smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
+        smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
+
+        stage = Stages.CTHULHU_APPEAR
+
+    elif Stages.CTHULHU_APPEAR == stage:
+        AC_SCARE_HEAD_APPEARANCE(master, task, game_state)
+
+        stage = Stages.LIGHTNING
+
+    elif Stages.LIGHTNING == stage:
+        AC_LIGHTNING(master, task, game_state)
+
+        stage = Stages.RED_LIGHT_ON_CTHULHU
+
+    elif Stages.RED_LIGHT_ON_CTHULHU == stage:
+        smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+        smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, ROOM_RED)
+
+        stage = Stages.CTHULHU_START_TALKING
+
+    elif Stages.CTHULHU_START_TALKING == stage:
+        game_state.sound_manager.play_sound(SOUNDS.cthulhu_appear)
+
+        stage = Stages.CTHULHU_TALK
+
+    elif Stages.CTHULHU_TALK == stage:
+        playing = game_state.sound_manager.is_playing(SOUNDS.cthulhu_appear)
+        if not playing:
+            stage = Stages.LIGHT_OFF_CTHULHU_DISAPPEAR
+
+    elif Stages.LIGHT_OFF_CTHULHU_DISAPPEAR == stage:
+
+        smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+        smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.OFF)
+
+        # head turn back
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 1
+        sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_ACTION] = DEVICES_TABLE.HEAD_ACTION_HIDE
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+        time.sleep(1)
+        sl_controlls[DEVICES_TABLE.SL_HEAD_WINDOW_MOTOR] = 0
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
+        stage = Stages.LIGHTNING_AGAIN
+
+    elif Stages.LIGHTNING_AGAIN == stage:
+        AC_LIGHTNING(master, task, game_state)
+
+        stage = Stages.TURN_ON_RED_LIGHT
+
+    elif Stages.TURN_ON_RED_LIGHT == stage:
+        smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
+        init_color = COLORS.ROOM_RED
+        smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, init_color)
+        smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, init_color)
+        smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
+        smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
+
+        stage = Stages.PLAY_RADIO_1
+
+    elif Stages.PLAY_RADIO_1 == stage:
+        if task.stack == []:
+            game_state.sound_manager.play_sound(SOUNDS.lifesaver_end_first)
+            task.stack.append(None)
+        task.stack.pop()
+        playing = game_state.sound_manager.is_playing(SOUNDS.lifesaver_end_first)
+
+        if not playing:
+            stage = Stages.PLAY_RADIO_2
+        else:
+            task.stack.append(None)
+
+
+    elif Stages.PLAY_RADIO_2 == stage:
+        if task.stack == []:
+            game_state.sound_manager.play_sound(SOUNDS.lifesaver_end_second)
+            task.stack.append(None)
+        task.stack.pop()
+        playing = game_state.sound_manager.is_playing(SOUNDS.lifesaver_end_second)
+
+        if not playing:
+            stage = Stages.FINALE_MUSIC
+        else:
+            task.stack.append(None)
+
+    elif Stages.FINALE_MUSIC == stage:
+        game_state.sound_manager.play_sound(SOUNDS.music_on_demon_wings)
+
+        stage = Stages.FINALE_OPERATOR
+        start_time = time.time()
+
+    elif Stages.FINALE_OPERATOR == stage:
+        if spend_time > OPERATOR_SOUND_DELAY:
+            game_state.sound_manager.play_sound(SOUNDS.operator_end)
+            stage = Stages.WAIT_TILL_OPERATOR_END
+
+
+    elif Stages.WAIT_TILL_OPERATOR_END == stage:
+        playing = game_state.sound_manager.is_playing(SOUNDS.operator_end)
+
+        if not playing:
+            AC_ON_EDDISON_LIGHT(master, task, game_state)
+            return True
+
+    task.stack.append(stage)
+    task.stack.append(start_time)
+
+
