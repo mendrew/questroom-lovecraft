@@ -2122,7 +2122,12 @@ def REQ_TIMER_PICTURE_BOX(master, task, game_state):
     return True
 
 
-def AC_FINAL_DAGON(master, task, game_state):
+def AC_ADD_FINAL_DAGON(master, task, game_state):
+    print("(ACTION:{task_id}) Add final dagon".format(task_id=task.id))
+    game_state.add_active_task_with_id(TASKS_IDS.FINAL_DAGON)
+
+
+def REQ_FINAL_DAGON(master, task, game_state):
     # TIME
     OPERATOR_SOUND_DELAY = 10
 

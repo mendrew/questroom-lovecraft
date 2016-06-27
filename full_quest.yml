@@ -580,7 +580,7 @@
         []
       failure_actions:
         []
-      title: 'Финал'
+      title: 'Финал (ничего)'
 
     -
       id: 218
@@ -665,4 +665,17 @@
       failure_actions:
         []
       title: 'Мерцание ламп Эддисона'
+
+    -
+      id: 219
+      success_requirements:
+        [REQ_FINAL_DAGON]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Концовка'
+
 
