@@ -406,6 +406,7 @@ def REQ_PLAY_INTRO(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -413,6 +414,7 @@ def REQ_PLAY_INTRO(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.begin)
@@ -1103,6 +1105,7 @@ def REQ_PLAY_ABOUT_COINS_AND_CLOSET(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1110,6 +1113,7 @@ def REQ_PLAY_ABOUT_COINS_AND_CLOSET(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.second_coin)
@@ -1137,6 +1141,7 @@ def REQ_PLAY_SHE_ALL_WHAT_I_HAVE(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1144,6 +1149,7 @@ def REQ_PLAY_SHE_ALL_WHAT_I_HAVE(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.girl_she_all_i_have)
@@ -1244,6 +1250,7 @@ def REQ_PLAY_CLOSET(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1251,6 +1258,7 @@ def REQ_PLAY_CLOSET(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.closet)
@@ -1278,6 +1286,7 @@ def REQ_PLAY_PRAY(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1285,6 +1294,7 @@ def REQ_PLAY_PRAY(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.pray)
@@ -1312,6 +1322,7 @@ def REQ_PLAY_GIRL_YOU_HEAR_ME(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1319,6 +1330,7 @@ def REQ_PLAY_GIRL_YOU_HEAR_ME(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.girl_hear_me)
@@ -1550,6 +1562,7 @@ def REQ_PLAY_DIVISION(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1557,6 +1570,7 @@ def REQ_PLAY_DIVISION(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.division)
@@ -1584,6 +1598,7 @@ def REQ_PLAY_DAGON_PRIVATE(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1591,6 +1606,7 @@ def REQ_PLAY_DAGON_PRIVATE(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.dagon_private)
@@ -1665,6 +1681,7 @@ def REQ_PLAY_KNIFE_ACHIEVED(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1672,6 +1689,7 @@ def REQ_PLAY_KNIFE_ACHIEVED(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.knife_achieved)
@@ -1699,6 +1717,7 @@ def REQ_PLAY_OLD_MAN_MONOLOG(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1706,6 +1725,7 @@ def REQ_PLAY_OLD_MAN_MONOLOG(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.old_man)
@@ -1867,6 +1887,7 @@ def REQ_PLAY_AFTER_SKELET_DOOR_OPEN(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1874,6 +1895,7 @@ def REQ_PLAY_AFTER_SKELET_DOOR_OPEN(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.after_skelet_door_open)
@@ -1915,6 +1937,7 @@ def REQ_PLAY_ALL_COINS_ON_PLACE(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1922,6 +1945,7 @@ def REQ_PLAY_ALL_COINS_ON_PLACE(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.all_coins_on_place)
@@ -1965,6 +1989,7 @@ def REQ_PLAY_CHEST(master, task, game_state):
     spend_time = time.time() - start_time
 
     if spend_time < DELAY_TIME:
+        task.stack.append(sound_start)
         task.stack.append(start_time)
         return
     elif not sound_start:
@@ -1972,6 +1997,7 @@ def REQ_PLAY_CHEST(master, task, game_state):
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
+        return
 
 
     playing = game_state.sound_manager.is_playing(SOUNDS.chest)

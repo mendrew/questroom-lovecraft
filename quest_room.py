@@ -233,6 +233,10 @@ class QuestRoom(threading.Thread):
     def play_robot(self, sound):
         self.sound_manager.play_sound(sound)
 
+    def add_task(self, task):
+        if 'final_dagon' in task:
+            AC_ADD_FINAL_DAGON(master, task, game_state)
+
     def play_sound(self, sound_id):
         # stages
         print("Sound_id in quest_room play_sound: {}".format(sound_id))

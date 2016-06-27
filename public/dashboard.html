@@ -64,6 +64,12 @@
               ws.send('{"message": "eyes_pump", "action":"' + action + '"}');
             }
 
+            function add_task(event){
+              task = event.currentTarget.dataset.task_name;
+              ws.send('{"message": "add_task", "task":"' + task + '"}');
+            }
+
+
             function mirror_on(event){
               ws.send('{"message": "mirror_on"}');
             }
@@ -165,6 +171,12 @@
          <th>Зеркало</th>
          <tr>
            <td><button onClick='mirror_on(event)'>Запусить</button></td>
+         </tr>
+
+
+         <th>Финал</th>
+         <tr>
+           <td><button data-task_name='final_dagon'onClick='add_task(event)'>Запуск Концовки</button></td>
          </tr>
 
          <th>Голова в окне</th>

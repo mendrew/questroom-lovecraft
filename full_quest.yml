@@ -1,3 +1,5 @@
+---
+  tasks:
     -
       id: 0
       success_requirements:
