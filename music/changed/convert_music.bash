@@ -5,8 +5,8 @@ ffmpeg $_FORCE -i ../original/Спасатель_2.1.mp3 -map_channel -1 -map_ch
 # lifesaver_end
 ffmpeg $_FORCE -i ../original/Спасатель_3.1.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -ac 6 -ar 44100 lifesaver_3_1.wav
 # lifesaver_end_first
-ffmpeg $_FORCE -i ../original/Спасатель_3.1\ Первая\ часть.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -ac 6 -ar 44100 lifesaver_3_1_first.wav
-ffmpeg $_FORCE -i ../original/Спасатель_3.1\ Вторая.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -map_channel 0.0.1 -ac 6 -ar 44100 lifesaver_3_1_second.wav
+ffmpeg $_FORCE -i ../original/Спасатель_3.1\ Первая\ часть.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.0 -map_channel 0.0.0 -map_channel 0.0.0 -map_channel 0.0.0 -ac 6 -ar 44100  lifesaver_3_1_first.wav
+ffmpeg $_FORCE -i ../original/Спасатель_3.1\ Вторая.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.0 -map_channel 0.0.0 -map_channel 0.0.0 -map_channel 0.0.0 -ac 6 -ar 44100 lifesaver_3_1_second.wav
 
 # ffmpeg -i ../original/Спасатель_2.2.mp3 -map_channel -1 -map_channel -1 -map_channel 0.0.0 -ac 3 -ar 44100 lifesaver_2_2.wav
 # ffmpeg -i ../original/LIGHTNING-THUNDER.mp3 -map_channel 0.0.0 -map_channel 0.0.0 -ac 2 -ar 44100 lightning_thunder.wav
