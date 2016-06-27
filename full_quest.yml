@@ -20,7 +20,7 @@
         [REQ_START_QUEST]
       success_actions:
         [
-
+          AC_SOUND_BACKGROUND_STAGE_1,
           AC_OFF_EDDISON_LIGHT,
           AC_ADD_PLAY_INTRO,
 
@@ -104,8 +104,9 @@
         [REQ_PUT_STATUE_ON_LORDS_TABLE]
       success_actions:
         [AC_TURN_LORDS_TABLE,
-         AC_ADD_PUT_FIRST_COIN,
-         AC_PLAY_COINS_PULLED_US]
+        AC_ADD_PUT_FIRST_COIN,
+        AC_PLAY_COINS_PULLED_US,
+        ]
       failure_requirements:
         []
       failure_actions:
@@ -122,6 +123,7 @@
           # AC_LIGHTNING,
           AC_CHANGE_MOVE_PICTURE,
           # AC_PLAY_SHE_ALL_I_HAVE
+          AC_SOUND_BACKGROUND_STAGE_1,
           ]
       failure_requirements:
         []
@@ -246,6 +248,7 @@
          AC_ALL_LIGHT_ON,
          AC_CHANGE_MOVE_PICTURE,
          AC_ADD_PLAY_ABOUT_COINS_AND_CLOSET,
+         AC_SOUND_BACKGROUND_STAGE_1,
          ]
       failure_requirements:
         []
@@ -404,6 +407,7 @@
          # AC_LIGHTNING,
          AC_CHANGE_MOVE_PICTURE,
          # AC_SOUND_BACKGROUND_STAGE_3,
+         AC_SOUND_BACKGROUND_STAGE_1,
          # AC_ADD_ANOMALOUS_PHENOMENA,
          # AC_PLAY_DAGON_PRIVATE
          AC_ADD_CLOSE_THE_DOOR,
@@ -508,6 +512,7 @@
         [AC_OPEN_DOOR_WITH_SKELET,
          AC_ADD_PLAY_AFTER_SKELET_DOOR_OPEN,
          AC_ADD_PUT_FOURTH_COIN,
+         AC_SOUND_BACKGROUND_STAGE_1,
          ]
       failure_requirements:
         []
@@ -553,6 +558,7 @@
           AC_ADD_THE_FINAL,
           # AC_ADD_TIMER_PLAY_LIFESAVER_END,
           # AC_ADD_TIMER_PLAY_BAD_END,
+          AC_SOUND_BACKGROUND_STAGE_1,
         ]
       failure_requirements:
         []
