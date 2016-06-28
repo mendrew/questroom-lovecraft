@@ -298,10 +298,7 @@ class QuestRoom(threading.Thread):
             self.game_state.sound_manager.play_sound(SOUNDS.he)
 
         elif sound_id in SOUNDS_NAMES.DOLL:
-            self.game_state.sound_manager.play_sound(SOUNDS.doll)
-            time.sleep(7)
-            self.game_state.sound_manager.play_sound(SOUNDS.girl_help)
-
+            AC_ADD_PLAY_DOLL_HELP(master, None, self.game_state)
 
         elif sound_id in SOUNDS_NAMES.BEGIN:
             self.game_state.sound_manager.play_sound(SOUNDS.begin)

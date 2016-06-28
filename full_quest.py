@@ -2151,6 +2151,42 @@ def REQ_TIMER_PICTURE_BOX(master, task, game_state):
     return True
 
 
+def AC_ADD_PLAY_DOLL_HELP(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_DOLL_HELP)
+
+def REQ_PLAY_DOLL_HELP(master, task, game_state):
+    DELAY_TIME = 7
+    if task.stack == []:
+        game_state.sound_manager.play_sound(SOUNDS.doll)
+        # task.stack.append(sound_start)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    # sound_start = task.stack.pop()
+    spend_time = time.time() - start_time
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.doll)
+    if playing:
+        task.stack.append(time.time())
+        return
+
+    if spend_time < DELAY_TIME:
+        task.stack.append(start_time)
+        return
+
+    game_state.sound_manager.play_sound(SOUNDS.girl_help)
+
+
+def AC_ADD_PLAY_BACKGROUND_SOUND(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_BACKGROUND_SOUND)
+
+def REQ_PLAY_BACKGROUND_SOUND(master, task, game_state):
+
+    playing = game_state.sound_manager.is_playing(SOUNDS.stage_1)
+    if not playing:
+        game_state.sound_manager.play_sound(SOUNDS.stage_1)
+
+
 def AC_ADD_FINAL_DAGON(master, task, game_state):
     print("ACTION: Add final dagon")
     game_state.add_active_task_with_id(TASKS_IDS.FINAL_DAGON)
