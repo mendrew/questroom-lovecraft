@@ -2175,6 +2175,7 @@ def REQ_PLAY_DOLL_HELP(master, task, game_state):
         return
 
     game_state.sound_manager.play_sound(SOUNDS.girl_help)
+    return True
 
 
 def AC_ADD_PLAY_BACKGROUND_SOUND(master, task, game_state):
