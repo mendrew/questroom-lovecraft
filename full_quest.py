@@ -1043,6 +1043,9 @@ def REQ_CLOCK_SYNCHRONIZATION(master, task, game_state):
 
     return False
 
+def AC_SET_CLOCK_SYNCHRONIZATION_TRUE(master, task, game_state):
+    GLOBAL_VARIABLES.CLOCKS_SYNCHRONIZE = True
+
 
 def AC_PLAY_CLOCK_OPEN(master, task, game_state):
     game_state.sound_manager.play_sound(SOUNDS.clock_sync)

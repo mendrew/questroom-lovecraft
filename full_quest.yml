@@ -212,7 +212,9 @@
       success_requirements:
         [REQ_CLOCK_SYNCHRONIZATION]
       success_actions:
-        [ AC_PLAY_CLOCK_OPEN,
+        [
+          AC_SET_CLOCK_SYNCHRONIZATION_TRUE,
+          AC_PLAY_CLOCK_OPEN,
           AC_BOX_UNDER_CLOCK_FACE_OPEN,
           ADD_FAMILY_PICTURE_BARLEY_BREAK
          ]
