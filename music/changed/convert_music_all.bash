@@ -36,7 +36,7 @@ ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/2.\ через\ 1\ мин\ после
 # first_coin
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/Первая\ монета.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 first_coin.wav
 # before_books_fall
-ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/3.\ перд\ падением\ книг.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 before_books_fall.wav
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/3.\ перд\ падением\ книг.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 before_books_fall.wav
 # after_books_fall
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/4.\ как\ только\ книги\ упали.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 after_books_fall.wav
 # fishing
@@ -54,7 +54,7 @@ ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/11.все\ монеты\ на\ мес
 # after_skelet_door_open
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/12.\ Труп,\ через\ 3\ сек\ после\ открытия\ второй\ двери.mp3 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 after_skelet_door_open.wav
 # cthulhu_appear
-ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/13.\ Древний\ ужас_дагон.wav -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
+ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/13.\ Древний\ ужас_дагон.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 cthulhu_appear.wav
 # operator_end
 ffmpeg $_FORCE -i ../original/$HELP_SOUNDS/14.\ Оператор,\ после\ Ктулху.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 operator_end.wav
 
@@ -78,9 +78,9 @@ ffmpeg $_FORCE -i ../original/$BUTTONS/Кукла.mp3 -map_channel -1 -map_chann
 
 ffmpeg $_FORCE -i ../original/LIGHTNING-THUNDER.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 lightning_thunder.wav
 ffmpeg $_FORCE -i ../original/ЭМБ_МБ_1_Шепот_Зов.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 stage_one_whisper.wav
-ffmpeg $_FORCE -i ../original/ЭМБ_МБ_2_Зов_Зов.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 stage_two_call.wav
-ffmpeg $_FORCE -i ../original/ЭМБ_МБ_3_Крик_Зов.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 stage_three_shout.wav
-ffmpeg $_FORCE -i ../original/ЭМБ_МБ_4_Безуие_Зов.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 stage_four_madness.wav
+# ffmpeg $_FORCE -i ../original/ЭМБ_МБ_2_Зов_Зов.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 stage_two_call.wav
+# ffmpeg $_FORCE -i ../original/ЭМБ_МБ_3_Крик_Зов.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 stage_three_shout.wav
+# ffmpeg $_FORCE -i ../original/ЭМБ_МБ_4_Безуие_Зов.mp3 -map_channel -1 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 stage_four_madness.wav
 
 ffmpeg $_FORCE -i ../original/1_Помоги....mp3 -map_channel 0.0.0 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 girl_1_help.wav
 ffmpeg $_FORCE -i ../original/2_Я\ слышала....mp3 -map_channel 0.0.0 -map_channel 0.0.0 -map_channel -1 -map_channel -1 -map_channel -1 -map_channel -1 -ac 6 -ar 44100 girl_2_i_heard.wav
