@@ -744,6 +744,7 @@ def AC_PLAY_PICTURE(master, task, game_state):
 
 def AC_ADD_PLAY_BEFORE_FALLING_BOOKS(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PLAY_BEFORE_FALLING_BOOKS)
+    time.sleep(1) # becouse picture and falling books plays same time
 
 
 def REQ_PLAY_BEFORE_FALLING_BOOKS(master, task, game_state):
