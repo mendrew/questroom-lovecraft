@@ -58,6 +58,12 @@
               ws.send('{"message": "aquarium_pump", "action":"' + action + '"}');
             }
 
+            function setLock(event) {
+              action = event.currentTarget.dataset.action;
+              lock_id = event.currentTarget.dataset.lock_id;
+              ws.send('{"message": "set_lock", "lock_id": "' + lock_id + '", "action":"' + action + '"}');
+            }
+
 
             function eyes_pump(event){
               action = event.currentTarget.dataset.action;
@@ -161,6 +167,12 @@
          <tr>
            <td><button data-door_id='3' onClick='closeDoor(event)'>Выдвинуть</button></td>
            <td><button data-door_id='3' onClick='openDoor(event)'>Спрятать</button></td>
+         </tr>
+
+         <th>Шкаф</th>
+         <tr>
+           <td><button data-lock_id='closet' data-action='0' onClick='setLock(event)'>Открыть</button></td>
+           <td><button data-lock_id='closet' data-action='1' onClick='setLock(event)'>Закрыть</button></td>
          </tr>
 
          <th>Настольные часы</th>

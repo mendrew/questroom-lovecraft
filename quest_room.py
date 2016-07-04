@@ -220,6 +220,13 @@ class QuestRoom(threading.Thread):
         sl_controlls[DEVICES_TABLE.SL_AQUARIUM_PUMP] = pump_action
         master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
 
+    def set_lock(self, lock_id, action):
+        sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
+        if lock_id == "closet":
+            sl_controlls[DEVICES_TABLE.SL_CODE_LOCKS_LOCKER_LOCK] = action
+
+        master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
+
     def aquarium_pump_in(self):
         AC_ADD_FILL_QUARIUM(master, None, self.game_state)
 

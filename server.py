@@ -76,6 +76,11 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             box_state = message['state']
             quest_room.set_box_state(box_id, box_state)
 
+        if "set_lock" == message['message']:
+            lock_id = message['lock_id']
+            action = int(message['action'])
+            quest_room.set_lock(lock_id, action)
+
         if "moving_picture" == message['message']:
             picture_id = int(message['picture_id'])
             print("Change picture with id: {}".format(picture_id))
