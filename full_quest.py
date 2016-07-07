@@ -724,8 +724,7 @@ def check_coins_inserted(master, task, game_state, nubmer_of_coins):
                     "ERROR: check_coins_inserted coin_id {} value: {}".format(
                         index, coin_value))
     if inserted_coins_number >= nubmer_of_coins:
-        # return True
-        pass
+        return True
     return False
 
 
