@@ -730,7 +730,8 @@ def check_coins_inserted(master, task, game_state, nubmer_of_coins):
 
 def REQ_PUT_FIRST_COIN(master, task, game_state):
     # time.sleep(5)
-    return check_coins_inserted(master, task, game_state, 1)
+    # return check_coins_inserted(master, task, game_state, 1)
+    return False
 
 
 def AC_BAKE_FLARE_UP(master, task, game_state):
@@ -1096,7 +1097,8 @@ def ADD_PUT_SECOND_COIN(master, task, game_state):
 
 
 def REQ_PUT_SECOND_COIN(master, task, game_state):
-    return check_coins_inserted(master, task, game_state, 2)
+    # return check_coins_inserted(master, task, game_state, 2)
+    return False
 
 def AC_ADD_PLAY_ABOUT_COINS_AND_CLOSET(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_ABOUT_COINS_AND_CLOSET)
