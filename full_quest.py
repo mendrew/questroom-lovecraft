@@ -1933,7 +1933,7 @@ def AC_ADD_PLAY_AFTER_SKELET_DOOR_OPEN(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PLAY_AFTER_SKELET_DOOR_OPEN)
 
 def REQ_PLAY_AFTER_SKELET_DOOR_OPEN(master, task, game_state):
-    DELAY_TIME = 3
+    DELAY_TIME = 7
     if task.stack == []:
         sound_start = False
         task.stack.append(sound_start)
