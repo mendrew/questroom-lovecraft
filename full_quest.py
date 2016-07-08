@@ -2354,32 +2354,7 @@ def REQ_FINAL_DAGON(master, task, game_state):
         smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
         smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
 
-        stage = Stages.PLAY_RADIO_1
-
-    elif Stages.PLAY_RADIO_1 == stage:
-        if task.stack == []:
-            game_state.sound_manager.play_sound(SOUNDS.lifesaver_end_first)
-            task.stack.append(None)
-        task.stack.pop()
-        playing = game_state.sound_manager.is_playing(SOUNDS.lifesaver_end_first)
-
-        if not playing:
-            stage = Stages.PLAY_RADIO_2
-        else:
-            task.stack.append(None)
-
-
-    elif Stages.PLAY_RADIO_2 == stage:
-        if task.stack == []:
-            game_state.sound_manager.play_sound(SOUNDS.lifesaver_end_second)
-            task.stack.append(None)
-        task.stack.pop()
-        playing = game_state.sound_manager.is_playing(SOUNDS.lifesaver_end_second)
-
-        if not playing:
-            stage = Stages.FINALE_MUSIC
-        else:
-            task.stack.append(None)
+        stage = Stages.FINALE_MUSIC
 
     elif Stages.FINALE_MUSIC == stage:
         game_state.sound_manager.play_sound(SOUNDS.music_on_demon_wings)
