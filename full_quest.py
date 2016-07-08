@@ -1727,7 +1727,7 @@ def AC_ADD_PLAY_KNIFE_ACHIEVED(master, task, game_state):
 
 
 def REQ_PLAY_KNIFE_ACHIEVED(master, task, game_state):
-    DELAY_TIME = 5
+    DELAY_TIME = 3
     if task.stack == []:
         sound_start = False
         task.stack.append(sound_start)
