@@ -554,8 +554,6 @@
           AC_ADD_OPEN_STOORE_ROOM_DOOR,
           AC_ADD_PLAY_ALL_COINS_ON_PLACE,
           AC_ADD_THE_FINAL,
-          # AC_ADD_TIMER_PLAY_LIFESAVER_END,
-          # AC_ADD_TIMER_PLAY_BAD_END,
         ]
       failure_requirements:
         []

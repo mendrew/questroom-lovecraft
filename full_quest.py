@@ -1905,7 +1905,7 @@ def AC_ADD_OPEN_STOORE_ROOM_DOOR(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.OPEN_STOORE_ROOM_DOOR)
 
 def REQ_OPEN_STOORE_ROOM_DOOR(master, task, game_state):
-    DELAY_TIME = 5
+    DELAY_TIME = 3
     if task.stack == []:
         sound_start = False
         task.stack.append(time.time())
