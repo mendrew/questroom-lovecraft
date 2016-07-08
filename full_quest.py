@@ -18,6 +18,8 @@ class GLOBAL_VARIABLES:
     WALL_CLOCK_REAL_12 = 0
     CURRENT_MOVE_PICTURE = None
 
+    SOUND_ARRAY = [];
+
 
 def puzzle_status(puzzle_name, status):
     PUZZLE_OK_MSG = "\tOK"
@@ -2347,5 +2349,75 @@ def REQ_FINAL_DAGON(master, task, game_state):
 
     task.stack.append(stage)
     task.stack.append(start_time)
+
+def AC_ADD_PLAY_SOUND_ARRAY(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_ARRAY)
+
+
+def REQ_PLAY_SOUND_ARRAY(master, task, game_state):
+    """ SOUND_ARRAY FORMAT:
+        [
+            {
+                sound: sound,
+                delay: "delay in sec",
+                delay_start: "True|False",
+                play_start: "True|False",
+                play_done: "True|False",
+            }
+        ]
+    """
+    if task.stack == []:
+        delay = 0
+        task.stack.append(delay)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    delay = task.stack.pop()
+    spend_time = time.time() - start_time
+    if spend_time < delay:
+        task.stack.append(delay)
+        task.stack.append(start_time)
+        return
+
+    if GLOBAL_VARIABLES.SOUND_ARRAY == []:
+        task.stack.append(delay)
+        task.stack.append(start_time)
+        return
+
+    sounds_list = GLOBAL_VARIABLES.SOUND_ARRAY
+    for sound_object in sounds_list:
+        if sound_object['play_done']:
+            continue
+        if sound_object['play_start']:
+            playing = game_state.sound_manager.is_playing(sound_object['sound'])
+            if playing:
+                task.stack.append(delay)
+                task.stack.append(start_time)
+                return
+            sound_object['play_start'] = False
+            sound_object['play_done'] = True
+            print("Stop play sound ")
+
+    # now if no one sound is playing we can find some one who not play yet
+    for sound_object in sounds_list:
+        if sound_object['play_done']:
+            continue
+        if not sound_object['play_start']:
+            if sound_object['delay_start']:
+                sound_object['delay_start']= False
+                game_state.sound_manager.play_sound(sound_object['sound'])
+                sound_object['play_start'] = True
+                print("Start play sound ")
+            else:
+                sound_object['delay_start']= True
+                delay = sound_object['delay']
+                start_time = time.time()
+                print("Start delay {}s for sound".format(delay))
+            break
+
+
+    task.stack.append(delay)
+    task.stack.append(start_time)
+    return
 
 
