@@ -26,7 +26,7 @@
 
           AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
           AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
-          # AC_ADD_PLAY_SOUND_ARRAY,
+          AC_ADD_PLAY_SOUND_ARRAY,
         ]
       failure_requirements:
         []
@@ -707,3 +707,14 @@
         []
       title: 'Фон шепот (не пропускать)'
 
+    -
+      id: 222
+      success_requirements:
+        [REQ_PLAY_SOUND_ARRAY]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Проигрывание звуков (последовательное)'

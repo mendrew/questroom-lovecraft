@@ -693,7 +693,15 @@ def AC_TURN_LORDS_TABLE(master, task, game_state):
 
 def AC_PLAY_COINS_PULLED_US(master, task, game_state):
     print("(ACTION:{task_id}) Coins pulled us".format(task_id=task.id))
-    game_state.sound_manager.play_sound(SOUNDS.first_coin)
+    # game_state.sound_manager.play_sound(SOUNDS.first_coin)
+
+    GLOBAL_VARIABLES.SOUND_ARRAY.append({
+          'sound': SOUNDS.first_coin,
+          'delay': 0,
+          'delay_start': False,
+          'play_start': False,
+          'play_done': False
+    })
 
 
 def AC_ADD_PUT_FIRST_COIN(master, task, game_state):
@@ -742,7 +750,14 @@ def AC_BAKE_FLARE_UP(master, task, game_state):
 
 
 def AC_PLAY_PICTURE(master, task, game_state):
-    game_state.sound_manager.play_sound(SOUNDS.picture)
+    # game_state.sound_manager.play_sound(SOUNDS.picture)
+    GLOBAL_VARIABLES.SOUND_ARRAY.append({
+          'sound': SOUNDS.picture,
+          'delay': 0,
+          'delay_start': False,
+          'play_start': False,
+          'play_done': False
+    })
 
 
 def AC_ADD_PLAY_BEFORE_FALLING_BOOKS(master, task, game_state):
@@ -773,17 +788,35 @@ def REQ_PLAY_BEFORE_FALLING_BOOKS(master, task, game_state):
         return
 
     elif not sound_start:
-        game_state.sound_manager.play_sound(SOUNDS.before_books_fall)
+        buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
+        dad_collected = buttons[DEVICES_TABLE.BTN_COLLECT_DAD_FISHING]
+        if dad_collected: return True
+
+        GLOBAL_VARIABLES.SOUND_ARRAY.append({
+              'sound': SOUNDS.before_books_fall,
+              'delay': 0,
+              'delay_start': False,
+              'play_start': False,
+              'play_done': False
+        })
+        # return True
+        # game_state.sound_manager.play_sound(SOUNDS.before_books_fall)
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
         return
 
     else:
-        playing = game_state.sound_manager.is_playing(SOUNDS.before_books_fall)
-        print("Sound before books still playing")
+        playing = True
+        sound_array = GLOBAL_VARIABLES.SOUND_ARRAY
+        for sound_object in sound_array:
+            if sound_object['sound'] == SOUNDS.before_books_fall:
+                playing = not sound_object['play_done']
+
         if not playing:
             return True
+        print("Sound before books still playing")
+
         task.stack.append(sound_start)
         task.stack.append(start_time)
         return
@@ -861,9 +894,21 @@ def AC_ADD_PLAY_FISHING(master, task, game_state):
 def REQ_PLAY_SOUND_FISHING(master, task, game_state):
     if task.stack == []:
         task.stack.append(True)
-        game_state.sound_manager.play_sound(SOUNDS.fishing)
+        # game_state.sound_manager.play_sound(SOUNDS.fishing)
+        GLOBAL_VARIABLES.SOUND_ARRAY.append({
+              'sound': SOUNDS.fishing,
+              'delay': 0,
+              'delay_start': False,
+              'play_start': False,
+              'play_done': False
+        })
 
-    playing = game_state.sound_manager.is_playing(SOUNDS.fishing)
+    # playing = game_state.sound_manager.is_playing(SOUNDS.fishing)
+    playing = True
+    sound_array = GLOBAL_VARIABLES.SOUND_ARRAY
+    for sound_object in sound_array:
+        if sound_object['sound'] == SOUNDS.fishing:
+            playing = not sound_object['play_done']
 
     if not playing:
         return True
@@ -2183,7 +2228,15 @@ def REQ_PLAY_DOLL_HELP(master, task, game_state):
         task.stack.append(start_time)
         return
 
-    game_state.sound_manager.play_sound(SOUNDS.girl_help)
+    GLOBAL_VARIABLES.SOUND_ARRAY.append({
+          'sound': SOUNDS.girl_help,
+          'delay': 3,
+          'delay_start': False,
+          'play_start': False,
+          'play_done': False
+    })
+
+    # game_state.sound_manager.play_sound(SOUNDS.girl_help)
     return True
 
 
