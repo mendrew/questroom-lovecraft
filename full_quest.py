@@ -1917,11 +1917,13 @@ def REQ_OPEN_STOORE_ROOM_DOOR(master, task, game_state):
         task.stack.append(start_time)
         return
 
-    print("(ACTION:{task_id}) Open door with skelet".format(task_id=task.id))
-    relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
-    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = DEVICES_TABLE.RELAY_OPEN
-    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
     return True
+
+def AC_OPEN_STOORE_ROOM_DOOR(master, task, game_state):
+    print("(ACTION:{task_id}) Open stoore room door".format(task_id=task.id))
+    relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.RELAY_OPEN
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
 def AC_OPEN_DOOR_WITH_SKELET(master, task, game_state):
     print("(ACTION:{task_id}) Open door with skelet".format(task_id=task.id))
