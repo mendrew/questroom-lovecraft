@@ -18,6 +18,8 @@ class GLOBAL_VARIABLES:
     WALL_CLOCK_REAL_12 = 0
     CURRENT_MOVE_PICTURE = None
 
+    SOUND_ARRAY = [];
+
 
 def puzzle_status(puzzle_name, status):
     PUZZLE_OK_MSG = "\tOK"
@@ -691,7 +693,15 @@ def AC_TURN_LORDS_TABLE(master, task, game_state):
 
 def AC_PLAY_COINS_PULLED_US(master, task, game_state):
     print("(ACTION:{task_id}) Coins pulled us".format(task_id=task.id))
-    game_state.sound_manager.play_sound(SOUNDS.first_coin)
+    # game_state.sound_manager.play_sound(SOUNDS.first_coin)
+
+    GLOBAL_VARIABLES.SOUND_ARRAY.append({
+          'sound': SOUNDS.first_coin,
+          'delay': 0,
+          'delay_start': False,
+          'play_start': False,
+          'play_done': False
+    })
 
 
 def AC_ADD_PUT_FIRST_COIN(master, task, game_state):
@@ -740,7 +750,14 @@ def AC_BAKE_FLARE_UP(master, task, game_state):
 
 
 def AC_PLAY_PICTURE(master, task, game_state):
-    game_state.sound_manager.play_sound(SOUNDS.picture)
+    # game_state.sound_manager.play_sound(SOUNDS.picture)
+    GLOBAL_VARIABLES.SOUND_ARRAY.append({
+          'sound': SOUNDS.picture,
+          'delay': 0,
+          'delay_start': False,
+          'play_start': False,
+          'play_done': False
+    })
 
 
 def AC_ADD_PLAY_BEFORE_FALLING_BOOKS(master, task, game_state):
@@ -771,17 +788,35 @@ def REQ_PLAY_BEFORE_FALLING_BOOKS(master, task, game_state):
         return
 
     elif not sound_start:
-        game_state.sound_manager.play_sound(SOUNDS.before_books_fall)
+        buttons = master.getButtons(Devices.LOVECRAFT_DEVICE_NAME).get()
+        dad_collected = buttons[DEVICES_TABLE.BTN_COLLECT_DAD_FISHING]
+        if dad_collected: return True
+
+        GLOBAL_VARIABLES.SOUND_ARRAY.append({
+              'sound': SOUNDS.before_books_fall,
+              'delay': 0,
+              'delay_start': False,
+              'play_start': False,
+              'play_done': False
+        })
+        # return True
+        # game_state.sound_manager.play_sound(SOUNDS.before_books_fall)
         sound_start = True
         task.stack.append(sound_start)
         task.stack.append(start_time)
         return
 
     else:
-        playing = game_state.sound_manager.is_playing(SOUNDS.before_books_fall)
-        print("Sound before books still playing")
+        playing = True
+        sound_array = GLOBAL_VARIABLES.SOUND_ARRAY
+        for sound_object in sound_array:
+            if sound_object['sound'] == SOUNDS.before_books_fall:
+                playing = not sound_object['play_done']
+
         if not playing:
             return True
+        print("Sound before books still playing")
+
         task.stack.append(sound_start)
         task.stack.append(start_time)
         return
@@ -859,9 +894,21 @@ def AC_ADD_PLAY_FISHING(master, task, game_state):
 def REQ_PLAY_SOUND_FISHING(master, task, game_state):
     if task.stack == []:
         task.stack.append(True)
-        game_state.sound_manager.play_sound(SOUNDS.fishing)
+        # game_state.sound_manager.play_sound(SOUNDS.fishing)
+        GLOBAL_VARIABLES.SOUND_ARRAY.append({
+              'sound': SOUNDS.fishing,
+              'delay': 0,
+              'delay_start': False,
+              'play_start': False,
+              'play_done': False
+        })
 
-    playing = game_state.sound_manager.is_playing(SOUNDS.fishing)
+    # playing = game_state.sound_manager.is_playing(SOUNDS.fishing)
+    playing = True
+    sound_array = GLOBAL_VARIABLES.SOUND_ARRAY
+    for sound_object in sound_array:
+        if sound_object['sound'] == SOUNDS.fishing:
+            playing = not sound_object['play_done']
 
     if not playing:
         return True
@@ -1680,7 +1727,7 @@ def AC_ADD_PLAY_KNIFE_ACHIEVED(master, task, game_state):
 
 
 def REQ_PLAY_KNIFE_ACHIEVED(master, task, game_state):
-    DELAY_TIME = 5
+    DELAY_TIME = 3
     if task.stack == []:
         sound_start = False
         task.stack.append(sound_start)
@@ -1858,7 +1905,7 @@ def AC_ADD_OPEN_STOORE_ROOM_DOOR(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.OPEN_STOORE_ROOM_DOOR)
 
 def REQ_OPEN_STOORE_ROOM_DOOR(master, task, game_state):
-    DELAY_TIME = 5
+    DELAY_TIME = 3
     if task.stack == []:
         sound_start = False
         task.stack.append(time.time())
@@ -1886,7 +1933,7 @@ def AC_ADD_PLAY_AFTER_SKELET_DOOR_OPEN(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.PLAY_AFTER_SKELET_DOOR_OPEN)
 
 def REQ_PLAY_AFTER_SKELET_DOOR_OPEN(master, task, game_state):
-    DELAY_TIME = 3
+    DELAY_TIME = 7
     if task.stack == []:
         sound_start = False
         task.stack.append(sound_start)
@@ -2181,7 +2228,15 @@ def REQ_PLAY_DOLL_HELP(master, task, game_state):
         task.stack.append(start_time)
         return
 
-    game_state.sound_manager.play_sound(SOUNDS.girl_help)
+    GLOBAL_VARIABLES.SOUND_ARRAY.append({
+          'sound': SOUNDS.girl_help,
+          'delay': 3,
+          'delay_start': False,
+          'play_start': False,
+          'play_done': False
+    })
+
+    # game_state.sound_manager.play_sound(SOUNDS.girl_help)
     return True
 
 
@@ -2299,32 +2354,7 @@ def REQ_FINAL_DAGON(master, task, game_state):
         smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, init_color)
         smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, init_color)
 
-        stage = Stages.PLAY_RADIO_1
-
-    elif Stages.PLAY_RADIO_1 == stage:
-        if task.stack == []:
-            game_state.sound_manager.play_sound(SOUNDS.lifesaver_end_first)
-            task.stack.append(None)
-        task.stack.pop()
-        playing = game_state.sound_manager.is_playing(SOUNDS.lifesaver_end_first)
-
-        if not playing:
-            stage = Stages.PLAY_RADIO_2
-        else:
-            task.stack.append(None)
-
-
-    elif Stages.PLAY_RADIO_2 == stage:
-        if task.stack == []:
-            game_state.sound_manager.play_sound(SOUNDS.lifesaver_end_second)
-            task.stack.append(None)
-        task.stack.pop()
-        playing = game_state.sound_manager.is_playing(SOUNDS.lifesaver_end_second)
-
-        if not playing:
-            stage = Stages.FINALE_MUSIC
-        else:
-            task.stack.append(None)
+        stage = Stages.FINALE_MUSIC
 
     elif Stages.FINALE_MUSIC == stage:
         game_state.sound_manager.play_sound(SOUNDS.music_on_demon_wings)
@@ -2347,5 +2377,75 @@ def REQ_FINAL_DAGON(master, task, game_state):
 
     task.stack.append(stage)
     task.stack.append(start_time)
+
+def AC_ADD_PLAY_SOUND_ARRAY(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.PLAY_SOUND_ARRAY)
+
+
+def REQ_PLAY_SOUND_ARRAY(master, task, game_state):
+    """ SOUND_ARRAY FORMAT:
+        [
+            {
+                sound: sound,
+                delay: "delay in sec",
+                delay_start: "True|False",
+                play_start: "True|False",
+                play_done: "True|False",
+            }
+        ]
+    """
+    if task.stack == []:
+        delay = 0
+        task.stack.append(delay)
+        task.stack.append(time.time())
+
+    start_time = task.stack.pop()
+    delay = task.stack.pop()
+    spend_time = time.time() - start_time
+    if spend_time < delay:
+        task.stack.append(delay)
+        task.stack.append(start_time)
+        return
+
+    if GLOBAL_VARIABLES.SOUND_ARRAY == []:
+        task.stack.append(delay)
+        task.stack.append(start_time)
+        return
+
+    sounds_list = GLOBAL_VARIABLES.SOUND_ARRAY
+    for sound_object in sounds_list:
+        if sound_object['play_done']:
+            continue
+        if sound_object['play_start']:
+            playing = game_state.sound_manager.is_playing(sound_object['sound'])
+            if playing:
+                task.stack.append(delay)
+                task.stack.append(start_time)
+                return
+            sound_object['play_start'] = False
+            sound_object['play_done'] = True
+            print("Stop play sound ")
+
+    # now if no one sound is playing we can find some one who not play yet
+    for sound_object in sounds_list:
+        if sound_object['play_done']:
+            continue
+        if not sound_object['play_start']:
+            if sound_object['delay_start']:
+                sound_object['delay_start']= False
+                game_state.sound_manager.play_sound(sound_object['sound'])
+                sound_object['play_start'] = True
+                print("Start play sound ")
+            else:
+                sound_object['delay_start']= True
+                delay = sound_object['delay']
+                start_time = time.time()
+                print("Start delay {}s for sound".format(delay))
+            break
+
+
+    task.stack.append(delay)
+    task.stack.append(start_time)
+    return
 
 
