@@ -149,6 +149,26 @@
        <!-- <input type="submit" id="skip_task_button" onsubmit='start_quest(event)' value=" <<== Старт квеста ==>>"></td> -->
 
        <table>
+         <tr><th>Ключевые звуки</th></tr>
+         <tr>
+           <td><button data-sound='stage_one_whisper' onClick='playSound(event)'>Этап 1. Шёпот (лечение шума)</button></td>
+         </tr>
+         <tr>
+           <td><button data-sound='doll' onClick='playSound(event)'>Кукла (+ Помоги)</button></td>
+         </tr>
+         <tr>
+           <td><button data-sound='after_books_fall' onClick='playSound(event)'>4. После падения книг</button></td>
+         </tr>
+         <tr>
+           <td><button data-sound='play_chest' onClick='playSound(event)'>Сундук с шумелкой</button></td>
+         </tr>
+         <tr>
+           <td><button data-task_name='final_dagon'onClick='add_task(event)'>Финал (Запуск Концовки)</button></td>
+         </tr>
+
+       </table>
+
+       <table>
          <th>Управление дверями</th>
          <tr>
            <td><button data-door_id='0' onClick='openDoor(event)'>Открыть дверь в кладовку</button></td>
