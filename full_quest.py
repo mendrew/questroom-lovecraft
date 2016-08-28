@@ -146,7 +146,7 @@ def REQ_QUEST_INIT(master, task, game_state):
     # init fish eyes
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     for eye_index in DEVICES_TABLE.SML_FISH_EYES:
-        smart_leds.setOneLed(eye_index, COLORS.RED)
+        smart_leds.setOneLed(eye_index, COLORS.FISH_NORMAL)
 
     # init lights in rooms
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
