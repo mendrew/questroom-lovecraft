@@ -125,7 +125,6 @@ def init_sounds(game_state):
 
 def REQ_QUEST_INIT(master, task, game_state):
     init_sounds(game_state)
-    # return True
     # close all boxes
     sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
     sl_controlls[
@@ -215,16 +214,6 @@ def TABLE_CLOCK_UP(master):
         GLOBAL_VARIABLES.TABLE_CLOCK_VALUE = GLOBAL_VARIABLES.TABLE_CLOCK_VALUE - 12
 
     print("TABLE CLOCK VALUE: {}".format(GLOBAL_VARIABLES.TABLE_CLOCK_VALUE))
-
-    # sl_controlls = master.getSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME).get()
-    # sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 1
-    #
-    # master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-    # time.sleep(1)
-    #
-    # sl_controlls[DEVICES_TABLE.SL_TABLE_CLOCK_RING_OUT] = 0
-    # master.setSimpleLeds(Devices.LOVECRAFT_DEVICE_NAME, sl_controlls)
-
 
 def AC_ADD_TABLE_CLOCK_RING_OUT(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.TABLE_CLOCK_RING_OUT_ALWAYS)
@@ -1917,11 +1906,13 @@ def REQ_OPEN_STOORE_ROOM_DOOR(master, task, game_state):
         task.stack.append(start_time)
         return
 
-    print("(ACTION:{task_id}) Open door with skelet".format(task_id=task.id))
-    relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
-    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_WITH_SKELET] = DEVICES_TABLE.RELAY_OPEN
-    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
     return True
+
+def AC_OPEN_STOORE_ROOM_DOOR(master, task, game_state):
+    print("(ACTION:{task_id}) Open stoore room door".format(task_id=task.id))
+    relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.RELAY_OPEN
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
 def AC_OPEN_DOOR_WITH_SKELET(master, task, game_state):
     print("(ACTION:{task_id}) Open door with skelet".format(task_id=task.id))
