@@ -1488,6 +1488,30 @@ def AC_CLOSE_THE_STOOREROOM_DOOR(master, task, game_state):
     relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.RELAY_CLOSE
     master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
 
+def AC_ADD_STOOREROOM_OPEN_DOOR_TIMER(master, task, game_state):
+    game_state.add_active_task_with_id(TASKS_IDS.STOOREROOM_OPEN_DOOR_TIMER)
+
+def REQ_STOOREROOM_OPEN_DOOR_TIMER(master, task, game_state):
+    DELAY_TO_OPEN_DOOR = DEVICES_TABLE.TIMER_STOOREROOM_OPEN_DOOR
+
+    if task.stack == []:
+        print("(REQ:{task_id}) Start timer to open stooreroom".format(task_id=task.id))
+        start_time = time.time()
+        task.stack.append(start_time)
+
+    start_time = task.stack.pop()
+
+    passed_time = time.time() - start_time
+
+    if passed_time < DELAY_TO_OPEN_DOOR:
+        task.stack.append(start_time)
+        return
+
+    relays = master.getRelays(Devices.LOVECRAFT_DEVICE_NAME).get()
+    relays[DEVICES_TABLE.RELAY_CLOSET_DOOR_1] = DEVICES_TABLE.RELAY_OPEN
+    master.setRelays(Devices.LOVECRAFT_DEVICE_NAME, relays)
+    return True
+
 def AC_ADD_CLOSE_THE_DOOR(master, task, game_state):
     game_state.add_active_task_with_id(TASKS_IDS.CLOSE_THE_DOOR)
 

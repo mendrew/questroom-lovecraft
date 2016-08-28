@@ -367,13 +367,26 @@
       success_actions:
         [AC_ADD_PUMPS_WATER,
          AC_ADD_PUT_THIRD_COIN,
-         AC_CLOSE_THE_STOOREROOM_DOOR
+         AC_CLOSE_THE_STOOREROOM_DOOR,
+         AC_ADD_STOOREROOM_OPEN_DOOR_TIMER
         ]
       failure_requirements:
         []
       failure_actions:
         []
       title: 'Расставить склянки'
+
+    -
+      id: 300
+      success_requirements:
+        [REQ_STOOREROOM_OPEN_DOOR_TIMER]
+      success_actions:
+        []
+      failure_requirements:
+        []
+      failure_actions:
+        []
+      title: 'Таймер на открытие двери в кладовку'
 
     -
       id: 90
