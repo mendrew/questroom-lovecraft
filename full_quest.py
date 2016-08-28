@@ -628,8 +628,8 @@ def AC_LIGHT_SHOW_WHERE_STATUE(master, task, game_state):
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
     smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_BLUE)
     smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, COLORS.ROOM_BLUE)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_GREEN)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.ROOM_GREEN)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_BLUE)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.ROOM_BLUE)
 
 
 def AC_ADD_PUT_STATUE_ON_LORDS_TABLE(master, task, game_state):
@@ -858,7 +858,7 @@ def AC_LIGHT_SHOW_WHERE_COLLECT_DAD_FISHING(master, task, game_state):
     smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.ROOM_BLUE)
     smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_BLUE)
     smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_BLUE)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, COLORS.ROOM_GREEN)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, COLORS.ROOM_BLUE)
 
 
 def AC_PLAY_SHE_ALL_I_HAVE(master, task, game_state):
@@ -968,7 +968,7 @@ def AC_LIGHT_SHOW_WHERE_CLOCK_SYNCHRONIZATION(master, task, game_state):
     smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM_SECRET, COLORS.ROOM_BLUE)
     smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_BLUE)
     smart_leds.setOneLed(DEVICES_TABLE.SML_STOREROOM, COLORS.ROOM_BLUE)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_GREEN)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_BLUE)
 
 def AC_ALL_LIGHT_ON(master, task, game_state):
     # init lights in rooms
@@ -2086,8 +2086,8 @@ def AC_THE_FINAL(master, task, game_state):
 def AC_LIGHT_SHOW_WHERE_PICTURE_BOX(master, task, game_state):
     print("(ACTION:{task_id}) show light where locker".format(task_id=task.id))
     smart_leds = master.getSmartLeds(Devices.LOVECRAFT_DEVICE_NAME)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_GREEN)
-    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_GREEN)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_BEGIN, COLORS.ROOM_BLUE)
+    smart_leds.setOneLed(DEVICES_TABLE.SML_HALL_END, COLORS.ROOM_BLUE)
 
 def AC_OPEN_PICTURE_BOX(master, task, game_state):
     print("(ACTION:{task_id}) Open picture box".format(task_id=task.id))
