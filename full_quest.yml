@@ -368,7 +368,8 @@
         [AC_ADD_PUMPS_WATER,
          AC_ADD_PUT_THIRD_COIN,
          AC_CLOSE_THE_STOOREROOM_DOOR,
-         AC_ADD_STOOREROOM_OPEN_DOOR_TIMER
+         # disable open door by timer
+         # AC_ADD_STOOREROOM_OPEN_DOOR_TIMER
         ]
       failure_requirements:
         []
