@@ -1476,7 +1476,8 @@ def AC_ADD_PUT_THIRD_COIN(master, task, game_state):
 
 
 def REQ_PUT_THIRD_COIN(master, task, game_state):
-    return check_coins_inserted(master, task, game_state, 3)
+    pass
+    # return check_coins_inserted(master, task, game_state, 3)
 
 
 def AC_SOUND_BACKGROUND_STAGE_3(master, task, game_state):
@@ -1991,7 +1992,8 @@ def AC_ADD_PUT_FOURTH_COIN(master, task, game_state):
 
 
 def REQ_PUT_FOURTH_COIN(master, task, game_state):
-    return check_coins_inserted(master, task, game_state, 4)
+    pass
+    # return check_coins_inserted(master, task, game_state, 4)
 
 
 def AC_ADD_PLAY_ALL_COINS_ON_PLACE(master, task, game_state):
