@@ -8,6 +8,7 @@
         [
           AC_ADD_WAIT_START_QUEST,
           AC_ADD_PLAY_BACKGROUND_SOUND,
+          AC_ADD_BACKGROUND_TABLE_CLOCK_JOB
         ]
       failure_requirements:
         []

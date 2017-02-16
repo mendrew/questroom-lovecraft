@@ -10,7 +10,7 @@ from settings import COLORS
 
 
 class GLOBAL_VARIABLES:
-    TABLE_CLOCK_VALUE = 1
+    TABLE_CLOCK_VALUE = 3
     TABLE_CLOCK_LAST_CHANGE_TIME = time.time()
 
     CLOCKS_SYNCHRONIZE = False
@@ -19,6 +19,8 @@ class GLOBAL_VARIABLES:
     CURRENT_MOVE_PICTURE = None
 
     SOUND_ARRAY = [];
+
+    TABLE_CLOCK_INIT_DONE = False
 
 
 def puzzle_status(puzzle_name, status):
@@ -308,6 +310,10 @@ def REQ_BACKGROUND_TABLE_CLOCK(master, task, game_state):
 
         stack.append(start_time)
         return
+
+    if not GLOBAL_VARIABLES.TABLE_CLOCK_INIT_DONE:
+        GLOBAL_VARIABLES.TABLE_CLOCK_INIT_DONE = True
+        print("Table clock INIT DONE")
 
     change_clock_time_passed = time.time() - GLOBAL_VARIABLES.TABLE_CLOCK_LAST_CHANGE_TIME
 
