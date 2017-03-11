@@ -21,14 +21,12 @@
         [REQ_START_QUEST]
       success_actions:
         [
-          # AC_OFF_EDDISON_LIGHT,
-          # AC_ADD_PLAY_INTRO,
+          AC_OFF_EDDISON_LIGHT,
+          AC_ADD_PLAY_INTRO,
 
           AC_ADD_BACKGROUND_TABLE_CLOCK_JOB,
           AC_ADD_BACKGROUND_WALL_CLOCK_INIT,
           AC_ADD_PLAY_SOUND_ARRAY,
-          AC_TABLE_CLOCK_CHANGE_TIME,
-          AC_ADD_CLOCK_SYNCHRONIZATION
         ]
       failure_requirements:
         []
