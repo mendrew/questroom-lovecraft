@@ -6,6 +6,8 @@ class Global:
     SCENARY_FILE = "./full_quest.yml"
     GET_TTY_USB_SCRIPT = "./get_ttyUSB.sh "
     INIT_TASK_ID = 0
+    RAVEN_DNS = ("https://4c6ae2fddd3d4e8db0d5c48987713a46:"
+        "cfef5efe75c54965878647629f3180a6@sentry.io/181588")
 
 
 class Devices:

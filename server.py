@@ -14,6 +14,9 @@ from quest_room import QuestRoom
 from tornado.options import define, options, parse_command_line
 import json
 
+from raven import Client
+from settings import Global
+
 define("port", default=8888, help="run on the given port", type=int)
 
 clients = dict()
@@ -149,6 +152,7 @@ app = tornado.web.Application([
 )
 
 if __name__ == '__main__':
+    client = Client(Global.RAVEN_DNS)
     parse_command_line()
     app.listen(options.port)
     # sound_manager = SoundManager()
