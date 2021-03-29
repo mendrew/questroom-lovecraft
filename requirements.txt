@@ -2,7 +2,7 @@ PyAudio==0.2.9
 PyInstaller==3.2
 PyUpdater==2.2.0
 PyYAML==3.12
-Pygments==2.2.0
+Pygments==2.7.4
 Pyro==3.16
 SoundFile==0.8.1
 appdirs==1.4.0
